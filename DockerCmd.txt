@@ -1,6 +1,46 @@
-Docker :
+Docker : In docker different conainers have different file systems, they dont share data. It is isolated from each other.
 
+To create docker container and start at the same time:
 docker run hello-world
+Note : run cmnd will print output of docker in current terminal
 
-List all running containers
+List all running containers:
 doceker ps 
+
+List all docker containers:
+docker ps -a
+
+Create docker contaienr from image:
+docker create hello-world
+
+To start docekr using container id:
+docker start -a {container_id}
+Note : -a is used to attach current terminal with docker and it used to print output of the running container in current cmd line terminal.
+
+To remove stopped container:
+docker system prune
+
+To see logs emmited by coontainer:
+docker logs {container_id}
+
+Used to stop container:
+docker stop {container_id}
+Note : It gives 10 sec time to container to shutdown else it internally calls kill cmd.
+
+Used to immediately stop container:
+docker kill {container_id}
+
+Pass cmd to docker:
+docker run busybox echo hi there
+Note : Override cmd is something which will run inside docker. In this case echo cmnd will run inside docker.
+
+To execute cmd in running container:
+docker exec -it {contsainer_id} {cmd}
+Note : exec is used to pass cmnd. -it is used to provide input to cmd.
+-it -> -i and -t. -i indicates that current terminal will be used as std input to the cmd passed with exec. -t used for formatting.
+
+Start shell of running conainer:
+docker exec -it {container_id} sh
+
+run container and start shell:
+docker run -it {image_name} sh
