@@ -1,0 +1,6 @@
+Docker :
+
+docker run hello-world
+
+List all running containers
+doceker ps 

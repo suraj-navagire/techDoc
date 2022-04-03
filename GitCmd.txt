@@ -1,0 +1,58 @@
+Git work flow : 
+
+When we create files it is considered as untracked files -> When we add this file using git add cmd then it considered as uncommitted files
+->When we commit the file it gets commited in local repository -> when we push file then it goes in remote repository
+
+Useful cmds :
+1. "git init" this cmd is used to initialize Git repository . Go inside your project directory and fire this cmd. "git init" it will 
+   create empty repository
+
+2. "git status" this cmd will show on which branch you are currently and will show all untracked files and files wich are yet to commit.
+
+3. "git add {file_name}" this cmd will add file to staging area i.e files which gets tracked by git for any changes. This file will
+   be uncommited at this time.
+
+4. "git commit -m "{commmit msg}"" this cmd will commit files to local reposotory with commit msg.
+
+5. "git log" this cmd will display all the latest commits
+
+6. "git revert -n {commit id}" this cmnd will help you to revert your commit based on commit id that we can get using "git status" cmd. 
+   Suppose you have commited something at 10 and you again commit something at 12. After some time you realize that you want to revert your 
+   commit which you commited at 12. Now get commit id which is done on 12. use "git revert -n". -n cmd will help you to not commit revert 
+   changes directly. This cmd will revert all changes of that commit and update files to previous commit. Now if we dont use -n in this cmd
+   then "git revert" will directly commit all this reverted changes. But when we use -n it will just update files to its previous commit 
+   and will not commit that updated files directly. After this cmd veify changes in files and commit those files sepertly using commit cmd.
+  
+7. "git reset {commit id} --hard" this cmd will help you to reset changes to that provided commit id.  Suppose you have commited 
+   something at 10 and you again commit something at 12 and you agin commit something at 3. After some time you realize that you want 
+   to dicard all your changes and go back to the commit 10. You want to discard all commits after 10. Then use this cmd and provide
+   commit id of 10.
+
+8. "git branch {branch name}" this cmd will help to create new branch.
+
+9. "git branch" this will list all branch.
+
+10. "git checkout {branch name}" this will help to switch to branch.
+
+11. "git merge {branch name}" this will help to merge the given branch to current branch. First go on master branch. Then use this cmd. 
+    All changes from that branch will come on master branch
+
+12 "git remote" will display remote repositories.
+
+13. "git push origin master" this will push master branch to origin repo.
+
+13. "git push --all origin" this will push all branch on origin
+
+14. "git stash save" this cmd will be used when remote branch has some updated commit which is not in out local. 
+     When we do git pull and if we get error that stash the changes then use this comn. This cmd will saves the changes from last pull 
+    to current time. and revert files to last pull state. After this we can do pull. Now after pull use "git stash pop" to apply your
+     changes and resolve conflicts and commit to local and push to remote.
+
+15. "git stash pop" Used to apply changes that we have stashed.
+
+Terms : 
+1. "origin" - This is short form for repository which is mapped.
+2. "HEAD" - This will help us to use instead of actual commit id. This will point to latest commit id of current branch.
+3. "HEAD~1" - This will point to latest minus 1 i.e. second latest commit id.
+4. ".gitignore" This file will contains file names which we want to ignore from staging area. Also result in not comes for commit.
+		We can use this to add class files and cred files that we should not commit.
