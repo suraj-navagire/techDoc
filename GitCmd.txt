@@ -3,6 +3,9 @@ Git work flow :
 When we create files it is considered as untracked files -> When we add this file using git add cmd then it considered as uncommitted files
 ->When we commit the file it gets commited in local repository -> when we push file then it goes in remote repository
 
+cmd to downloan github repository:-
+git clone {copy from git hub under ssh tab}
+
 Useful cmds :
 1. "git init" this cmd is used to initialize Git repository . Go inside your project directory and fire this cmd. "git init" it will 
    create empty repository
