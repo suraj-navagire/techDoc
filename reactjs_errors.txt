@@ -1,0 +1,17 @@
+Error while creating react project using npx :-
+Error:- c:\workspace\poc\reactProject>npx create-react-app temod
+Error: EEXIST: file already exists, mkdir 'C:\Users\Suraj'
+TypeError: Cannot read property 'loaded' of undefined
+    at exit (C:\Program Files\nodejs\node_modules\npm\lib\utils\error-handler.js:97:27)
+    at errorHandler (C:\Program Files\nodejs\node_modules\npm\lib\utils\error-handler.js:216:3)
+    at C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js:78:20
+    at cb (C:\Program Files\nodejs\node_modules\npm\lib\npm.js:225:22)
+    at C:\Program Files\nodejs\node_modules\npm\lib\npm.js:263:24
+    at C:\Program Files\nodejs\node_modules\npm\lib\config\core.js:81:7
+    at Array.forEach (<anonymous>)
+    at C:\Program Files\nodejs\node_modules\npm\lib\config\core.js:80:13
+    at f (C:\Program Files\nodejs\node_modules\npm\node_modules\once\once.js:25:25)
+    at afterExtras (C:\Program Files\nodejs\node_modules\npm\lib\config\core.js:171:20)
+   
+ Solution :- run cmd "npm config edit" and search for line staring with "; cache" and replce user name i.e "Suraj Navagire" with "Suraj~l"
+          Also if npmrc file needs to be deleted if present inside "users/Suraj Navagire" folder. Again Do aboe step and then create.
