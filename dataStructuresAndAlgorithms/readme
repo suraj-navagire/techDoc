@@ -19,3 +19,4 @@ Progress:-
                 1. Adding new element is slow.
                 2. Deleting existing element is slow.
                 3. When array is initialized memory gets reserved even if element is not added.
+            Example :- src/main/java/com/datastructures/Array.java

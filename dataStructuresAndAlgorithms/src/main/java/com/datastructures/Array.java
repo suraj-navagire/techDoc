@@ -5,7 +5,7 @@ public class Array {
 				//Declaring array
 				int[] n;
 
-				//Initializing an array. Tells JVM to allocate memory for 5 integers.
+				//Initializing an array. Tells JVM to allocate memory for 5 integers. Memory gets allocated inside heap area.
 				n = new int[5];
 
 				for(int i=0 ; i<5 ; i++) {
@@ -22,6 +22,5 @@ public class Array {
 				}
 
 				System.out.print("]");
-
 		}
 }
