@@ -1,0 +1,21 @@
+This project is created to practice data structures and algorithms
+
+Learning path to be followed :-
+https://instabyte.io/p/dsa-master
+
+Progress:-
+1. Arrays -
+            Array is collection similar data type stored in a contiguous memory location. It is a linear data structure. It is a static data structure with a fixed size.
+            Operations :-
+                1. Traversal - Visiting each element of an array in a specific order [sequential or reversal].
+                2. Insertion - Adding new element to an array at a specific index.
+                3. Deletion - Removing an existing element from an array at a specific index.
+                4. Searching - Finding the index of an element in an array.
+                5. Retrieval - Returning an element present at a specific index from an array.
+            Advantages :-
+                1. Retrieval of an element is faster.
+                2. Requires less memory compared with linked list.
+            DisAdvantages :-
+                1. Adding new element is slow.
+                2. Deleting existing element is slow.
+                3. When array is initialized memory gets reserved even if element is not added.
