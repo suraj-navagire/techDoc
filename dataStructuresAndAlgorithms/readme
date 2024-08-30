@@ -20,3 +20,19 @@ Progress:-
                 2. Deleting existing element is slow.
                 3. When array is initialized memory gets reserved even if element is not added.
             Example :- src/main/java/com/datastructures/Array.java
+
+2. Linked List -
+            Linked list is a linear data structure consists of series of nodes connected by references. Node consists of data and reference to the next node. It doesn't
+            store node in a contiguous memory location.
+            Operations :-
+                1. Traversal - Visiting each element of a linked list in a specific order.
+                2. Insertion - Adding new element to a linked list.
+                3. Deletion - Removing existing element from a linked list.
+                4. Searching - Finding the element in a linked list.
+                4. Retrieval - Returning an element present at a specific index.
+            Advantages :-
+                1. Adding new element is faster/efficient.
+                2. Removing existing element is faster/efficient.
+            Disadvantages :-
+                1. Retrieving element from a specific index is costly.
+                2. Traversal is slow.
