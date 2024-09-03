@@ -2,7 +2,5 @@ dataStructuresAndAlgorithms/.gradle
 dataStructuresAndAlgorithms/.idea
 dataStructuresAndAlgorithms/build
 dataStructuresAndAlgorithms/gradle
-sparkTutorial/.gradle
+sparkTutorial/target
 sparkTutorial/.idea
-sparkTutorial/build
-sparkTutorial/gradle
