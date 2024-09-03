@@ -1,0 +1,7 @@
+This file contains useful cmds to do various operations.
+
+1. Check hostname
+cmd :- hostname
+
+2. Check ip address
+cmd :- hostname -I | awk '{print $1}'
