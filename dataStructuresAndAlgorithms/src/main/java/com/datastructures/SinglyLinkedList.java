@@ -1,6 +1,9 @@
 package com.datastructures;
 
-public class SinglyLinkedList<T> {
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+
+public class SinglyLinkedList<T> implements Iterable<T> {
 
 		private Node head;
 
@@ -66,4 +69,45 @@ public class SinglyLinkedList<T> {
 				System.out.println(currentNode.data+"]");
 		}
 
+		@Override public Iterator<T> iterator() {
+				return new Itr();
+		}
+
+		private class Itr implements Iterator<T> {
+
+				private int originalSize;
+
+				private int cursor;
+
+				private Node currentNode;
+
+				Itr(){
+						this.originalSize = size;
+						this.cursor = 0;
+						this.currentNode = head;
+				}
+
+				@Override public boolean hasNext() {
+						if(originalSize != size){
+								throw new ConcurrentModificationException();
+						}
+
+						if(cursor >= size) {
+								return false;
+						} else {
+								return true;
+						}
+				}
+
+				@Override public T next() {
+						if(originalSize != size){
+								throw new ConcurrentModificationException();
+						}
+
+						T currentData  = currentNode.data;
+						currentNode = currentNode.next;
+						cursor++;
+						return currentData;
+				}
+		}
 }

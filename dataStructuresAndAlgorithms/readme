@@ -36,3 +36,26 @@ Progress:-
             Disadvantages :-
                 1. Retrieving element from a specific index is costly.
                 2. Traversal is slow.
+
+3. Hash Table -
+            Hash table is data structure used to store element in such a way that searching becomes fast.
+            Hash table step :-
+                1. Calculate hash of element using hash function.
+                2. Calculate index within the size of table using evaluated hash value.
+                3. Store the element at that derived index location.
+                4. If collision happens then use one of the collision handling technique called separate chaining. In this technique use linked list to store data at that
+                index location.
+
+                Hash table :- Node<K>[] table;
+                Node :- {k element, int hash, Node nextNode}
+
+                function insert(k element){
+                    int hash = hash(element);
+                    int index = hash % (table.size-1);
+
+                    if(table[index] == null){
+                        // add element to this location;
+                    } else {
+                        // add element to next node provided next node is null else keep moving to next node till we get next node as null;
+                    }
+                }

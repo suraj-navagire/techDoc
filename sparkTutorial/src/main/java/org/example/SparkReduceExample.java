@@ -9,7 +9,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SparkFirstExample {
+public class SparkReduceExample {
 		public static void main(String[] args) {
 				System.out.println("SparkFirstExample started");
 				List<Double> inputData = new ArrayList<>();
@@ -27,6 +27,9 @@ public class SparkFirstExample {
 
 				JavaRDD<Double> rdd = context.parallelize(inputData);
 
+				Double result = rdd.reduce((value1, value2) -> value1 + value2);
+
+				System.out.println("Total value : "+ result);
 				context.close();
 
 				System.out.println("SparkFirstExample ended");

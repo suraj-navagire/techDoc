@@ -2,6 +2,8 @@ package com.datastructures.application;
 
 import com.datastructures.SinglyLinkedList;
 
+import java.util.Iterator;
+
 public class SinglyLinkedListApplication {
 		public static void main(String[] args) {
 				SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
@@ -16,7 +18,30 @@ public class SinglyLinkedListApplication {
 
 				System.out.println("Printing element present at 3rd position : " + list.get(2));
 
-				System.out.println("Printing element present at 100th position : " + list.get(99));
+				System.out.print("Printing element present at 100th position : ");
 
+				System.out.println(list.get(99));
+
+				System.out.print("Iterating over Singly Linked List using iterator : ");
+
+				Iterator<Integer> iterator = list.iterator();
+
+				System.out.print("[");
+				while (iterator.hasNext()){
+						Integer m = iterator.next();
+						System.out.print(m+",");
+				}
+
+				System.out.println("]");
+
+				System.out.print("Iterating using advanced for loop : ");
+
+				System.out.print("[");
+
+				for(Integer a : list){
+						System.out.print(a+",");
+				}
+
+				System.out.println("]");
 		}
 }
