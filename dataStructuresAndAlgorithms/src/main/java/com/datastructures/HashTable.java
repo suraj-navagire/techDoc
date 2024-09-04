@@ -1,6 +1,6 @@
 package com.datastructures;
 
-public class HashTable<k> {
+public class HashTable<T> {
 
 		private Node[] table;
 
@@ -8,13 +8,13 @@ public class HashTable<k> {
 				this.table = new Node[16];
 		}
 
-		private class Node<k> {
+		private class Node<T> {
 				int hash;
-				k element;
+				T element;
 				Node  next;
 		}
 
-		public void put(k element) {
+		public void put(T element) {
 				//calculate hash of element
 				//calculating hash using hashcode
 
@@ -23,7 +23,7 @@ public class HashTable<k> {
 				int index = hash % table.length;
 
 				if(table[index] == null) {
-						Node<k> newNode = new Node<>();
+						Node<T> newNode = new Node<>();
 						newNode.element = element;
 						newNode.hash = hash;
 						table[index] = newNode;
@@ -32,7 +32,7 @@ public class HashTable<k> {
 				}
 		}
 
-		private void addElement(k element, int hash, Node<k> existingNode){
+		private void addElement(T element, int hash, Node<T> existingNode){
 
 				Node tempNode = existingNode;
 
@@ -50,14 +50,14 @@ public class HashTable<k> {
 						return;
 				}
 
-				Node<k> newNode = new Node();
+				Node<T> newNode = new Node();
 				newNode.element = element;
 				newNode.hash = hash;
 
 				tempNode.next = newNode;
 		}
 
-		public boolean contains(k element){
+		public boolean contains(T element){
 				//calculate hash of element
 				//calculating hash using hashcode
 				int hash = element.hashCode();
@@ -68,7 +68,7 @@ public class HashTable<k> {
 						return false;
 				}
 
-				Node<k> tempElement = table[index];
+				Node<T> tempElement = table[index];
 
 				while (tempElement != null) {
 						if(tempElement.hash == hash && (tempElement.element == element || tempElement.element.equals(element))) {

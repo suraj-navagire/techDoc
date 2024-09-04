@@ -34,7 +34,7 @@ public class SinglyLinkedListApplication {
 
 				System.out.println("]");
 
-				System.out.print("Iterating using advanced for loop : ");
+				System.out.print("Iterating over Singly Linked List using advanced for loop : ");
 
 				System.out.print("[");
 
@@ -42,6 +42,12 @@ public class SinglyLinkedListApplication {
 						System.out.print(a+",");
 				}
 
+				System.out.println("]");
+
+
+				System.out.print("Iterating over Singly Linked List using forEach method : ");
+				System.out.print("[");
+				list.forEach(q -> System.out.print(q+","));
 				System.out.println("]");
 		}
 }

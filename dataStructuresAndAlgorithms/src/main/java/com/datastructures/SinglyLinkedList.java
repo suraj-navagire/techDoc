@@ -2,6 +2,7 @@ package com.datastructures;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 public class SinglyLinkedList<T> implements Iterable<T> {
 
@@ -109,5 +110,21 @@ public class SinglyLinkedList<T> implements Iterable<T> {
 						cursor++;
 						return currentData;
 				}
+		}
+
+		@Override public void forEach(Consumer<? super T> action){
+				if(head == null){
+						return;
+				}
+
+				Node currentNode = head;
+
+				while (currentNode.next != null) {
+						action.accept(currentNode.data);
+						currentNode = currentNode.next;
+				}
+
+				action.accept(currentNode.data);
+
 		}
 }

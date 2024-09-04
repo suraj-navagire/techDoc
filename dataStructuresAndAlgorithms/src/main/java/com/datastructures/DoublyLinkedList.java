@@ -1,6 +1,10 @@
 package com.datastructures;
 
-public class DoublyLinkedList <T> {
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.function.Consumer;
+
+public class DoublyLinkedList <T> implements Iterable<T> {
 
 		private Node head;
 
@@ -86,5 +90,59 @@ public class DoublyLinkedList <T> {
 				}
 
 				System.out.println(currentNode.data+"]");
+		}
+
+		@Override public Iterator<T> iterator() {
+				return new Itr();
+		}
+
+		@Override public void forEach(Consumer<? super T> action) {
+				if(head == null){
+						return;
+				}
+
+				Node currentNode = head;
+
+				while (currentNode.next!=null){
+						action.accept(currentNode.data);
+						currentNode = currentNode.next;
+				}
+
+				action.accept(currentNode.data);
+		}
+
+		private class Itr implements Iterator<T> {
+				private int originalSize;
+
+				private int cursor;
+
+				private Node currentNode;
+
+				Itr(){
+						this.cursor = 0;
+						this.originalSize = size;
+						this.currentNode = head;
+				}
+
+				@Override public boolean hasNext() {
+						if(originalSize != size) {
+								throw new ConcurrentModificationException();
+						}
+						if(cursor >= size) {
+								return false;
+						} else {
+								return true;
+						}
+				}
+
+				@Override public T next() {
+						if(originalSize != size) {
+								throw new ConcurrentModificationException();
+						}
+						T data = currentNode.data;
+						currentNode = currentNode.next;
+						cursor++;
+						return data;
+				}
 		}
 }
