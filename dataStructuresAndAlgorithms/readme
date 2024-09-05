@@ -36,6 +36,7 @@ Progress:-
             Disadvantages :-
                 1. Retrieving element from a specific index is costly.
                 2. Traversal is slow.
+            Example :- src/main/java/com/datastructures/SinglyLinkedList.java, src/main/java/com/datastructures/DoublyLinkedList.java
 
 3. Hash Table -
             Hash table is data structure used to store element in such a way that searching becomes fast.
@@ -59,3 +60,7 @@ Progress:-
                         // add element to next node provided next node is null else keep moving to next node till we get next node as null;
                     }
                 }
+            Advantages :-
+                1. Hash table is very useful when we want to perform searching specially unsorted collection.
+            Example :- src/main/java/com/datastructures/HashTable.java
+                    https://www.hackerearth.com/practice/data-structures/hash-tables/basics-of-hash-tables/tutorial/
