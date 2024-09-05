@@ -6,6 +6,16 @@ import java.util.Iterator;
 
 public class DoublyLinkedListApplication {
 		public static void main(String[] args) {
+				try {
+						DoublyLinkedListApplication application = new DoublyLinkedListApplication();
+						application.start();
+				} catch (Throwable e){
+						e.printStackTrace();
+				}
+
+		}
+
+		private void start(){
 				DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
 
 				for(int i=0 ; i<10; i++){

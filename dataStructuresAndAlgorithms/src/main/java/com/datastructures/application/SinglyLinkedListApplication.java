@@ -6,6 +6,15 @@ import java.util.Iterator;
 
 public class SinglyLinkedListApplication {
 		public static void main(String[] args) {
+				try {
+						SinglyLinkedListApplication application = new SinglyLinkedListApplication();
+						application.start();
+				}catch (Throwable e){
+						e.printStackTrace();;
+				}
+		}
+
+		private void start() {
 				SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
 
 				for(int i=0 ; i<10; i++){

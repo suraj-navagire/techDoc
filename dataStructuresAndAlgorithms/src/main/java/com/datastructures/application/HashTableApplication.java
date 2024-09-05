@@ -6,6 +6,15 @@ import java.util.Iterator;
 
 public class HashTableApplication {
 		public static void main(String[] args) {
+				try {
+						HashTableApplication application = new HashTableApplication();
+						application.start();
+				} catch (Throwable e) {
+						e.printStackTrace();
+				}
+		}
+
+		private void start() {
 				System.out.println("HashTable implementation : ");
 
 				HashTable<String> studentCollection = new HashTable<>();
