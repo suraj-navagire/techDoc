@@ -64,3 +64,29 @@ Progress:-
                 1. Hash table is very useful when we want to perform searching specially unsorted collection.
             Example :- src/main/java/com/datastructures/HashTable.java
                     https://www.hackerearth.com/practice/data-structures/hash-tables/basics-of-hash-tables/tutorial/
+
+4. Tree -
+            It is non linear data structure consists of nodes connected by edges. It allow faster and quicker access to element as it is non linear in nature.
+
+            Node :- It contains key/data along with pointers to child nodes. Last node is called leaf node which don't point to any other node.
+                The node with at least one child is called internal node.
+            Edge :- It is the link between any 2 node.
+
+            Root :- It is the top most node of a tree.
+
+            Height of node :- It is the number edges from node to the farthest leaf node of that node.
+
+            depth of node :- It is the number of edges from root to that node.
+
+            Height of tree :- It is the number of edges from root node to farthest leaf node.
+
+            Forest :- A collection of disjoint trees.
+
+            Types of tree :-
+                1. Binary Tree - Binary tree is a tree in which each node can have at most 2 children.
+                2. Binary search tree - It allows us to maintain sorted list of elements quickly. time complexity for search is O(log(n))
+                3. AVL tree
+                4. B-tree
+
+            Example :- https://www.programiz.com/dsa/trees,
+                       com.datastructures.application.BinarySearchTreeApplication
