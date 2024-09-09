@@ -1,0 +1,18 @@
+Refer udemy course for this spark tutorial
+
+1. java.io.IOException: Could not locate executable null\bin\winutils.exe in the Hadoop binaries
+    -   Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
+        eg: System.setProperty("hadoop.home.dir","C:\\hadoop"); where hadoop folder contains bin folder and bin contains winutils.exe
+        Refer example :- org.example.SparkTextFileRead
+
+2. Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.crypto.key.KeyProviderTokenIssuer -
+    -   Added following dependency
+        <dependency>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-common</artifactId>
+                    <version>2.10.2</version>
+                </dependency>
+
+3. Caused by: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset.
+    -  Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
+       Refer example :- org.example.SparkTextFileRead

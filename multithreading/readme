@@ -1,0 +1,63 @@
+2 ways to create threads :-
+	1. extends Thread class -
+		Starting thread - NewThreadClass t1 = new NewThreadClass();
+							t1.start();
+		Example :- org.example.ThreadCreationExample1
+
+	2. Implement Runnable interface -
+		starting thread - Thread t = new Thread(new NewRunnableThread);
+							t.start()
+        Example :- org.example.ThreadCreationExample2
+
+Thread vs Runnable :-
+    - Thread represents actual thread which runs and it has all the methods supported by threads. Runnable on other hand represents task.
+    - When we use threads we cannot differentiate tasks , we have to tasks within thread only, this might affect quality of code and usability. With runnable we can separate
+     out task from Thread.
+    - Resource sharing between multiple threads become easies with runnable.
+    - If you want to enhance Thread or override ny property of method that time we should think of using extending threads otherwise use runnable.
+
+Join :-
+    thread.join() method will tell currently executing thread to wait for this thread (thread on which join method is called) to finish its job.
+    Example :- org.example.JonExample
+
+Volatile keyword :-
+    Volatile means read from main memory not from CPU registers since in multicore system each cpu has its own register to store data.
+
+	Sometimes on some systems it might happen that some shared data or data which is going to be updated by another thread is cached by running thread and never check for
+	updated value. Or Code might interpreted in such a way that system might feel that data which is shared or getting updated by another thread is useless and because of
+	this system might never check its updated value . In such case we should use volatile keyword on those shared data. It can happen on some systems, its not always true
+	for all systems.
+    Example :- org.example.VolatileExample
+    https://jenkov.com/tutorials/java-concurrency/volatile.html
+
+synchronized keyword on method :-
+	Every object in java has intrinsic lock. At a time only one thread can aquire this lock. When we mark any method synchronized then thread has to aquire this intrensic lock inorder do any processing on tht object.
+
+	When we use synchronized keyword on method then we dont need to use volatile keyword for shared data, by default that shared data is monitored by all the threads
+
+	Case : If class has 2 synchronized methods and if 2 threads want to access them then at a time only 1 thread can access one of the thread. If 1 thread is accessing one method then other thread cannont access same or other synchrozed method.
+
+	void synchronized method1(){
+		//do stuff
+	}
+
+	void synchronized method2(){
+		//do stuff
+	}
+
+	Solution : To solve this we can use synchronized lock on separate objects.
+
+	Object o1 = new Object();
+	Object o2 = new Object();
+
+	void method1(){
+		synchronized(o1){
+			//do stuff
+		]
+	}
+
+	void method2(){
+		synchronized(o2){
+			//do stuff
+		]
+	}
