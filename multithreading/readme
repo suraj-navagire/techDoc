@@ -63,5 +63,9 @@ synchronized keyword on method :-
 	}
 
 	Example :- Follow example present in package src/main/java/org/example/synchronizedExample
+
 	synchronized method example present in following class :- Example1, Example2, SynchronizedMethod
-	synchronized block example present in following class :- Example3, Example4, Example5, Example6, Example7
+
+	synchronized block (object lock) example present in following class :- Example3, Example4, Example5, Example6, Example7
+
+	synchronized block (class level lock) example present in following class :- Example8 , Example9
