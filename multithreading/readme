@@ -31,9 +31,9 @@ Volatile keyword :-
     https://jenkov.com/tutorials/java-concurrency/volatile.html
 
 synchronized keyword on method :-
-	Every object in java has intrinsic lock. At a time only one thread can aquire this lock. When we mark any method synchronized then thread has to aquire this intrensic lock inorder do any processing on tht object.
+	Every object in java has intrinsic lock. At a time only one thread can acquire this lock. When we mark any method synchronized then thread has to aquire this intrensic lock inorder do any processing on tht object.
 
-	When we use synchronized keyword on method then we dont need to use volatile keyword for shared data, by default that shared data is monitored by all the threads
+	When we use synchronized keyword on method then we don't need to use volatile keyword for shared data, by default that shared data is monitored by all the threads
 
 	Case : If class has 2 synchronized methods and if 2 threads want to access them then at a time only 1 thread can access one of the thread. If 1 thread is accessing one method then other thread cannont access same or other synchrozed method.
 
@@ -61,3 +61,7 @@ synchronized keyword on method :-
 			//do stuff
 		]
 	}
+
+	Example :- Follow example present in package src/main/java/org/example/synchronizedExample
+	synchronized method example present in following class :- Example1, Example2, SynchronizedMethod
+	synchronized block example present in following class :- Example3, Example4, Example5, Example6, Example7
