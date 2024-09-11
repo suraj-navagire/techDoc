@@ -69,3 +69,18 @@ synchronized keyword on method :-
 	synchronized block (object lock) example present in following class :- Example3, Example4, Example5, Example6, Example7
 
 	synchronized block (class level lock) example present in following class :- Example8 , Example9
+
+Executor Framework :-
+    It is created to use existing threads rather than creating new threads every time. It works on concept of thread pooling. It uses
+    existing thread from thread pool to execute task.
+
+    Executor and ExecutorService are interface.
+    Executors is class which provide factory methods to create thread pools.
+    4 Types of ExecutorService are available
+        - SingleThreadPool : Thread poo with single thread.
+        - FixedThreadPool : Thread pool with fixed number of threads
+        - CachedThreadPool : Creates thread pool which creates new thread if require else will use existing one. If no thread is available
+                in thread pool then it creates new one.
+        - ScheduledExecutor : We can use this when task needs to be run at a regular interval or if we want to delay a task.
+
+    Future object :- We can acces result of a task submitted to executor using Future<> object.
