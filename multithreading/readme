@@ -83,4 +83,13 @@ Executor Framework :-
                 in thread pool then it creates new one.
         - ScheduledExecutor : We can use this when task needs to be run at a regular interval or if we want to delay a task.
 
-    Future object :- We can acces result of a task submitted to executor using Future<> object.
+    Example :- src/main/java/org/example/threadpool
+
+    Future object :- We can access result of a task submitted to executor using Future<> object.
+
+    shutdown method in ExecutorService : If we don't call it then executors keeps running in background. Once we call this executor will
+        not accept new tasks and shuts down.
+
+    awaitTermination : Program waits at this for given amount of time or all tasks gets completed.  When time gets completed program
+        resumes from this point but in background executors stays alive. so to kill or shut down executor threads we need to call
+        shutdown method.
