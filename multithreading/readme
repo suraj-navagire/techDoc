@@ -93,3 +93,9 @@ Executor Framework :-
     awaitTermination : Program waits at this for given amount of time or all tasks gets completed.  When time gets completed program
         resumes from this point but in background executors stays alive. so to kill or shut down executor threads we need to call
         shutdown method.
+
+CountDown latch :-
+     It helps if any thread wants to wait for other n number of threads to complete its tasks. When we create countDown latch we
+     provide number then we pass this latch object to all those threads on which we are dependent. Then once thread completes their
+     tasks it decrements count by 1. Like this all threads decrements latch by 1 one. When latch reaches to zero thread which is waiting
+     resumes and starts running.
