@@ -85,7 +85,10 @@ Executor Framework :-
 
     Example :- src/main/java/org/example/threadpool
 
-    Future object :- We can access result of a task submitted to executor using Future<> object.
+    Future object :- We can access result of a task submitted to executor using Future<> object. If we want result the we should
+    implement Callable interface instead of Runnable for task.
+
+    Example : org.example.threadpool.FuturesExample
 
     shutdown method in ExecutorService : If we don't call it then executors keeps running in background. Once we call this executor will
         not accept new tasks and shuts down.
@@ -99,3 +102,5 @@ CountDown latch :-
      provide number then we pass this latch object to all those threads on which we are dependent. Then once thread completes their
      tasks it decrements count by 1. Like this all threads decrements latch by 1 one. When latch reaches to zero thread which is waiting
      resumes and starts running.
+
+     Example : org.example.CountDownLatchExample

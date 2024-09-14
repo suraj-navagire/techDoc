@@ -4,5 +4,8 @@ dataStructuresAndAlgorithms/build
 dataStructuresAndAlgorithms/gradle
 sparkTutorial/target
 sparkTutorial/.idea
+sparkTutorial/src/main/resources/boringwords.txt
+sparkTutorial/src/main/resources/input.txt
+sparkTutorial/src/main/resources/input-spring.txt
 multithreading/target
 multithreading/.idea

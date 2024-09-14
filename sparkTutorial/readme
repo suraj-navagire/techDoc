@@ -1,4 +1,6 @@
-Refer udemy course for this spark tutorial
+Refer udemy course for this spark tutorial.
+Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
+                https://spark.apache.org/docs/latest/
 
 1. java.io.IOException: Could not locate executable null\bin\winutils.exe in the Hadoop binaries
     -   Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
@@ -16,3 +18,8 @@ Refer udemy course for this spark tutorial
 3. Caused by: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset.
     -  Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
        Refer example :- org.example.SparkTextFileRead
+
+4. When you use foreach method of RDD then we might get incorrect result in case of sorting. We might not get sorted result. It becuase
+    foreach on RDD works different than forEach of List. When we do foreach on RDD driver program sends this function to worker nodes. Then worker nodes
+    runs this functions parallally on different partitions. Thats why we see unexpected outcome.
+    If in case of sort we want to perform forEach then we should do on final result List instead of on RDD.
