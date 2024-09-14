@@ -104,3 +104,7 @@ CountDown latch :-
      resumes and starts running.
 
      Example : org.example.CountDownLatchExample
+
+ Producer Consumer problem :-
+    Producer consumer problem is best solved by using blocking queue.
+    Example : org.example.producerconsumer.ProducerConsumerUsingQueue
