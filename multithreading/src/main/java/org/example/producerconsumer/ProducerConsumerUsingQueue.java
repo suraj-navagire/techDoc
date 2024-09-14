@@ -31,6 +31,8 @@ public class ProducerConsumerUsingQueue {
 
 				t1.start();
 				t2.start();
+
+				System.out.println("Main thread ended");
 		}
 
 

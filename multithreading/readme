@@ -1,3 +1,5 @@
+Find multithreading course on my udemy account.
+
 2 ways to create threads :-
 	1. extends Thread class -
 		Starting thread - NewThreadClass t1 = new NewThreadClass();
@@ -107,4 +109,25 @@ CountDown latch :-
 
  Producer Consumer problem :-
     Producer consumer problem is best solved by using blocking queue.
+
+    Wait and Notify: When we call wait method on an object on which we are want to wait to notify it then current thread goes to wait state.
+        Then another thread which is waiting for intrinsic lock of that object gets lock and enters synchronized block.
+        When this thread call notify method on object who's intrinsic lock is getting used then other thread which is in wait state gets notification
+        and that starts starts running once that other thread exits synchronized block.
+
     Example : org.example.producerconsumer.ProducerConsumerUsingQueue
+
+ Re-entrant Lock :- It's used when we don't want to use synchronized method or block where we try to get intrinsic lock of provided object,
+    but still we want to achieve synchronization.
+
+    lock : When we call this method only one thread can get lock other threads goes in waiting state.
+    unlock : When we call this method current thread releases lock and other threads which are waiting for lock one of them gets lock.
+    await : Used like wait method
+    signal : Used like notify method
+    tryLock : Same as lock method only difference is if acquires lick then returns true else false.
+
+    Example : org/example/locks
+
+ DeadLock : Deadlock occurs when onc Thread has acquired lock on one resource and waiting for lock on another resource but at same time another
+    thread have acquired lock on another resource for which first thread is waiting and this second thread also want lock on resource who's lock is
+    taken by first resource.

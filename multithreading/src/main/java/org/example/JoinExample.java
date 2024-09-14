@@ -1,6 +1,6 @@
 package org.example;
 
-public class JonExample {
+public class JoinExample {
 		public static void main(String[] args) {
 
 				Thread3 t3 = new Thread3();
