@@ -20,8 +20,8 @@ public class SparkKeyWordRankingExample {
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
 				//Following files can be downloaded from spark udemy tutorial attachment
-				String file = "src/main/resources/input-spring.txt";
-//				String file = "src/main/resources/input.txt";
+//				String file = "src/main/resources/input-spring.txt";
+				String file = "src/main/resources/input.txt";
 				SparkConf conf = new SparkConf().setAppName("Keywords Ranking App").setMaster("local[*]");
 
 				JavaSparkContext context = new JavaSparkContext(conf);
