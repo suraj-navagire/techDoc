@@ -11,7 +11,7 @@ public class FixedSizeThreadPoolAwaitTermination {
 				ExecutorService service = Executors.newFixedThreadPool(5);
 
 				for(int i=0;i<15;i++) {
-						service.submit(new RunnableWorker(i));
+						service.submit(new RunnableWorker1(i));
 				}
 
 

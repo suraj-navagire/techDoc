@@ -1,5 +1,17 @@
 Find multithreading course on my udemy account.
 
+Thread is the smallest light weight process.
+
+Life cycle :
+1. New state - When we create thread. Thread t = new Thread().
+2. Runnable / Running - When we start thread it goes in runnable state then depending upon availability it goes to running state
+    t.start.
+3. Blocked state - When thread tries to acquire lock but not available. synchronized(Object) {}.
+4. Waiting state - When thread is waiting for notification. object.wait().
+5. Timed waiting state - When thread is waiting for definite amount of time. object.wait(1000).
+6. Terminate state - When thread completes its task or any exception occured.
+
+
 2 ways to create threads :-
 	1. extends Thread class -
 		Starting thread - NewThreadClass t1 = new NewThreadClass();
@@ -99,6 +111,8 @@ Executor Framework :-
         resumes from this point but in background executors stays alive. so to kill or shut down executor threads we need to call
         shutdown method.
 
+    Example : org.example.threadpool.AwaitTerminationExample
+
 CountDown latch :-
      It helps if any thread wants to wait for other n number of threads to complete its tasks. When we create countDown latch we
      provide number then we pass this latch object to all those threads on which we are dependent. Then once thread completes their
@@ -114,6 +128,8 @@ CountDown latch :-
         Then another thread which is waiting for intrinsic lock of that object gets lock and enters synchronized block.
         When this thread call notify method on object who's intrinsic lock is getting used then other thread which is in wait state gets notification
         and that starts starts running once that other thread exits synchronized block.
+        When we use wait notify we are actually using resources efficiently otherwise ew can achieve same using synchronization also but
+        that time we will end-up tracking some flag in loop which will use cpu resource unnecessary.
 
     Example : org.example.producerconsumer.ProducerConsumerUsingQueue
 
@@ -131,3 +147,17 @@ CountDown latch :-
  DeadLock : Deadlock occurs when onc Thread has acquired lock on one resource and waiting for lock on another resource but at same time another
     thread have acquired lock on another resource for which first thread is waiting and this second thread also want lock on resource who's lock is
     taken by first resource.
+
+ Semaphore : Semaphore is used to acquire permit. The number provided to semaphore that many number of threads can
+    acquire permit and proceed further. If there is no available permit then threads will wait.
+
+    acquire : Used to acquire permit. If permit not available then thread will wait
+    release : Used to release permit. Then available permit count increases.
+    availablePermit : Used to check available permit count.
+
+    Example : org/example/semaphore
+
+ Interrupt : This method will invoke interrupted exception if thread calling thread is in sleep. If calling thread is running then
+    it will update interrupt flag of that thread.
+
+    Example : org.example.InterruptExample
