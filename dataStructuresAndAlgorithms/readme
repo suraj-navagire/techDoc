@@ -90,3 +90,17 @@ Progress:-
 
             Example :- https://www.programiz.com/dsa/trees,
                        com.datastructures.application.BinarySearchTreeApplication
+
+            Tree traversing Techniques :-
+                1. Inorder :-
+                    i. Traverse left subtree
+                    ii. Visit root node
+                    iii. Traverse right subtree
+                2. PreOrder :-
+                     i.   Visit root node
+                     ii.  Traverse left subtree
+                     iii. Traverse right subtree
+                3. PostOrder :-
+                    i.  Traverse left subtree
+                    ii. Traverse right subtree
+                    iii. Visit root node

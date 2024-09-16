@@ -30,5 +30,22 @@ public class BinarySearchTreeApplication {
 
 
 				System.out.println("Binary search tree application ended");
+
+				System.out.println("Inorder traversing : ");
+				binarySearchTree.inOrderTraversing();
+
+				System.out.println();
+				System.out.println("Preorder traversing : ");
+				binarySearchTree.preOrderTraversing();
+
+				System.out.println();
+				System.out.println("Postorder traversing : ");
+				binarySearchTree.postOrderTraversing();
+
+				System.out.println();
+				System.out.println("Height of Tree : "+ binarySearchTree.heightOfTree());
+
+				System.out.println();
+				System.out.println("Height of Node 6 : "+ binarySearchTree.heightOfNode(6));
 		}
 }
