@@ -43,6 +43,10 @@ public class BinarySearchTreeApplication {
 				binarySearchTree.postOrderTraversing();
 
 				System.out.println();
+				System.out.println("Breath First search traversing : ");
+				binarySearchTree.bFS();
+
+				System.out.println();
 				System.out.println("Height of Tree : "+ binarySearchTree.heightOfTree());
 
 				System.out.println();

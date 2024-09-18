@@ -130,6 +130,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
 				System.out.print(node.data+",");
 		}
 
+		/**
+		 * It returns number of edges from root node to farthest leaf node.
+		 *
+		 * @return
+		 */
 		public int heightOfTree(){
 				return heightOfNode(root);
 
@@ -216,6 +221,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 
 		/**
+		 * Returns number of edges between given node from root node.
+		 *
 		 * Need to minus 1 from given number to find number of edges
 		 *
 		 * @param node
@@ -341,4 +348,34 @@ public class BinarySearchTree<T extends Comparable<T>> {
 				return isSubtree(node);
 		}
 
+		public void bFS() {
+				if(root == null){
+						System.out.println("Tree is empty");
+				}
+
+				int heightOfTree = heightOfTree();
+
+				//Here we are passing which level of rows we need to print. Adding +1 in for loop condition since height is number of edegs
+				//but we need to traverse vertices. If we don't add +1 then we might miss last row
+				for(int i=1; i<=heightOfTree+1; i++){
+						bFS(root, i);
+				}
+		}
+
+		private void bFS(Node node, int i) {
+				if(i==1){
+						//This indicates we have reached desired level
+						System.out.print(node.data+",");
+						return;
+				}
+
+				if(node.left != null){
+						//Here we are decrementing i for making it 1 till level we want
+						bFS(node.left, i-1);
+				}
+
+				if(node.right != null){
+						bFS(node.right, i-1);
+				}
+		}
 }
