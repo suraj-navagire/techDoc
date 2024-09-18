@@ -88,9 +88,6 @@ Progress:-
                 3. AVL tree
                 4. B-tree
 
-            Example :- https://www.programiz.com/dsa/trees,
-                       com.datastructures.application.BinarySearchTreeApplication
-
             Tree traversing Techniques :-
                 1. Inorder (DFS):-
                     i. Traverse left subtree
@@ -105,3 +102,6 @@ Progress:-
                     ii. Traverse right subtree
                     iii. Visit root node
                 4. Breath first search :- Print node from left to right i.e. breath first from root node to leaf node
+
+            Example :- https://www.programiz.com/dsa/trees,
+                       com.datastructures.application.BinarySearchTreeApplication
