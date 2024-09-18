@@ -4,7 +4,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 		private Node root;
 
-		private class Node {
+		public class Node {
 				T data;
 				Node left;
 				Node right;
@@ -131,7 +131,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 
 		public int heightOfTree(){
-				return heightOfNode(root) -1 ;
+				return heightOfNode(root);
 
 		}
 
@@ -141,15 +141,25 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		 * @param node
 		 * @return
 		 */
-		private int depth(Node node){
+		private int height(Node node){
 				if(node == null){
 						return 0;
 				}
 
-				int leftHeight = depth(node.left);
-				int rightHeight = depth(node.right);
+				int leftHeight = -1;
+				if(node.left != null){
+						leftHeight = height(node.left);
+				}
 
-				int max = 0;
+				int rightHeight = -1;
+				if(node.right != null) {
+						rightHeight = height(node.right);
+				}
+
+
+				if(leftHeight == -1 && rightHeight == -1){
+						return 0;
+				}
 
 				if(leftHeight > rightHeight){
 						return leftHeight + 1;
@@ -164,8 +174,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		 * @param node
 		 * @return
 		 */
-		public int heightOfNode(Node node){
-				return depth(node) - 1;
+		private int heightOfNode(Node node){
+				return height(node);
 		}
 
 
@@ -186,9 +196,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
 				Node currentNode = root;
 
 				int height = 0;
+
+				boolean isNodePresent = false;
+
 				while (currentNode!=null){
 						if(currentNode.data.equals(node)){
 								height = heightOfNode(currentNode);
+								isNodePresent = true;
 						}
 
 						if(currentNode.data.compareTo(node) <0){
@@ -198,6 +212,133 @@ public class BinarySearchTree<T extends Comparable<T>> {
 						}
 				}
 
-				return height;
+				return isNodePresent ? height : -1;
 		}
+
+		/**
+		 * Need to minus 1 from given number to find number of edges
+		 *
+		 * @param node
+		 * @return
+		 */
+		public int depthOfNode(T node){
+				int height = depthOfNode(root, node);
+				return height != -1 ? height: -1;
+		}
+
+		/**
+		 * Returns number of vertices from root node to given node
+		 *
+		 * @param currentNode
+		 * @param node
+		 * @return
+		 */
+		private int depthOfNode(Node currentNode, T node){
+
+				if(currentNode == null) {
+						return  -1;
+				}
+
+				if(currentNode.data.compareTo(node) == 0){
+						return 0;
+				}
+
+				int leftDepth = depthOfNode(currentNode.left, node);
+				int rightDepth = depthOfNode(currentNode.right, node);
+
+				if(leftDepth != -1 || rightDepth != -1){
+						if(leftDepth != -1){
+								return leftDepth +1;
+						} else {
+								return rightDepth + 1;
+						}
+				} else {
+						return -1;
+				}
+
+		}
+
+
+		public boolean isSubtree(Node subtree){
+				if(subtree == null){
+						return  false;
+				}
+
+				return isSubtree(root, subtree);
+		}
+
+		private boolean isSubtree(Node tree, Node subtree){
+				if(tree == null) {
+						return false;
+				}
+
+				boolean isSubtree = false;
+				if(tree.data.equals(subtree.data)){
+						isSubtree = isIdentical(tree, subtree);
+				} else{
+						boolean isLeftSubtree = isSubtree(tree.left, subtree);
+						boolean isRightSubtree = isSubtree(tree.right, subtree);
+
+						isSubtree = isLeftSubtree || isRightSubtree;
+				}
+
+				return isSubtree;
+		}
+
+		/**
+		 * Check if both tree are same
+		 *
+		 * @param tree
+		 * @param subtree
+		 * @return
+		 */
+		private boolean isIdentical(Node tree , Node subtree){
+
+				//If both node are null means same
+				if(tree == null && subtree == null){
+						return true;
+				}
+
+				//If subtree node is not null but main tree node is null means it is not sub tree
+				if(tree == null && subtree!=null){
+						return false;
+				}
+
+				//If main tree node is not null but subtree node is null then its fine. It can be sub tree
+				if(tree != null && subtree == null){
+						return true;
+				}
+
+
+				boolean isLeftSubtreeIdentical = false;
+				boolean isRightSubtreeIdentical = false;
+
+				if(tree.data.equals(subtree.data)){
+						isLeftSubtreeIdentical = isIdentical(tree.left, subtree.left);
+						isRightSubtreeIdentical = isIdentical(tree.right, subtree.right);
+				} else{
+						return false;
+				}
+
+				return isLeftSubtreeIdentical && isRightSubtreeIdentical;
+		}
+
+
+		public boolean isSubtree(T[] data){
+				Node node =new Node();
+
+				node.data = data[0];
+
+				node.left = new Node();
+				node.right = new Node();
+
+				node.left.data = data[1];
+				node.right.data = data[2];
+
+				node.right.right = new Node();
+				node.right.right.data = data[3];
+
+				return isSubtree(node);
+		}
+
 }

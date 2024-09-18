@@ -47,5 +47,23 @@ public class BinarySearchTreeApplication {
 
 				System.out.println();
 				System.out.println("Height of Node 6 : "+ binarySearchTree.heightOfNode(6));
+
+				System.out.println();
+				System.out.println("Height of Node 11 : "+ binarySearchTree.heightOfNode(11));
+
+				System.out.println();
+				System.out.println("Height of Node 46 : "+ binarySearchTree.heightOfNode(46));
+
+				System.out.println();
+				System.out.println("Depth of Node 11 : "+ binarySearchTree.depthOfNode(11));
+
+				System.out.println();
+				System.out.println("Depth of Node 6 : "+ binarySearchTree.depthOfNode(6));
+
+				System.out.println();
+				System.out.println("Depth of Node 89 : "+ binarySearchTree.depthOfNode(89));
+
+				System.out.println();
+				System.out.println("Is sub tree : "+ binarySearchTree.isSubtree(new Integer[]{6, 4, 9, 11}));
 		}
 }
