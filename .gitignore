@@ -7,5 +7,6 @@ sparkTutorial/.idea
 sparkTutorial/src/main/resources/boringwords.txt
 sparkTutorial/src/main/resources/input.txt
 sparkTutorial/src/main/resources/input-spring.txt
+sparkTutorial/src/main/resources/inputData
 multithreading/target
 multithreading/.idea
