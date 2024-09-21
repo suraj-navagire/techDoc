@@ -22,5 +22,13 @@ Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
 
 4. When you use foreach method of RDD then we might get incorrect result in case of sorting. We might not get sorted result. It becuase
     foreach on RDD works different than forEach of List. When we do foreach on RDD driver program sends this function to worker nodes. Then worker nodes
-    runs this functions parallally on different partitions. Thats why we see unexpected outcome.
+    runs this functions parallally on different partitions. That's why we see unexpected outcome.
     If in case of sort we want to perform forEach then we should do on final result List instead of on RDD.
+
+5. Transformation vs action :- Transformations are just execution plan given to spark. Actions where spark starts operation.
+    E.g. transformation -> rdd.map(), rdd.filter(). rdd.flatmap().  actions -> rdd.collect(), rdd.take().
+
+    Narrow transformation :- Narrow transformations are those transformations where data dont get shuffled between partitions.
+    E.g rdd.filter() . In this filter operation each rdd can work independently without needing data of another partition.
+
+    Wide transformation :-

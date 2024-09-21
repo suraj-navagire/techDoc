@@ -3,6 +3,8 @@ This project is created to practice data structures and algorithms
 Learning path to be followed :-
 https://instabyte.io/p/dsa-master
 
+Data structures:-
+
 Progress:-
 1. Arrays -
             Array is collection similar data type stored in a contiguous memory location. It is a linear data structure. It is a static data structure with a fixed size.
@@ -105,3 +107,72 @@ Progress:-
 
             Example :- https://www.programiz.com/dsa/trees,
                        com.datastructures.application.BinarySearchTreeApplication
+
+--------------------------------
+
+Algorithms:-
+
+Progress :-
+1. Reservoir sampling -
+            This algorithm is used to randomly pick k elements from a large list. Usually this list is big enough that it will not fit into memory. So we need algorithm
+            through which only in one iteration we will be able to pick k elements with each element getting picked-up with probability k/n where k is number of elements
+            picked-up and n is total number of elements.
+
+            Case 1:- Select 1 element randomly from list(might be stream where we don't know size) where probability of i'th element getting selected is 1/n
+
+                int selectRandom(List arr){
+                    int randomNumber = -1;
+                    Random rand = new Random();
+                    int i=0;
+                    while(arr.hasNext()){
+                        i++;
+                        int random = rand.nextInt(i); //Within the range of i. This will return from 0 to i-1.
+                        int num = listIterator.next();
+
+                        //Probability of random number will be i-1 is 1/n.  Total number is n and range is 1 then probability will be 1/n
+                        if(random == (i-1)){
+                            randomNumber = num;
+                        }
+                    }
+
+                    return randomNumber;
+                }
+
+                proof :- p(A of i) getting selected is p(A is getting selected at i position ) * p(A is not getting selected at i+1, i+2,...n) position
+                        p(A of i) = 1/i * (1 - 1/i+1) * (1- 1/i+2) * ....* (1 - 1/n-1) * (1 - 1/n)
+                        p(A of i) = 1/i * (i/i+1) * (i+1/i+2) * ....* (n-2/n-1) * (n-1/n)
+                        p(A of i) = 1/i * (i/i+1) * (i+1/i+2) * ....* (n-2/n-1) * (n-1/n)
+                        p(A of i) = 1/n
+
+            Case 2 :-   Select k elements randomly from list(might be stream where we don't know size) where probability of i'th element getting selected is k/n
+
+                int[] selectRandomK(List arr, int k){
+                    int[] selectedRandomNumber = new int[k];
+
+                    for(int i=0;i<k;i++){
+                        selectedRandomNumber[i] = arr[i];
+                    }
+                    Random rand = new Random();
+
+                    //After this i will be i=k
+                    while(arr.hasNext()){
+                        int random = rand.nextInt(i); //Within the range of i. This will return from 0 to i-1.
+                        int num = listIterator.next();
+
+                        //Probability of random number will be less than k is k/n. Total number is n and range is k then probability will be k/n
+                        if(random < k){
+                            selectedRandomNumber[random] = num;
+                        }
+                    }
+
+                    return selectedRandomNumber;
+                }
+
+                proof :- p(A of i) getting selected is p(A is getting selected at i position ) * p(A is not getting selected at i+1, i+2,...n) position
+                          For first k element , p(A of i ) = 1;
+                          For k<i<n is ,(Note after this i will be k+1)
+                          p(A of i) = k/k+1 * (1 - k/k+2) * (1- k/k+3) * ....* (1 - k/n-1) * (1 - k/n)
+                          p(A of i) = k/k+1 * (2/k+2) * (3/k+3) * ....* (n-2/n-1) * (n-1/n)
+                          p(A of i) = k/n
+
+            Example : com.algorithms.ReservoirSampling
