@@ -28,7 +28,31 @@ Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
 5. Transformation vs action :- Transformations are just execution plan given to spark. Actions where spark starts operation.
     E.g. transformation -> rdd.map(), rdd.filter(). rdd.flatmap().  actions -> rdd.collect(), rdd.take().
 
-    Narrow transformation :- Narrow transformations are those transformations where data dont get shuffled between partitions.
+    Narrow transformation :- Narrow transformations are those transformations where data don't get shuffled between partitions.
     E.g rdd.filter() . In this filter operation each rdd can work independently without needing data of another partition.
 
-    Wide transformation :-
+    Wide transformation :- Wide transformations are those transformations where data gets shuffled between partitions.
+    E.g. rdd.groupByKey(); In this group by key operation data gets shuffled between rdd's so that one key data will gather in one partition.
+
+6. Stage in spark :- Stage is series of transformations that don't need shuffle. When there is a point where shuffle is needed spark creates new stage.
+       So we can say that when stage reach wide transformation it creates new stage.
+       Name of stage is the last operation name of that stage.
+
+7. Partitions in spark :- Partition in spark is a atomic block of data which resides at a single node at any given time. Partitions can run in parallel as no 2 partitions
+       are dependent at any given time. By default spark creates each partition with 32mb of data. If file size is 90mb then spark will create 3 partitions with size32mb,
+       32mb and 26mb.
+       If thread pool size 32 and we have 64 partitions then at a time 32 partitions can be run.
+
+8. Key skew :- Its situation where data gets populated in one partition and other partitions stays empty.
+       To solve this use salting technique. Read more when you actually face this problem.
+
+9. Job in spark :- Job in spark gets created when we call any action. Means if we call 2 actions then 2 jobs will get created. 2nd action will also start from last read or write
+        to memory. If no read write has happened between start to 1st action then 2nd action will starts its operation from start of the program i.e. start of the spark execution
+        plan. So its better to cache or persist the intermediate results so that new job will not start whole operation again. Use DAG to see which operations gets computed
+        repeatedly and cache result of that operation to avoid such repeated computing.
+        Example : org.example.SparkJobExample
+
+10. RDD :- Resilient Distributed Data. Resilient means if any node gets failed even then these data gets recalculated. Distributed means it can be distributed on multiple
+        nodes.
+
+11. Group by :- Group by is used to group data based on key. Group by works in 2 stages i.e. shuffle data i.e write and read and map it to based on key .

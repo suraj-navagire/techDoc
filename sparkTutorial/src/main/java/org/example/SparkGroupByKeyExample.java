@@ -12,6 +12,9 @@ import scala.Tuple2;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Group by works in 2 stages i.e. shuffle data and map it to based on key.
+ */
 public class SparkGroupByKeyExample {
 		public static void main(String[] args) {
 				System.out.println("SparkGroupByKeyExample started");
