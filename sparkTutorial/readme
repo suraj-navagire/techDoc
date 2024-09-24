@@ -60,7 +60,7 @@ Spark RDD section -
         Example : SparkJobExample
 
 10. RDD :- Resilient Distributed Data. Resilient means if any node gets failed even then these data gets recalculated. Distributed means it can be distributed on multiple
-        nodes.
+        nodes. RDD are immutable
 
 11. Group by :- Group by is used to group data based on key. Group by works in 2 stages i.e. shuffle data i.e write and read and map it to based on key .
 --------------------------
@@ -70,3 +70,12 @@ Spark sql section -
             Need spark-sql dependency along with spark core and other.
 
             Example present in : src/main/java/org/sql/example/*
+
+            Spark Sql Dataset supports all operations supported by RDD like filter, groupBy, map ....etc
+
+            Dataset are immutable like RDD on every step it returns new RDD or Dataset doesn't update existing one.
+
+1. function class : Spark sql provides function class which contains static methods which we can use in program. We can use static import to import this class so
+        that we can use static methods directly without using class name.
+
+        Example : org.sql.example.SparkSQLFunctionClassExample
