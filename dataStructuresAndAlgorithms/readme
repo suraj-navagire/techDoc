@@ -108,6 +108,29 @@ Progress:-
             Example :- https://www.programiz.com/dsa/trees,
                        com.datastructures.application.BinarySearchTreeApplication
 
+
+5. Stacks -
+            Stack is linear data structure which used to store and manage data, which follows last in first out(LIFO) or First in last out(FILO) order.
+
+            Operations supported by stack:-
+                1. Push : Adds element at top of the stack.
+                2. Pop : Removes and returns element presents at top of the stack.
+                3. Peek : Returns element present at top of the stack without removing it.
+                4. IsEmpty : Returns boolean true if stack is empty.
+                5. IsFull : Returns boolean true if stack is full if fixed size collection is used i.e. array.
+
+            Example : com.datastructures.application.StackArrayImplementationApplication,
+                        com.datastructures.application.StackLinkedListImplementationApplication
+
+6. Queues -
+            Queue is a linear data structure which used to store and manage data which follows first in first out (FIFO) or last in last out(LILO) order
+
+            Operations supported by queue :-
+                1. Enqueue : Adds element to the tail of the queue.
+                2. Dequeue : Removes and returns element from the head of the queue.
+                3. Peek : Returns element from the head of the queue.
+                4. isEmpty : Returns boolean true if queue is empty.
+                5. isFull : Returns boolean true if queue is full.
 --------------------------------
 
 Algorithms:-
