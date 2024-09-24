@@ -1,4 +1,4 @@
-package org.example;
+package org.rdd.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -9,9 +9,9 @@ import org.apache.spark.api.java.JavaSparkContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SparkMapExample {
+public class CountRDDElements {
 		public static void main(String[] args) {
-				System.out.println("Spark Map Example started");
+				System.out.println("Spark CountRDDElements Example started");
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
@@ -28,10 +28,17 @@ public class SparkMapExample {
 
 				JavaRDD<Integer> inputRDD = context.parallelize(inputData);
 
-				JavaRDD<Double> sqrtRDD = inputRDD.map(value -> Math.sqrt(value));
+				//Don't use this function to count on big data set as performance degrades.
+				//inputRDD.count()
 
-				sqrtRDD.foreach(value -> System.out.println(value));
+				//Use following map reduce instead.
 
-				System.out.println("SparkMapExample ended");
+				JavaRDD<Integer> transformedRDD = inputRDD.map(value -> 1);
+
+				Integer result = transformedRDD.reduce((value1, value2) -> value1 + value2);
+
+				System.out.println("Total number of count : " + result);
+
+				System.out.println("Spark CountRDDElements example ended");
 		}
 }

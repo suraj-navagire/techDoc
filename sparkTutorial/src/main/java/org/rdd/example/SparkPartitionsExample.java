@@ -1,4 +1,4 @@
-package org.example;
+package org.rdd.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -12,15 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Spark shuffling happens when there a wide transformation i.e. when data gets shuffled between partitions.
+ * In this example we are reading a file and creating a partitions. By default, spark allots 32mb of data to each partition.
  *
- * We can check this in DAG of spark UI. Visit localhost:4040 to see spark ui.
+ * If file size is 90mb then spark will create 3 partitions of size 32 , 32, 26 mb
  *
- * I have stopped program using scanner to see spark UI.
+ * Partitions can run in parallel depending upon number of thread in thread pool. If number of partitions are 64 and thread
+ * count in thread pool is 32 then only 32 partitions will run in parallel. Once current partitions gets completed by thread
+ * it will pick up next partition.
+ *
  */
-public class SparkShufflingExample {
+public class SparkPartitionsExample {
 		public static void main(String[] args) {
-				System.out.println("SparkShuffling Started :");
+				System.out.println("SparkPartitionsExample Started :");
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
@@ -56,6 +59,6 @@ public class SparkShufflingExample {
 
 				context.close();
 
-				System.out.println("SparkShuffling ended");
+				System.out.println("SparkPartitionsExample ended");
 		}
 }

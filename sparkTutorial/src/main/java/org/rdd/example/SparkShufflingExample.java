@@ -1,4 +1,4 @@
-package org.example;
+package org.rdd.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -12,17 +12,15 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * For very action spark creates new job. In this example we have provided 2 actions so spark will create 2 job.
+ * Spark shuffling happens when there a wide transformation i.e. when data gets shuffled between partitions.
  *
- * When new job gets created it starts computation from last write operation.
+ * We can check this in DAG of spark UI. Visit localhost:4040 to see spark ui.
  *
- * In following example count will start its computing from reading data i.e. shuffled, but this shuffled saved data won't be grouped.
- *
- *
+ * I have stopped program using scanner to see spark UI.
  */
-public class SparkJobExample {
+public class SparkShufflingExample {
 		public static void main(String[] args) {
-				System.out.println("SparkJobExample Started :");
+				System.out.println("SparkShuffling Started :");
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
@@ -38,8 +36,6 @@ public class SparkJobExample {
 						row -> new Tuple2<>(row.split(":")[0], row.split(":")[1]));
 
 				//At this point shuffle will take place
-				//Count action's job will start its operation from this point. As while doing group by it saves shuffled data.
-				// But this saved data is not grouped. So count action will read and group it again in its stage.
 				JavaPairRDD<String, Iterable<String>> groupRDD = logPairRDD.groupByKey();
 
 				JavaPairRDD<String, Long> keyCountRDD = groupRDD.mapToPair(row -> {
@@ -54,16 +50,12 @@ public class SparkJobExample {
 
 				result.forEach( row -> System.out.println(row));
 
-				Long count = keyCountRDD.count();
-
-				System.out.println("Count : "+count);
-
 				Scanner sc = new Scanner(System.in);
 				sc.nextLine();
 
 
 				context.close();
 
-				System.out.println("SparkJobExample ended");
+				System.out.println("SparkShuffling ended");
 		}
 }

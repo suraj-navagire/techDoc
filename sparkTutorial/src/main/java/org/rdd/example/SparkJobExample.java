@@ -1,4 +1,4 @@
-package org.example;
+package org.rdd.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -12,18 +12,17 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * In this example we are reading a file and creating a partitions. By default, spark allots 32mb of data to each partition.
+ * For very action spark creates new job. In this example we have provided 2 actions so spark will create 2 job.
  *
- * If file size is 90mb then spark will create 3 partitions of size 32 , 32, 26 mb
+ * When new job gets created it starts computation from last write operation.
  *
- * Partitions can run in parallel depending upon number of thread in thread pool. If number of partitions are 64 and thread
- * count in thread pool is 32 then only 32 partitions will run in parallel. Once current partitions gets completed by thread
- * it will pick up next partition.
+ * In following example count will start its computing from reading data i.e. shuffled, but this shuffled saved data won't be grouped.
+ *
  *
  */
-public class SparkPartitionsExample {
+public class SparkJobExample {
 		public static void main(String[] args) {
-				System.out.println("SparkPartitionsExample Started :");
+				System.out.println("SparkJobExample Started :");
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
@@ -39,6 +38,8 @@ public class SparkPartitionsExample {
 						row -> new Tuple2<>(row.split(":")[0], row.split(":")[1]));
 
 				//At this point shuffle will take place
+				//Count action's job will start its operation from this point. As while doing group by it saves shuffled data.
+				// But this saved data is not grouped. So count action will read and group it again in its stage.
 				JavaPairRDD<String, Iterable<String>> groupRDD = logPairRDD.groupByKey();
 
 				JavaPairRDD<String, Long> keyCountRDD = groupRDD.mapToPair(row -> {
@@ -53,12 +54,16 @@ public class SparkPartitionsExample {
 
 				result.forEach( row -> System.out.println(row));
 
+				Long count = keyCountRDD.count();
+
+				System.out.println("Count : "+count);
+
 				Scanner sc = new Scanner(System.in);
 				sc.nextLine();
 
 
 				context.close();
 
-				System.out.println("SparkPartitionsExample ended");
+				System.out.println("SparkJobExample ended");
 		}
 }

@@ -1,6 +1,5 @@
-package org.example;
+package org.rdd.example;
 
-import com.google.common.collect.Iterables;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -12,16 +11,13 @@ import scala.Tuple2;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Group by works in 2 stages i.e. shuffle data and map it to based on key.
- */
-public class SparkGroupByKeyExample {
+public class SparkPairRDD {
 		public static void main(String[] args) {
-				System.out.println("SparkGroupByKeyExample started");
+				System.out.println("SparkPairRDD started");
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
-				SparkConf conf = new SparkConf().setAppName("SparkGroupByKeyExample").setMaster("local[*]");
+				SparkConf conf = new SparkConf().setAppName("SparkPairRDD").setMaster("local[*]");
 
 				JavaSparkContext context = new JavaSparkContext(conf);
 
@@ -34,22 +30,22 @@ public class SparkGroupByKeyExample {
 
 				JavaRDD<String> inputRDD = context.parallelize(inputData);
 
-				JavaPairRDD<String, String> pairRDD = inputRDD.mapToPair(value -> {
+				JavaPairRDD<String, Long> pairRDD = inputRDD.mapToPair(value -> {
 						String[] val = value.split(":");
 
 						String level = val[0];
-						String msg = val[1];
 
-						return new Tuple2<>(level, msg);
+						return new Tuple2<>(level, 1L);
 				});
 
-				JavaPairRDD<String, Iterable<String>> groupByKeyRDD = pairRDD.groupByKey();
+				pairRDD.foreach(val -> System.out.println(val));
 
-				groupByKeyRDD.foreach(val -> System.out.println("key : "+ val._1+" count : "+ Iterables.size(val._2)));
+				JavaPairRDD<String, Long> count = pairRDD.reduceByKey((val1, val2) -> val1 + val2);
+
+				count.foreach(val -> System.out.println(val));
 
 				context.close();
 
-				System.out.println("SparkGroupByKeyExample ended");
-
+				System.out.println("SparkPairRDD ended");
 		}
 }

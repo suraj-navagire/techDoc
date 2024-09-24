@@ -1,4 +1,4 @@
-package org.example.courseranking;
+package org.rdd.example.courseranking;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

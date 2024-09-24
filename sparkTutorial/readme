@@ -3,10 +3,17 @@ Refer udemy course for this spark tutorial.
 Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
                 https://spark.apache.org/docs/latest/
 
+Spark RDD section -
+            Resilient Distributed Data. Resilient means if any node gets failed even then these data gets recalculated. Distributed means it can be distributed on multiple nodes
+
+            For Spark RDD we don't need spark-sql dependency.
+
+            Examples present in : src/main/java/org/rdd/example/*
+
 1. java.io.IOException: Could not locate executable null\bin\winutils.exe in the Hadoop binaries
     -   Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
         eg: System.setProperty("hadoop.home.dir","C:\\hadoop"); where hadoop folder contains bin folder and bin contains winutils.exe
-        Refer example :- org.example.SparkTextFileRead
+        Refer example :- SparkTextFileRead
 
 2. Caused by: java.lang.ClassNotFoundException: org.apache.hadoop.crypto.key.KeyProviderTokenIssuer -
     -   Added following dependency
@@ -18,7 +25,7 @@ Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
 
 3. Caused by: java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset.
     -  Download winutils.exe and keep in folder. Add system property "hadoop.home.dir" to folder containing bin.
-       Refer example :- org.example.SparkTextFileRead
+       Refer example :- SparkTextFileRead
 
 4. When you use foreach method of RDD then we might get incorrect result in case of sorting. We might not get sorted result. It becuase
     foreach on RDD works different than forEach of List. When we do foreach on RDD driver program sends this function to worker nodes. Then worker nodes
@@ -50,9 +57,16 @@ Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
         to memory. If no read write has happened between start to 1st action then 2nd action will starts its operation from start of the program i.e. start of the spark execution
         plan. So its better to cache or persist the intermediate results so that new job will not start whole operation again. Use DAG to see which operations gets computed
         repeatedly and cache result of that operation to avoid such repeated computing.
-        Example : org.example.SparkJobExample
+        Example : SparkJobExample
 
 10. RDD :- Resilient Distributed Data. Resilient means if any node gets failed even then these data gets recalculated. Distributed means it can be distributed on multiple
         nodes.
 
 11. Group by :- Group by is used to group data based on key. Group by works in 2 stages i.e. shuffle data i.e write and read and map it to based on key .
+--------------------------
+
+Spark sql section -
+            Spark sql is newer version of spark  which comes with rich set of API. It works on Dataset not on RDD but dataset is internally works on RDD only.
+            Need spark-sql dependency along with spark core and other.
+
+            Example present in : src/main/java/org/sql/example/*

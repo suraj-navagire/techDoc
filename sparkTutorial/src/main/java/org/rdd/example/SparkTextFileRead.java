@@ -1,4 +1,4 @@
-package org.example;
+package org.rdd.example;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

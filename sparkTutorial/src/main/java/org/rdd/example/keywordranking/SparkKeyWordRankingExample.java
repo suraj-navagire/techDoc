@@ -1,4 +1,4 @@
-package org.example.keywordranking;
+package org.rdd.example.keywordranking;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

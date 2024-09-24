@@ -8,6 +8,7 @@ Data structures:-
 Progress:-
 1. Arrays -
             Array is collection similar data type stored in a contiguous memory location. It is a linear data structure. It is a static data structure with a fixed size.
+            Array.length method gives size of array not number of elements inserted in array.
             Operations :-
                 1. Traversal - Visiting each element of an array in a specific order [sequential or reversal].
                 2. Insertion - Adding new element to an array at a specific index.
@@ -131,6 +132,21 @@ Progress:-
                 3. Peek : Returns element from the head of the queue.
                 4. isEmpty : Returns boolean true if queue is empty.
                 5. isFull : Returns boolean true if queue is full.
+
+            Example : com.datastructures.application.QueueArrayImplementationApplication
+                        com.datastructures.application.QueueLinkedListImplementationApplication
+
+7. Heaps (Priority queues) -
+            Heap is a binary tree data structure which satisfies heap property for every node.
+
+            Types of heap :-
+                1. Max heap : In this type of heap every node is greater than or equal to its children. So in type of heap root contains maximum value.
+                2. Min heap : In this type of heap every node is less than or equal to its children. So in this type of heap root contains minimum value.
+
+            Operations supported by heap :-
+                1. Insert : Add new element to heap maintaining heap property.
+                2. Extract min/max : Removes maximum or minimum element from the heap and return it.
+                3. Heapify : Converts an arbitrary binary tree into a heap.
 --------------------------------
 
 Algorithms:-

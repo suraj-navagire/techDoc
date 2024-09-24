@@ -1,4 +1,4 @@
-package org.example.keywordranking;
+package org.rdd.example.keywordranking;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
