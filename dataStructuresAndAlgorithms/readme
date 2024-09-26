@@ -271,7 +271,7 @@ Progress :-
             Example : com.algorithms.ReservoirSampling
 
 
-2. Heap sort -
+2. Heap Sort -
             Check Heap section present under Data Structure above.
             Steps for heap sort :-
                 1. Heapify given array/tree. To heapify each element it takes lon N time. So to heapify entire array with size N it will take -> N log N
