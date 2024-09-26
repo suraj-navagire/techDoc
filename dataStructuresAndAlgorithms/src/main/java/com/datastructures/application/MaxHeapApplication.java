@@ -44,5 +44,26 @@ public class MaxHeapApplication {
 
 				System.out.println();
 
+				System.out.println("Heapify following tree : ");
+
+				Integer[] inputTree = new Integer[n];
+				for(int i=0;i<n;i++){
+						int number = ran.nextInt(100);
+						System.out.print(number+",");
+						inputTree[i] = number;
+				}
+				maxHeap.heapify(inputTree);
+				System.out.println();
+				for(int i=0;i<n/2;i++){
+						int leftChildIndex = (2 *i ) +1;
+						int rightChildIndex = (2 * i) + 2;
+
+						if(rightChildIndex >= n){
+								System.out.print(inputTree[i] +" -> "+inputTree[leftChildIndex]);
+						} else{
+								System.out.print(inputTree[i] +" -> "+inputTree[leftChildIndex]+" ,"+inputTree[rightChildIndex]);
+						}
+						System.out.println();
+				}
 		}
 }

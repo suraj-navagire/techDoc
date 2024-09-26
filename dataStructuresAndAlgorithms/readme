@@ -114,6 +114,7 @@ Progress:-
             Example :- https://www.programiz.com/dsa/trees,
                        com.datastructures.application.BinarySearchTreeApplication
                        com.datastructures.application.BinaryTreeArrayImplementationExample
+                       com.datastructures.application.MaxHeapApplication
 
 
 5. Stacks -
@@ -193,7 +194,9 @@ Progress:-
                         - When we dequeue element from heap then we will get max or min depending upon heap, While returning and deleting this element we adjust tree
                          to satisfy heap property like "Delete " operation.
                         - Every time we do queue we get highest priority element.
+                        - Use com.datastructures.application.MaxHeap class and use insert method as enqueue and extractMax as dequeue.
 
+                Example :- com.datastructures.application.MaxHeapApplication
 
 
 
@@ -269,3 +272,4 @@ Progress :-
 
 2. Heap sort -
             Check Heap section present under Data Structure above.
+

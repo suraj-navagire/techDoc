@@ -11,6 +11,13 @@ public class MaxHeap<T extends Comparable> {
 				this.currentIndex = 0;
 		}
 
+		public void heapify(T[] inputTree){
+				int size = inputTree.length;
+				for(int i=size-1;i>=0;i--){
+						compareChildrenAndAdjust(i, inputTree);
+				}
+		}
+
 		public T extractMax(){
 				if(isEmpty()){
 						throw new RuntimeException("Cannot extract element as heap is empty");
@@ -21,7 +28,7 @@ public class MaxHeap<T extends Comparable> {
 				heap[0] = heap[currentIndex-1];
 				heap[currentIndex-1] = null;
 
-				compareChildrenAndAdjust(0);
+				compareChildrenAndAdjust(0, heap);
 
 				currentIndex--;
 
@@ -30,19 +37,19 @@ public class MaxHeap<T extends Comparable> {
 		}
 
 
-		private void compareChildrenAndAdjust(int index){
-				T element = (T) heap[index];
+		private void compareChildrenAndAdjust(int index, Object[] inputHeap){
+				T element = (T) inputHeap[index];
 
 				int leftChildIndex = getLeftChildIndex(index);
 				int rightChildIndex = getRightChildIndex(index);
 				T leftChild = null;
-				if(leftChildIndex < heap.length){
-						leftChild = (T) heap[leftChildIndex];
+				if(leftChildIndex < inputHeap.length){
+						leftChild = (T) inputHeap[leftChildIndex];
 				}
 
 				T rightChild = null;
-				if(rightChildIndex < heap.length){
-						rightChild = (T) heap[rightChildIndex];
+				if(rightChildIndex < inputHeap.length){
+						rightChild = (T) inputHeap[rightChildIndex];
 				}
 
 				if(leftChild == null && rightChild == null){
@@ -51,18 +58,18 @@ public class MaxHeap<T extends Comparable> {
 
 				if(leftChild != null && rightChild == null){
 						if(leftChild.compareTo(element) > 0){
-								swap(index, leftChildIndex);
+								swap(index, leftChildIndex, inputHeap);
 								index = leftChildIndex;
-								compareChildrenAndAdjust(index);
+								compareChildrenAndAdjust(index, inputHeap);
 						}
 						return;
 				}
 
 				if(leftChild == null && rightChild != null){
 						if(rightChild.compareTo(element) > 0){
-								swap(index, rightChildIndex);
+								swap(index, rightChildIndex, inputHeap);
 								index = rightChildIndex;
-								compareChildrenAndAdjust(index);
+								compareChildrenAndAdjust(index, inputHeap);
 						}
 						return;
 				}
@@ -70,15 +77,15 @@ public class MaxHeap<T extends Comparable> {
 
 				if(leftChild.compareTo(rightChild) > 0){
 						if(leftChild.compareTo(element) > 0){
-								swap(index, leftChildIndex);
+								swap(index, leftChildIndex, inputHeap);
 								index = leftChildIndex;
-								compareChildrenAndAdjust(index);
+								compareChildrenAndAdjust(index, inputHeap);
 						}
 				} else {
 						if(rightChild.compareTo(element) > 0){
-								swap(index, rightChildIndex);
+								swap(index, rightChildIndex, inputHeap);
 								index = rightChildIndex;
-								compareChildrenAndAdjust(index);
+								compareChildrenAndAdjust(index, inputHeap);
 						}
 				}
 		}
@@ -108,17 +115,17 @@ public class MaxHeap<T extends Comparable> {
 				T parentElement = (T) heap[parentIndex];
 
 				if(parentElement.compareTo(element) < 0){
-						swap(parentIndex, index);
+						swap(parentIndex, index, heap);
 						index = parentIndex;
 
 						compareParentAndAdjustHeap(index);
 				}
 		}
 
-		private void swap(int index1, int index2){
-				T temp = (T) heap[index1];
-				heap[index1] = heap[index2];
-				heap[index2] = temp;
+		private void swap(int index1, int index2, Object[] inputHeap){
+				T temp = (T) inputHeap[index1];
+				inputHeap[index1] = inputHeap[index2];
+				inputHeap[index2] = temp;
 		}
 
 		private int getParentIndex(int childIndex){
