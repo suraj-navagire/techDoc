@@ -197,6 +197,7 @@ Progress:-
                         - Use com.datastructures.application.MaxHeap class and use insert method as enqueue and extractMax as dequeue.
 
                 Example :- com.datastructures.application.MaxHeapApplication
+                    https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
 
 
 
@@ -272,4 +273,11 @@ Progress :-
 
 2. Heap sort -
             Check Heap section present under Data Structure above.
+            Steps for heap sort :-
+                1. Heapify given array/tree. To heapify each element it takes lon N time. So to heapify entire array with size N it will take -> N log N
+                2. Iterate N times and extract element from root i.e. 0 index and put it on current last index. For each extraction it will take log N time
+                    So for entire it will take N log N
+                3. Total time -> N log N + N log N (i.e. step1 and step 2 time ) => 2 N log N => O(NlogN)
 
+            Example :- com.algorithms.HeapSortApplication
+                        https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
