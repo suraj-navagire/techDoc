@@ -106,8 +106,14 @@ Progress:-
                     iii. Visit root node
                 4. Breath first search :- Print node from left to right i.e. breath first from root node to leaf node
 
+            Binary Tree representation using array :-
+                Root location = 0;
+                Left children of i = 2*i + 1
+                Right children of i = 2*1 + 2
+                Parent of i = (i-1)/2
             Example :- https://www.programiz.com/dsa/trees,
                        com.datastructures.application.BinarySearchTreeApplication
+                       com.datastructures.application.BinaryTreeArrayImplementationExample
 
 
 5. Stacks -
@@ -147,6 +153,50 @@ Progress:-
                 1. Insert : Add new element to heap maintaining heap property.
                 2. Extract min/max : Removes maximum or minimum element from the heap and return it.
                 3. Heapify : Converts an arbitrary binary tree into a heap.
+
+            Algorithm (Max heap)-
+                1. Insert :
+                    Steps :- 1. Insert element at last position.
+                             2. Compare it with its parent .
+                             3. If element is greater than parent swap it.
+                             4. Keep performing steps from step 2 till no more swap needed or element reaches 0 index.
+
+                2. Delete (Extract Max) :
+                    Steps :- 1. Remove element from 0 index which is root node. This node is max node.
+                             2. Take last index element and put it in 0 index.
+                             3. Now compare this swapped element with its children.
+                             4. First compare both the children with each other. Select maximum element. Then compare this max element with swapped element.
+                             5. If swapped element is less than selected element then swap.
+                             6. Keep performing steps from step 3 till we reach state that there is no more swap needed.
+                             7. Return removed element in step 1.
+
+                3. Heapify : Heapify is a process of converting given binary tree into a heap.
+                    Steps :- 1. Start from last element to 0 element
+                             2. See if children are present for that current element.
+                             3. If children are present then compare both the children and find max element.
+                             4. Compare that max element with current element.
+                             5. If children is grater then swap.
+                             6. Keep performing steps from 2 till we reach state that there is no more swap needed and we reach index 0.
+
+                4. Heap sort : We can use deletion of element process for sorting. Whatever element we will delete we will put it at recently vacant location.
+                    Steps :- 1. lastIndex = currentLastIndex;
+                             2. Remove element from 0 index.
+                             2. Take element from lastIndex and put it at 0 index.
+                             3. Now keep removed element from step 2 at lastIndex location.
+                             4. lastIndex--;
+                             5. Now follow "Delete" algorithm present above to adjust elements position present at 0 index. Follow from step 3 of "Delete algorithm".
+                             6. Keep performing steps from step 2 till we reach where lastIndex = 0;
+                             7. By doing this we will make array sorted in ascending order.
+
+                5. Priority queues : Priority queue is nothing but heap. Depending upon application. If less value means highest priority then use min heap.
+                        If max value means highest priority then use max heap.
+                        - When we dequeue element from heap then we will get max or min depending upon heap, While returning and deleting this element we adjust tree
+                         to satisfy heap property like "Delete " operation.
+                        - Every time we do queue we get highest priority element.
+
+
+
+
 --------------------------------
 
 Algorithms:-
@@ -215,3 +265,7 @@ Progress :-
                           p(A of i) = k/n
 
             Example : com.algorithms.ReservoirSampling
+
+
+2. Heap sort -
+            Check Heap section present under Data Structure above.

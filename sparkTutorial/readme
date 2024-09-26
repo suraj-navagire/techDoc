@@ -2,6 +2,7 @@ Refer udemy course for this spark tutorial.
 
 Documentation :- https://spark.apache.org/docs/latest/rdd-programming-guide.html
                 https://spark.apache.org/docs/latest/
+                https://spark.apache.org/docs/latest/api/sql/index.html
 
 Spark RDD section -
             Resilient Distributed Data. Resilient means if any node gets failed even then these data gets recalculated. Distributed means it can be distributed on multiple nodes
@@ -79,3 +80,12 @@ Spark sql section -
         that we can use static methods directly without using class name.
 
         Example : org.sql.example.SparkSQLFunctionClassExample
+
+2. SQL function : Using this function we can use sql syntax on dataset like select, from, where , order by, group by, aggregating functions, date formatting, etc.
+        Example : org.sql.example.SparkSQLFullSyntax
+
+3. Creating Dataset / Dataframe : We can create Dataset of Row from In-memory list.
+        We can create row using RowFactory.create
+        Example : org.sql.example.SparkSQLCreateDatasetFromList
+
+4. Aggregating / Grouping functions : While using group by we have to use aggregating on column which is not part of grouping
