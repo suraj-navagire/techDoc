@@ -1,4 +1,6 @@
-package com.algorithms;
+package com.algorithms.application;
+
+import com.algorithms.HeapSort;
 
 import java.util.Random;
 

@@ -197,6 +197,7 @@ Progress:-
                         - Use com.datastructures.application.MaxHeap class and use insert method as enqueue and extractMax as dequeue.
 
                 Example :- com.datastructures.application.MaxHeapApplication
+                    com.problems.PrintMaxKElementHEAP
                     https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
 
 
@@ -279,5 +280,5 @@ Progress :-
                     So for entire it will take N log N
                 3. Total time -> N log N + N log N (i.e. step1 and step 2 time ) => 2 N log N => O(NlogN)
 
-            Example :- com.algorithms.HeapSortApplication
+            Example :- com.algorithms.application.HeapSortApplication
                         https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
