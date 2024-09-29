@@ -118,6 +118,7 @@ public class UndirectedUnweightedGraphTraversal {
 		public static void printAllPath(List<Edge>[] graph, int currentNode, int targetNode, boolean[] visitedNodes, String path){
 				if(currentNode == targetNode){
 						System.out.println(path);
+						return;
 				}
 
 				for(int i=0;i<graph[currentNode].size();i++){
