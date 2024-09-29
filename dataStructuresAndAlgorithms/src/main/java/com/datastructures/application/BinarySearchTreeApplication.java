@@ -47,6 +47,10 @@ public class BinarySearchTreeApplication {
 				binarySearchTree.bFS();
 
 				System.out.println();
+				System.out.println("Breath First search traversing using queue : ");
+				binarySearchTree.bFSUsingQueue();
+
+				System.out.println();
 				System.out.println("Height of Tree : "+ binarySearchTree.heightOfTree());
 
 				System.out.println();

@@ -1,5 +1,8 @@
 package com.datastructures;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BinarySearchTree<T extends Comparable<T>> {
 
 		private Node root;
@@ -376,6 +379,33 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
 				if(node.right != null){
 						bFS(node.right, i-1);
+				}
+		}
+
+		public void bFSUsingQueue(){
+				if(root == null){
+						return;
+				}
+
+				Queue<Node> queue = new LinkedList<>();
+
+				queue.add(root);
+
+				while (!queue.isEmpty()){
+						Node currentNode = queue.poll();
+
+						System.out.print(currentNode.data+",");
+
+						Node leftNode = currentNode.left;
+						Node rightNode = currentNode.right;
+
+						if(leftNode != null){
+								queue.add(leftNode);
+						}
+
+						if(rightNode != null){
+								queue.add(rightNode);
+						}
 				}
 		}
 }

@@ -200,7 +200,49 @@ Progress:-
                     com.problems.PrintMaxKElementHEAP
                     https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
 
+8. Graphs -
+            Graph is  a non linear data structure consists of nodes and edges. Different nodes are connected by edges to indicate relationship
+            between them. Nodes are also called Vertices.
+                Edges :- Can be uni directional or bi directional/un-directional. Edges can contain weights.
 
+            Operations on graphs :
+                1. Insertion of vertices/edges in the graph
+                2. Deletion of vertices/edges in the graph
+                3. Searching on graphs
+                4. Traversal of graphs
+                5. Shortest path from source to destination
+                6. Minimum spanning tree : Find minimum weight edge to connect all
+
+            Types of Graphs :
+                1. Directed graphs :- All edges are unidirectional.
+                2. Undirected graphs : Edges with no direction
+                3. Weighted graphs : In this graph edges has weights.
+                4. Unweighted graphs : In this graph edges doesn't have weights.
+
+            Storing / Creating graphs :
+                1. Adjacency list :- Use less space compared with adjacency matrix as this implementation stores only required edges information.
+                        ArrayList<Edge>[] graph = new ArrayList[v];
+                        graph[0].add(new Edge(0,2)); //This stores edges of vertex 0.
+
+                        Example - com.datastructures.graphs.UndirectedUnweightedGraph, com.datastructures.graphs.UndirectedWeightedGraph
+                2. Adjacency matrix :- Use more space as this implementation store data of edges which is not required i.e. edges which not present.
+                        int[v][v] = new int[v][v];
+                        int[v][i] = 1 or 0 // stores 1 if link is present else 0. Because of this we have to store 0 even if link not present which is unnecessary space wastage.
+                3. Edge list :- Used in minimum spanning tree or sorting of edges.
+                4. 2D matrix (Implicit graph) :- Used to find shortest path. Uses 2D array to store data.
+
+            Print all vertex :- com.datastructures.graphs.UndirectedUnweightedGraph.printNeighbourOfVertex, com.datastructures.graphs.UndirectedWeightedGraph.printNeighbourOfVertex
+
+            BFS :- com.datastructures.graphs.UndirectedUnweightedGraphTraversal.bfs, com.datastructures.graphs.UndirectedUnweightedDisjointGraphTraversal.bfs
+
+            DSF :- com.datastructures.graphs.UndirectedUnweightedGraphTraversal.bfs, com.datastructures.graphs.UndirectedUnweightedDisjointGraphTraversal.bfs
+
+            Print all path from source to destination :- com.datastructures.graphs.UndirectedUnweightedGraphTraversal.printAllPath
+
+            Cycle detection :- com.datastructures.graphs.CycleDetectionInGraph
+
+            Example : dataStructuresAndAlgorithms/src/main/java/com/datastructures/graphs
+                      https://www.youtube.com/watch?v=59fUtYYz7ZU
 
 --------------------------------
 
@@ -282,3 +324,20 @@ Progress :-
 
             Example :- com.algorithms.application.HeapSortApplication
                         https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
+3. BFS -
+            BFS is nothing but breath first search/traversal algorithm. It helps us to traverse neighbours. It visits immediate nodes first.
+            then it visits those nodes immediate nodes first. In this way it traverse level wise.
+
+            If 0 -> 1, 2    1->3,4    2->5,6    3->7,8
+            For above example BFS will visit as follows :- 0,   1,2,    3,4,5,6,    7,8
+
+            Example : com.datastructures.application.BinarySearchTreeApplication
+
+4. DFS -
+            DFS is nothing but depth first search/traversal algorithm. It helps us to traverse neighbours. It first completes one neighbour links till leaf then
+            it jumps to next neighbour. In this way it traverse vertically down first then it comes up then goes down again.
+
+            If 0 -> 1, 2    1->3,4    2->5,6    3->7,8
+            For above example DFS will visit as follows :- 0,1,3,7,8,   4,  2,5,6
+
+            Example : com.datastructures.application.BinarySearchTreeApplication

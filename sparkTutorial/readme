@@ -89,3 +89,6 @@ Spark sql section -
         Example : org.sql.example.SparkSQLCreateDatasetFromList
 
 4. Aggregating / Grouping functions : While using group by we have to use aggregating on column which is not part of grouping
+
+5. Pivot Table : We can use pivot table when we want to do grouping based on 2 columns.
+        Example : org.sql.example.SparkSQLPivotExample
