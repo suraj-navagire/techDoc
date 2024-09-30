@@ -237,9 +237,20 @@ Progress:-
 
             DSF :- com.datastructures.graphs.UndirectedUnweightedGraphTraversal.bfs, com.datastructures.graphs.UndirectedUnweightedDisjointGraphTraversal.bfs
 
-            Print all path from source to destination :- com.datastructures.graphs.UndirectedUnweightedGraphTraversal.printAllPath
+            Print all path from source to destination :- Using dfs. com.datastructures.graphs.UndirectedUnweightedGraphTraversal.printAllPath
 
-            Cycle detection :- com.datastructures.graphs.CycleDetectionInGraph
+            Cycle detection :-
+                    1. Undirected graph :- we can use DFS, BFS, Disjoint set.
+                    2. Directed graph :- We can use DFS, BFS and topological sort.
+                    com.datastructures.graphs.CycleDetectionInGraphUsingDFS
+
+            Topological sorting :- Used on directed acyclic graph(DAG). It is a linear order of vertices such that for every directed edge u->v, vertex u comes before v in the order.
+                    Topological sorted order shows the dependency sequence.
+                    com.datastructures.graphs.TopologicalSorting
+
+            DijKstra's Algorithm (Shorted path of all nodes from source) :- Used to shortest path to all noeds from source.
+                    com.datastructures.graphs.DijkstrasAlgorithm
+
 
             Example : dataStructuresAndAlgorithms/src/main/java/com/datastructures/graphs
                       https://www.youtube.com/watch?v=59fUtYYz7ZU
