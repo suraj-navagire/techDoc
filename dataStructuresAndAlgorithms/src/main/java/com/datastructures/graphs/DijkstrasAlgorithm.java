@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
  *
  * This is greedy algorithm which means at every step it compares previously stored values.
  *
- * It works on directed weighted graphs.
+ * It works on weighted graphs with +ve values. It fails in -ve values of weight.
  *
  * It uses BFS approach. Immediate nodes gets visited first.
  *

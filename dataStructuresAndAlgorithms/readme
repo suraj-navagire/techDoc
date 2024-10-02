@@ -248,9 +248,22 @@ Progress:-
                     Topological sorted order shows the dependency sequence.
                     com.datastructures.graphs.TopologicalSorting
 
-            DijKstra's Algorithm (Shorted path of all nodes from source) :- Used to shortest path to all noeds from source.
+            Dijkstra's Algorithm (Shorted path of all nodes from source) :- Used to shortest path to all nodes from source. for directed and undirected. Don't work for -ve weight.
                     com.datastructures.graphs.DijkstrasAlgorithm
 
+            Bellman ford algorithm :- Used to find shortest path for all the nodes from source vertex. It used in +ve as well as-ve weights. It takes more time than
+                    Dijkstra's algorithm. So use this only for -ve values weights.
+                    BellmanFord algorithm don't work if negative cycle present in graph. i.e. if cycle is there and sum of their weight is -ve then this algorithm won't work.
+
+                    Example : com.datastructures.graphs.BellmanFordAlgorithm
+
+            Minimum Spanning Tree (MST) :- Minimum spanning tree is a sub graph of a undirected, connected, weighted graph which has following properties.
+                    1. It contains all vertices of main graph.
+                    2. All vertices are connected.
+                    3. Contains no cycles.
+                    4. Total edge weight is minimum.
+
+                    Example :- com.datastructures.graphs.PrimsAlgorithm
 
             Example : dataStructuresAndAlgorithms/src/main/java/com/datastructures/graphs
                       https://www.youtube.com/watch?v=59fUtYYz7ZU
@@ -352,3 +365,30 @@ Progress :-
             For above example DFS will visit as follows :- 0,1,3,7,8,   4,  2,5,6
 
             Example : com.datastructures.application.BinarySearchTreeApplication
+
+5. Topological sorting -
+            Used on directed acyclic graph(DAG). It is a linear order of vertices such that for every directed edge u->v, vertex u comes before v in the order.
+            Topological sorted order shows the dependency sequence.
+
+            Example :- com.datastructures.graphs.TopologicalSorting
+
+6. Dijkstra's Algorithm (Shorted path of all nodes from source) -
+            Used to shortest path to all nodes from source. It works on weighted graphs with +ve values. It fails in -ve values of weight.
+
+            Example :- com.datastructures.graphs.DijkstrasAlgorithm
+
+7. Bellman ford algorithm (Shorted path of all nodes from source) -
+            Used to find shortest path for all the nodes from source vertex. It used in +ve as well as-ve weights. It takes more time than
+            Dijkstra's algorithm. So use this only for -ve values weights.
+            BellmanFord algorithm don't work if negative cycle present in graph. i.e. if cycle is there and sum of their weight is -ve then this algorithm won't work.
+
+            Example : com.datastructures.graphs.BellmanFordAlgorithm
+
+8. Minimum Spanning Tree (MST) (Prim's algorithm)-
+            Minimum spanning tree is a sub graph of a undirected, connected, weighted graph which has following properties.
+                1. It contains all vertices of main graph.
+                2. All vertices are connected.
+                3. Contains no cycles.
+                4. Total edge weight is minimum.
+
+            Example :- com.datastructures.graphs.PrimsAlgorithm
