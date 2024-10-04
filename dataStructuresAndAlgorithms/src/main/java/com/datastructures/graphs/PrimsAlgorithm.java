@@ -60,6 +60,16 @@ public class PrimsAlgorithm {
 
 				System.out.println("PrimsAlgorithm started");
 
+				/**
+				 *       0
+				 *  '10/ | \ '15
+				 *   /   |  \
+				 * 1  '30|   2
+				 *   \   |  / '50
+				 * '40 \ | /
+				 *       3
+				 *
+				 */
 				int v = 4;
 
 				List<Edge>[] graph = new List[v];

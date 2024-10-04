@@ -4,6 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Used on directed acyclic graph(DAG). It is a linear order of vertices such that for every directed edge u->v, vertex u comes before v in the order.
+ *
+ * Topological sorted order shows the dependency sequence.
+ *
+ * It uses DFS approach.
+ *
+ * Algorithm :-
+ * 1. Create boolean array to store visited vertices.
+ * 2. Iterate on all vertices
+ * 		3. Iterate on all edges of vertex using DFS if destination vertex is unvisited.
+ * 		4. Put current vertex value in stack while leaving out of recursion of DFS.
+ * 5. Take out element of from stack and print. This will be Topological order of given graph.
+ */
 public class TopologicalSorting {
 
 		private static class Edge{

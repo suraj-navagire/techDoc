@@ -1,0 +1,61 @@
+SQL Performance improvement/tunning :-
+
+		SQL performance tunning is a process of enhancing sql queries to speed up sql server perforamance. So that sql qeuries will spend less time to produce desired output.
+		
+	Factors affetcing SQL perforamnce :
+		1. Table size : If table size is more than qeury will take more time.
+		2. Joins : Query will take more time if it joins 2 tables and returned out put contains more rows.
+		3. Aggregation : Adding several rows together to create a single row takes more processing than retrieving single rows individually
+		4. Other users executing queries : More the number of queries runnig on server at a time, more time it will take to process it.
+		
+	Ways to find slow sql query :
+		1. Create an execution plan : In Oracle sql developer use explain plan (beside run button) it will give execution plan of query.
+		2. Monitor resource usage : Monitor resource usage of server.
+
+	Ways to tune perforamance :
+		1.	Select fields instead of selecting * :
+			Inefficient: Select * from GeeksTable;
+			Efficient: SELECT FirstName, LastName, Address, City, State, Zip FROM GeeksTable;
+
+		2.	Minimize the use of wildcard characters : If wild card is used then the database has to scan entire table to read relevent data.
+			SELECT * FROM customers WHERE last_name_city LIKE 'P%';
+	
+		3.	Increase Query Performance with Indexes :
+			Use indexes for coulmn or group of coulmns used in where , join and order by clause.
+			
+			SELECT * FROM orders WHERE customer_number = 2154;
+			CREATE INDEX idx_orders_customer_number ON orders (customer_id);
+		
+		4.	Use appropriate data types :
+			If we use int type to store numeric values, then it will run faster as compared with text data type
+			
+		5.	Avoid subqueries :
+			Avoid subqueries especially used in where or having clause.
+			
+			For example, consider a query that finds all customers who have placed an order in the last 30 days. The following query uses a subquery to find all order IDs within the last 30 days:
+			Costly query -
+				SELECT * FROM customers WHERE customer_id IN (SELECT customer_id FROM orders WHERE order_date >= DATEADD(day, -30, GETDATE()));
+				
+			Tunned query -
+				SELECT DISTINCT c.* FROM customers c JOIN orders o ON c.customer_id = o.customer_id WHERE o.order_date >= DATEADD(day, -30, GETDATE());
+		
+		6.  Use LIMIT or TOP to limit the number of rows returned :
+			It helps to restrict number of rows returned if not all rows importannt.
+			select * from   co.orders order  by order_datetime desc fetch first 10 rows only;
+			[Note : TOP and limit doesn't work on oracle use fetch instead]
+			
+		7.  Use EXISTS instead of IN : 
+			IN compares values, Exists checkes true or false
+			
+			Constly query :
+				SELECT * FROM customers WHERE customer_id IN (SELECT customer_id FROM orders WHERE order_date >= DATEADD(day, -30, GETDATE()));
+				
+			Tunned query :
+				SELECT * FROM customers c WHERE EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id AND o.order_date >= DATEADD(day, -30, GETDATE()));
+		
+		8.  Optimize the database design :
+			Properly use normalization and data types. Use index wherever required.
+			
+		9.	Use query optimization tools :
+			Query optimization tools can be used to identify various perforamance issues.
+		
