@@ -399,3 +399,34 @@ Progress :-
              Strongly connected component's are set of vertices, where from every vertex we can reach every other vertices.
 
              Example :- com.datastructures.graphs.KosarajusAlgorithm
+
+10. Bubble sort -
+            In bubble sort we sort numbers like bubbles. We start comparing from left to right and compares each element with each other and swap them till last element.
+            So at the end of 1st iteration we gets max or min element at last position.
+            Perform this n time but in next iteration compare minus 1 times then last iteration since in last iteration we have already fixed position of 1 element.
+
+            Example :- com.algorithms.BubbleSort
+            https://www.youtube.com/watch?v=PkJIc5tBRUE
+            Time Complexity = O(n^2);
+
+11. Selection sort -
+            Selection sort is similar to bubble sort but here we don't swap element every time when we comparing it. We iterate on whole array first. In
+            this iteration we just find smallest or largest elements index. Then at the end of iteration we swap smallest or largest index at first or last based on sorting.
+
+            Example :- com.algorithms.SelectionSort
+            https://www.youtube.com/watch?v=PkJIc5tBRUE
+            Time Complexity = O(n^2)
+
+12. Insertion sort -
+            Insertion sort logically divides array into 2 parts. Sorted and unsorted. In every iteration sorted part increases and unsorted part decreases
+
+            Example :- com.algorithms.InsertionSort
+            https://www.youtube.com/watch?v=PkJIc5tBRUE
+            Time Complexity = O(n^2)
+
+13. Merge sort -
+            It uses divide and conquer approach to sort the array. When extra space is available use merge sort.
+            Example :- com.algorithms.MergeSort
+            https://www.youtube.com/watch?v=unxAnJBy12Q
+
+           Time Complexity = nlog(n)

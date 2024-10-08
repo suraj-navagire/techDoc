@@ -1,0 +1,79 @@
+Binary numbers :-
+    8 = 1000
+    57 = 111001
+
+Negative numbers :-
+    We can store negative numbers using leftmost bit. If left most bit is 0 means its positive else negative.
+        -8 convert this to binary
+     1. Convert 8 to binary i.e. 1000
+     2. Add 0 to left i.e. 01000
+     3. Take ones complement of this i.e. 10111
+     4. Add 1 to this       10111
+                            +   1
+                           --------
+                            11000  (-8)
+
+     Convert negative binary to decimal
+         11000 convert this to i.e. -8
+     1.  Take ones complement of 11000 i.e. 00111
+     2. Add 1 to it         00111
+                            +   1
+                           --------
+                            01000 (8)
+
+
+Bitwise operators :-
+    Bitwise operators works on binary form of data.
+
+1. Bitwise & operator -
+        Rule :- 0 & 0 = 0
+                0 & 1 = 0
+                1 & 0 = 0
+                1 & 1 = 1
+
+        Example :-   8 & 2 = 0
+                            1000
+                          & 0010
+                          -------
+                            0000
+
+2. Bitwise  | operator -
+        Rule :- 0 | 0 = 0
+                0 | 1 = 1
+                1 | 0 = 1
+                1 | 1 = 1
+
+        Example :- 8 | 2 = 10
+                          1000
+                        | 0010
+                        -------
+                          1010
+
+3. Bitwise xor (^) operator -
+        Rule :- 0 ^ 0 = 0
+                0 ^ 1 = 1
+                1 ^ 0 = 1
+                1 ^ 1 = 0
+
+        Example :- 8 ^ 2 = 10
+                            1000
+                          ^ 0010
+                          ------
+                            1010
+
+4. Left shift operator << -
+        8(1000) left shift 2 => 8 << 2 => 1000 << 2 => 100000(32)
+        7(111) left shift 2 => 7 << 2 => 111 << 2 => 11100(28)
+
+        Left shift operator actually indicates => n = 8, p = 3, then n << p (8 << 3) indicates
+        (n * (2 raise to p))
+        i.e. 8 * (2 raise to 3) = 64
+
+5. Right shift operator >> -
+        8(1000) right shift 2 => 8 >> 2 => 1000 >> 2 => 0010(2)
+        7(111) right shift 2 => 7 >> 2 => 111 >> 2 => 001(1)
+
+        Right shift operator actually indicates => n = 8, p = 3, then n << p (8 << 3),
+        (n / (2 raise to p))
+        i.e. 8 / (2 raise to 3) = 1
+
