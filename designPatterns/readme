@@ -13,7 +13,22 @@ SOLID principle in software design:-
 
 3. Liskov substitution principle -
         It states that object of superclass can be replaced by object of sub class without affecting correctness of a program.
-        Example :-
+        Example :- com.patterns.solid.LiskovSubstitutionCorrect,
+                    com.patterns.solid.LiskovSubstitutionViolation
+
+4. Interface segregation principle -
+        This principle states that interface should be segregated properly. This principle is similar to single responsibility principle.
+        One interface should not contain all the method just for the sake of having. It should have only required and relevant methods.
+        Methods should be segregated in multiple interfaces as per requirement.
+        Example :- com.patterns.solid.InterfaceSegregationViolation,
+                    com.patterns.solid.InterfaceSegregationCorrect
+
+5. Dependency Inversion Principle -
+        It states that high level module should not depend on low level module, Both should depend on abstraction.
+        Example :- com.patterns.solid.DependencyInversionViolation,
+                    com.patterns.solid.DependencyInversionCorrect
+
+
 
 There are 3 categories or design pattern:-
 1. Creational design pattern
