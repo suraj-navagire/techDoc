@@ -10,3 +10,7 @@ sparkTutorial/src/main/resources/input-spring.txt
 sparkTutorial/src/main/resources/inputData
 multithreading/target
 multithreading/.idea
+designPatterns/.gradle
+designPatterns/.idea
+designPatterns/build
+designPatterns/gradle

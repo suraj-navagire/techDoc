@@ -1,0 +1,21 @@
+This project is created to provide understanding of design patterns.
+
+What is design pattern:-
+    Design pattern is a solution to commonly occurring problems in a software design. They are like pre made blue print which
+    you can customize to solve design problems in your code.
+
+SOLID principle in software design:-
+1. Single responsibility principle -
+        A class should have only one reason to change. i.e. A class should have only one job to do or one task or one purpose.
+
+2. Open/Closed principle -
+        A class should be open for extension but closed for modification.
+
+3. Liskov substitution principle -
+        It states that object of superclass can be replaced by object of sub class without affecting correctness of a program.
+        Example :-
+
+There are 3 categories or design pattern:-
+1. Creational design pattern
+2. Structural design pattern
+3. Behavioral design pattern
