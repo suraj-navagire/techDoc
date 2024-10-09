@@ -430,3 +430,17 @@ Progress :-
             https://www.youtube.com/watch?v=unxAnJBy12Q
 
            Time Complexity = nlog(n)
+
+14. Quick sort -
+            It uses divide and conquer approach like merge sort but it does not require additional memory space for sorting.
+            Example :- com.algorithms.QuickSort
+            https://www.youtube.com/watch?v=QXum8HQd_l4
+
+            Time Complexity :-
+            Worst Case = O(n^2) It happens when in each iteration pivot becomes first or last element. It happens if array is already sorted.
+            Average = O(nlogn)
+
+15. Binary search -
+            It used to search element in sorted array.
+            Time Complexity :-
+            O(logn)
