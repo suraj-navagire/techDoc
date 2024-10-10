@@ -7,9 +7,16 @@ What is design pattern:-
 SOLID principle in software design:-
 1. Single responsibility principle -
         A class should have only one reason to change. i.e. A class should have only one job to do or one task or one purpose.
+        Example :- com.patterns.solid.SingleResponsibilityViolation,
+                    com.patterns.solid.SingleResponsibilityCorrect
 
 2. Open/Closed principle -
-        A class should be open for extension but closed for modification.
+        A class should be open for extension but closed for modification. Suppose if you have PaymentProcessor which contains
+        code to process payment of credit card. In future if we want to add phonepe payment then if we add that code in same class
+        then it is violation of open/closed principle. Instead we should write a parent interface PaymentProcessor and implement this
+        using new new payment processor's. In this way its easy to add new payment methods without changing existing classes.
+        Example :- com.patterns.solid.OpenClosedViolation,
+                    com.patterns.solid.OpenClosedCorrect
 
 3. Liskov substitution principle -
         It states that object of superclass can be replaced by object of sub class without affecting correctness of a program.
