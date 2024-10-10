@@ -4,7 +4,7 @@ What is design pattern:-
     Design pattern is a solution to commonly occurring problems in a software design. They are like pre made blue print which
     you can customize to solve design problems in your code.
 
-SOLID principle in software design:-
+SOLID principle in software design:- These are the design principles that needs to be consider while designing the software
 1. Single responsibility principle -
         A class should have only one reason to change. i.e. A class should have only one job to do or one task or one purpose.
         Example :- com.patterns.solid.SingleResponsibilityViolation,
@@ -34,8 +34,6 @@ SOLID principle in software design:-
         It states that high level module should not depend on low level module, Both should depend on abstraction.
         Example :- com.patterns.solid.DependencyInversionViolation,
                     com.patterns.solid.DependencyInversionCorrect
-
-
 
 There are 3 categories or design pattern:-
 1. Creational design pattern
