@@ -35,7 +35,33 @@ SOLID principle in software design:- These are the design principles that needs 
         Example :- com.patterns.solid.DependencyInversionViolation,
                     com.patterns.solid.DependencyInversionCorrect
 
-There are 3 categories or design pattern:-
-1. Creational design pattern
-2. Structural design pattern
-3. Behavioral design pattern
+--------------------------------------------------------------
+
+There are 3 categories of design patterns:-
+
+https://www.digitalocean.com/community/tutorials/java-design-patterns-example-tutorial
+
+1. Creational design pattern -
+        Creational design pattern gives us best possible way to instantiate an object in a specific situation.
+
+        1. Singleton design pattern :- Singleton design pattern restricts instantiation of an object. It allows only one instance of a class
+            inside a java virtual machine.
+            Example :- com.patterns.creational.singleton.EagerInitialization,
+                        com.patterns.creational.singleton.EagerInitializationIssueExample,
+                        com.patterns.creational.singleton.StaticBlockInitialization,
+                        com.patterns.creational.singleton.LazyInitialization,
+                        com.patterns.creational.singleton.ThreadSafeInitialization,
+                        com.patterns.creational.singleton.StaticInnerClassInitialization
+
+            Reflection, Deserialization and cloning are 3 ways to broke singleton.
+
+            Reflection :- In reflection we can make constructor accessible by making it's visibility true.
+                          To overcome reflection issue we can use Enum or we can throw Exception from constructor if instance variable is not null.
+
+            Deserialization :- When we do deserialization of serialized object it creates new object.
+                            To overcome this issue we can use "readResolve" method.
+
+            Cloning :- In cloning we can create clone of a object using clone method.
+                        We can overcome this using overriding clone method and throwing "clone not supported Exception".
+
+            Example :- com.patterns.creational.singleton.FinalSingleton
