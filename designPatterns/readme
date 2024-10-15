@@ -40,6 +40,7 @@ SOLID principle in software design:- These are the design principles that needs 
 There are 3 categories of design patterns:-
 
 https://www.digitalocean.com/community/tutorials/java-design-patterns-example-tutorial
+https://www.youtube.com/watch?v=4ff_KZdvJn8
 
 1. Creational design pattern -
         Creational design pattern gives us best possible way to instantiate an object in a specific situation.
@@ -65,3 +66,41 @@ https://www.digitalocean.com/community/tutorials/java-design-patterns-example-tu
                         We can overcome this using overriding clone method and throwing "clone not supported Exception".
 
             Example :- com.patterns.creational.singleton.FinalSingleton
+
+        2. Factory pattern (Factory method):- When we have a situation where we have super class and multiple subclasses and base on input we have to return
+            one of the subclass. This pattern takes out responsibility of instantiation of subclasses from clients code to factory class.
+            We can use singleton pattern on factory class or make the factory method static.
+
+            Example :- com.patterns.creational.factoryPattern.ComputerTest
+
+        3. Abstract Factory :- It add another layer on top of factory pattern. Abstract factory return factory class, This returned factory class will return
+            desired object.
+
+            Example :-  com.patterns.creational.abstractFactory.ShapeTest,
+                    https://www.youtube.com/watch?v=5hXZnI86E2Y
+
+        4. Builder design pattern :- Builder design pattern helps in creation of complex objects
+            Builder design patter should be used in following scenario :-
+                1. When we want to create complex objects like large number of constructor parameters,
+                    Possibilities of having new properties or attributes in future, Not All constructor
+                    arguments are mandatory.
+                2. When we want object similar like immutable.
+
+            Example :- https://www.youtube.com/watch?v=4ff_KZdvJn8,
+                        com.patterns.creational.builder.URLWithBuilder
+
+        5. Prototype design pattern :- If we have a design requirement where we have to create copies of objects of a class
+            then we can use prototype design pattern. If we don't then we will have to write so much redundant code to make copy of
+            objects.
+            Implement cloneable interface where we have to achieve prototype pattern. Classes which implements cloneable are known as prototypes.
+            Cloning is nothing but copying. There are 2 types of copy. Shallow and deep.
+
+            Shallow copy :- If we implement Cloneable interface and override Clone method then default implementation will give shallow copy feature.
+                Example :- com.patterns.creational.prototype.CompanyShallowExample
+            Deep copy :- If we implement Cloneable interface and override Clone method then Along with default implementation clone all non primitive and non immutable fields explicitly.
+                Example :- com.patterns.creational.prototype.CompanyDeepExample
+
+            We can create copy using copy constructors as well. This is more advantageous then implementing cloneable.
+
+            Following is the most useful example of prototype
+            Example :- com.patterns.creational.prototype.copyConstructor.PrototypeTest
