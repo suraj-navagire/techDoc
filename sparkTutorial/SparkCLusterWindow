@@ -1,0 +1,26 @@
+Spark Installation :-
+1. Download spark from https://archive.apache.org/dist/spark/spark-2.4.8/
+    downloaded and store on C:\workspace\softwares\spark-2.4.8-bin-hadoop2.7
+
+2. Download and store winutils.exe
+    C:\hadoop\bin
+
+3. Set SPARK_HOME and HADOOP_HOME in environment variables.
+    C:\workspace\softwares\spark-2.4.8-bin-hadoop2.7
+    C:\hadoop
+
+Spark cluster setup :-
+https://aamargajbhiye.medium.com/apache-spark-setup-a-multi-node-standalone-cluster-on-windows-63d413296971
+
+1. Go inside bin folder of spark installation
+    Run following cmd to start master
+    :- spark-class org.apache.spark.deploy.master.Master
+
+2. Run following cmd to start worker
+    :- spark-class org.apache.spark.deploy.worker.Worker spark://<master_ip>:<port> -c 4 -m 16G
+    Note :- here <master_ip> and <port> will get from logs of 1st cmd.
+        -c and -m is used to allot number of cores and memory respectively else it will take default all.
+
+3. Start driver application with following command
+    :- spark-submit --class org.rdd.example.standalone.SparkPartitionsExample --master spark://192.168.1.8:7077 --deploy-mode standalone sparkTutorial-1.0-SNAPSHOT.jar
+    Note :- Since we have set SPARK_HOME in env variable we can fire this cmd from location where driver jar is present.
