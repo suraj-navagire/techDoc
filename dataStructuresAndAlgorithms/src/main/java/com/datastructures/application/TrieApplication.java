@@ -28,7 +28,7 @@ public class TrieApplication {
 				System.out.println("Is john exists in trie ? : " + isExists);
 
 
-				isExists = trie.wordBreak("ilikesamsung");
+				isExists = trie.wordBreak("ilike");
 
 				System.out.println("Is following string \"ilikesamsung\" made up of words present in words array :  exists in trie ? : " + isExists);
 
