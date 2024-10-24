@@ -104,3 +104,9 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Following is the most useful example of prototype
             Example :- com.patterns.creational.prototype.copyConstructor.PrototypeTest
+
+2. Structural design pattern :-
+        Structural design pattern provides different ways create a class structure ( For example using inheritance and composition to create large objects from small small
+        objects)
+
+        1. Adapter design pattern :-  It is used so that two unrelated interfaces can work together. The class which joints these two interfaces are classed adapter.

@@ -64,6 +64,10 @@ Spark RDD section -
         nodes. RDD are immutable
 
 11. Group by :- Group by is used to group data based on key. Group by works in 2 stages i.e. shuffle data i.e write and read and map it to based on key .
+
+12. Broadcast variable :- If we want to share a small immutable data to every task then we can use broadcast variable. Spark sends this broadcast variable on every executor once.
+
+13. Accumulators :- If we want to aggregate some data from tasks then we can use accumulators. Then each task can update this data.
 --------------------------
 
 Spark sql section -
@@ -92,3 +96,4 @@ Spark sql section -
 
 5. Pivot Table : We can use pivot table when we want to do grouping based on 2 columns.
         Example : org.sql.example.SparkSQLPivotExample
+

@@ -22,5 +22,54 @@ https://aamargajbhiye.medium.com/apache-spark-setup-a-multi-node-standalone-clus
         -c and -m is used to allot number of cores and memory respectively else it will take default all.
 
 3. Start driver application with following command
-    :- spark-submit --class org.rdd.example.standalone.SparkPartitionsExample --master spark://192.168.1.8:7077 --deploy-mode standalone sparkTutorial-1.0-SNAPSHOT.jar
+    :- spark-submit --class org.rdd.example.standalone.SparkPartitionsExample --master spark://192.168.1.8:7077 --deploy-mode cluster sparkTutorial-1.0-SNAPSHOT.jar
     Note :- Since we have set SPARK_HOME in env variable we can fire this cmd from location where driver jar is present.
+
+
+-------------
+
+--num-executors :- Number of executors for cluster. If we provide 10 in if we have 5 nodes then on each node 2 executors will get created.
+--executor-memory :- Memory or RAM allocated to each executor
+--executor-cores :- Number of cores allocated to each executor.
+--driver-memory :- Memory allocated to driver application.
+
+======================================
+
+Calculation
+Case 1 :-
+    Suppose we have to process 25GB of file then answer following questions
+        1. To process 25 GB of file how many CPU cores are needed
+            - As per the recommendation we can have 64 to 128GB data per partition. For this lets take 128GB
+            - So Number of partitions = 25*1024 MB / 128MB = 200
+            - So we need 200 partitions , Hence we can have 200 cores
+
+        2. How many executors are required to process 25GB of file
+            - As per recommendation we should keep 2 to 5 cores per executor i.e. 2 to 5 tasks should run in parallel to get
+                optimal results.
+            - We can consider having 4 cores per executors
+            - Number of executors = Total number of cores / 4 = 200 / 4 = 50
+
+        3. How much memory need to each executor
+            - As per recommendations we should give 4*(memory of each partition) memory to each core
+            - Here each partition have 128MB of data. Then for each core we should have = 4 * 128 = 512MB
+            - Memory for each executor = Memory for each core * total number of core of that executor = 512MB * 4 = 2GB
+
+        4. How much total memory required
+            - Total memory = Total number of executors * memory for each executor = 50 * 2GB = 200GB
+
+        5. Suppose 1 task is taking 5min to complete then what will be total time to complete 25GB
+            - For each partition we have 1 task. Partition is a logical chunk of data. Task actually works on that data.
+            - So we have 200 partitions then we will be having 200 tasks
+            - As we are having 200 cores. 1 task is running on 1 core then 200 tasks will run on 200 core in parallel.
+            - Hence to complete all the tasks it will take 5 min only
+
+        6. How much should be driver memory if no data is going to come on driver application
+            - Then we can keep minimum memory for driver application like 4GB
+            - Along with this memory we need to calculate overhead memory which is needed to do operation outside heap.
+                Like network i.o operations, reading remote partition data.
+            - Overhead memory has to be 10% of JVM memory or minimum 348MB
+            - Consider we have given 4GB memory to driver application. Then 4GB jvm will get created on server.
+                To run this 4GB JVM we need 10% separate memory i.e. 400MB. In case of insufficient overhead memory
+                "Out of memory exception will get thrown".
+
+

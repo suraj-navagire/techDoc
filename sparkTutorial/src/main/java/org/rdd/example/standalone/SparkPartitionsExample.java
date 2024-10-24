@@ -27,11 +27,11 @@ public class SparkPartitionsExample {
 
 				Logger.getLogger("org.apache").setLevel(Level.WARN);
 
-				SparkConf conf = new SparkConf().setAppName("SparkShuffling");
+				SparkConf conf = new SparkConf().setAppName("SparkShuffling").setMaster("local[*]");
 
 				JavaSparkContext context = new JavaSparkContext(conf);
 
-				JavaRDD<String> inputRDD = context.textFile("inputData/sql/bigLog.txt");
+				JavaRDD<String> inputRDD = context.textFile("C:\\workspace\\poc\\github\\techDoc\\sparkTutorial\\src\\main\\resources\\inputData\\viewingFigures\\bigLog.txt");
 
 				JavaPairRDD<String, String> logPairRDD = inputRDD.mapToPair(
 						row -> new Tuple2<>(row.split(":")[0], row.split(":")[1]));
@@ -51,9 +51,11 @@ public class SparkPartitionsExample {
 
 				result.forEach( row -> System.out.println(row));
 
-				Scanner sc = new Scanner(System.in);
-				sc.nextLine();
-
+				try {
+						Thread.sleep(1000000);
+				} catch (InterruptedException e) {
+						throw new RuntimeException(e);
+				}
 
 				context.close();
 

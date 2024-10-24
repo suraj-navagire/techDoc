@@ -270,6 +270,43 @@ Progress:-
             Example : dataStructuresAndAlgorithms/src/main/java/com/datastructures/graphs
                       https://www.youtube.com/watch?v=59fUtYYz7ZU
 
+9. Tries -
+            Tries data structure is used to store words.
+
+            In trie data structure make a node with children of nodes size 26, endOfWord.
+
+            Node {
+                Node[] children;
+                boolean eow;
+            }
+
+            insert :-
+                Parse entire string using for loop. fetch every character and check char index using minus 'a'. minus 'a' with that char will give index within 26;
+                check if that place is null . if null add new node else go to next char.
+                if last char came then set end of word to true;
+
+            search :-
+                same as insert parse entire string and check if that index node is null or not. if null then return false;
+                When last node reach check end of word flag and return that.
+
+            word break :-
+                In this we provide a long word and we have to check weather this word can be made up of array of words.
+
+                To solve this problem we can use trie. Add all array of words to trie.
+
+                Steps:-
+                    1. Split string into 2 parts for all possible combinations.
+                    2. search 1st part using search method and pass 2nd part to again same method recursively
+                    3. If both returns true then return true from there.
+                    4. If string reaches length to 0 then also return true.
+                    5. Else return false
+
+
+            Example :-
+            com.datastructures.application.TrieApplication
+            https://www.youtube.com/watch?v=m9zawMC6QAI&t=3729s
+
+
 --------------------------------
 
 Algorithms:-
