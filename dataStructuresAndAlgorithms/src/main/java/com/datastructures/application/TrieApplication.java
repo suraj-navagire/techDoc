@@ -30,10 +30,18 @@ public class TrieApplication {
 
 				isExists = trie.wordBreak("ilike");
 
-				System.out.println("Is following string \"ilikesamsung\" made up of words present in words array :  exists in trie ? : " + isExists);
+				System.out.println("Is following string \"ilikesamsung\" made up of words present in words array : " + isExists);
 
 				isExists = trie.wordBreak("ilikesamsun");
-				System.out.println("Is following string \"ilikesamsun\" made up of words present in words array :  exists in trie ? : " + isExists);
+				System.out.println("Is following string \"ilikesamsun\" made up of words present in words array : " + isExists);
+
+				isExists = trie.searchPrefix("mo");
+
+				System.out.println("Is there any word starting with mo :  " + isExists);
+
+				isExists = trie.searchPrefix("san");
+
+				System.out.println("Is there any word starting with san :  " + isExists);
 
 		}
 }

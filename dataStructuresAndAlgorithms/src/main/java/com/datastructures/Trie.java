@@ -81,4 +81,21 @@ public class Trie {
 		}
 
 
+
+		public boolean searchPrefix(String prefix){
+				Node currentNode = root;
+
+				for (int i=0;i<prefix.length();i++){
+						int index = prefix.charAt(i) - 'a';
+
+						if(currentNode.children[index] == null){
+								return false;
+						}
+
+						currentNode = currentNode.children[index];
+				}
+
+				return true;
+		}
+
 }

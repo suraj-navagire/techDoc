@@ -301,6 +301,14 @@ Progress:-
                     4. If string reaches length to 0 then also return true.
                     5. Else return false
 
+            starts with prefix :-
+                In this prefix is given and we have to check weather given prefix present in array of words
+
+                To solve this problem we can use trie. Add all array of words to trie.
+
+                Perform same as search except we don't need to check end of word
+
+
 
             Example :-
             com.datastructures.application.TrieApplication
