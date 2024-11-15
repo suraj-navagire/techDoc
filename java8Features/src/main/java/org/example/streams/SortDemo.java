@@ -21,6 +21,7 @@ public class SortDemo {
 		sortEmpUsingNaturalSorting(employees);
 		sortEmpUsingAgeDesc(employees);
 		sortUsingGenderAndAgeAsce(employees);
+		sortUsingNameDesc(employees);
 	}
 	
 	private void sortEmpUsingNaturalSorting(List<Employee> employees) {
@@ -39,7 +40,7 @@ public class SortDemo {
 	
 	private void sortUsingGenderAndAgeAsce(List<Employee> employees) {
 		List<Employee> sortedEmp = employees.stream().sorted((e1, e2) -> {
-			int re = e2.getGender().compareTo(e1.getGender());
+			int re = e1.getGender().compareTo(e2.getGender());
 			if(re == 0) {
 				re = e1.getAge() - e2.getAge();
 			}
@@ -49,5 +50,11 @@ public class SortDemo {
 		System.out.println("Sorted Employee Using gender and age : ");
 		sortedEmp.stream().forEach(System.out::println);
 	}
-	
+
+	private void sortUsingNameDesc(List<Employee> employees){
+			List<Employee> sortedEmp = employees.stream().sorted((e1, e2) -> -(e1.getFirstName().compareTo(e2.getFirstName()))).collect(Collectors.toList());
+			System.out.println();
+			System.out.println("Sorted Employee Using name desc : ");
+			sortedEmp.stream().forEach(System.out::println);
+	}
 }

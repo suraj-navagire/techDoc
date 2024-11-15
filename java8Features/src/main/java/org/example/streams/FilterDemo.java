@@ -26,6 +26,7 @@ public class FilterDemo {
 		employees.stream().forEach(System.out::println);
 		
 		printFemaleEmployee(employees);
+		printMaleEmployee(employees);
 	}
 	
 	private void printFemaleEmployee(List<Employee> employees) {
@@ -35,4 +36,16 @@ public class FilterDemo {
 		System.out.println("Female Employee : ");
 		femaleEmployee.stream().forEach(System.out::println);
 	}
+
+	private void printMaleEmployee(List<Employee> employees){
+			List<Employee> maleEmployees = employees.stream().filter(r -> Gender.MALE.equals(r.getGender()))
+					.collect(Collectors.toList());
+
+			System.out.println();
+			System.out.println("Male Employee count : " + maleEmployees.size());
+			System.out.println("Male Employee : ");
+
+			maleEmployees.stream().forEach(System.out::println);
+	}
+
 }

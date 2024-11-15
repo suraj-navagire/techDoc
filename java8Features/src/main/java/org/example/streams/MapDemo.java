@@ -1,16 +1,21 @@
 package org.example.streams;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.example.data.Employee;
 import org.example.util.MockDataGenerator;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MapDemo {
 	
 	public static void main(String[] args) {
-		MapDemo demo = new MapDemo();
-		demo.startApp();
+			try{
+					MapDemo demo = new MapDemo();
+					demo.startApp();
+			} catch (Exception e){
+					e.printStackTrace();
+			}
+
 	}
 	
 	private void startApp() {
@@ -28,4 +33,5 @@ public class MapDemo {
 		System.out.println("All Employee Ids : ");
 		ids.stream().forEach(System.out::println);
 	}
+
 }
