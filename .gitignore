@@ -18,3 +18,7 @@ java8Features/.gradle
 java8Features/.idea
 java8Features/build
 java8Features/gradle
+collectionFramework/.gradle
+collectionFramework/.idea
+collectionFramework/build
+collectionFramework/gradle
