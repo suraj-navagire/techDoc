@@ -44,3 +44,11 @@ docker exec -it {container_id} sh
 
 run container and start shell:
 docker run -it {image_name} sh
+
+Steps to copy docker image from one server to anothe:-
+1. Copy docker image to tar file:
+	docker save -o /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar obdxkafka-3.4.0
+	scp obdxkafka-3.4.0.tar obdxdev@10.180.57.124:/scratch/obdxdev/kafka
+	docker load -i /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar
+	docker run -it obdxkafka-3.4.0 /bin/bash
+	docker start {container id}
