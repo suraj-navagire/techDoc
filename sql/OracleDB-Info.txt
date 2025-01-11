@@ -1,0 +1,2 @@
+Table name which contains all tables information :- dba_tables
+How to run sql file in oracle sql client : Use "@{full path till sql script}" => @C:\folder\dummy.sql

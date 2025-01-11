@@ -187,6 +187,59 @@ Collection :- It is a root interface of collection framework.
                             - Elements gets traversed using preorder traversing.
                         Example : org.example.set.TreeSetExample
 
+    Queue (I) :- It is a group of objects that are about to be processed. Queue follows first in first out concept.
+        boolean add(E e), boolean offer(E e) - Both are used to add element at the tail of the queue or as per the priority.
+        E remove() - Removes and returns head of the queue. Returns NoSuchElement exception if queue is empty.
+        E poll() - Removes and returns head of the queue. Returns null if queue is empty.
+        E element() - Returns head of the queue. Returns NoSuchElement exception if element is not present.
+        E peek() - Returns head of the queue.  Returns null if queue is empty
+
+        Queue implementations :-
+            1. LinkedList
+
+            2. PriorityQueue : Represents a group of objects about to be processed based on some priority. Element gets added and deleted according to some priority.
+                Priority can be default natural sorting order or custom sorting order. Insertion order is not preserved and duplicate are not allowed.
+                Default size is 11 and default priority order is natural sorting order.
+
+            3. BlockingQueue (I) - This is thread safe as all the methods are atomic. Blocks the producer if queue is full and blocks the consumer if queue is empty.
+                If attempts to insert null element throws null pointer exception. Has 2 types, bounded and unbounded. Bounded blocking queue can.t increase size.
+                Unbounded blocking queue can increase size, e.g. LinkedList.
+
+                Implementations :-
+                    1. PriorityBlockingQueue :- It is an unbounded blocking queue that uses the same ordering rules as class PriorityQueue. Default initial capacity 11
+                        that orders its elements according to their natural ordering. Since it is unbounded capacity increases as increase in number of elements
+                        , adding elements may result in outOfMemoryException.
+
+                    2. LinkedBlockingQueue :- It can be bounded, if its capacity is given, else it will be unbounded.
+
+                    Example :-org.example.queue.PriorityQueueExample, org.example.queue.BlockingQueueExample
+
+    Map (I) - It is a group of objects used to store key value pair. When we have requirement where searching is required  we should use map.
+        - It does not allow duplicate keys, but values can be duplicate.
+        - Only one null key is allowed.
+        - Both key and values are object and support any data type
+        - Each key and value is considered as entry-objects. Thus, it is also knows as collection of entry objects.
+
+        methods :
+            1. size() - Returns number of entry objects i.e. number of key value pairs.
+            2. isEmpty()
+            3. containsKey(object)
+            4. containsValue(object)
+            5. put(key, value)
+            6. remove(key)
+            7. putAll(mapObject)
+            8. clear()
+            9. set keySet()
+            10. collection values()
+            11. Set<Map.Entry<key, value>> entrySet()
+            12. v getOrDefault(key, defaultValue)
+            13. v putIfAbsent(key, val) - if value for given key is missing then insert this val and return else return existing val
+            14. computeIfAbsent(key, k -> val) - If key is missing insert this val
+            15. computeIfPresent(key, val) - If key is present then only replace this val
+
+
+
+
 Cursor -
     Cursor is an object which is used to traverse over a collection or list of objects.
         Types of cursors :-
