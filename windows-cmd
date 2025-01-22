@@ -5,3 +5,7 @@ This will help you for windows system operations
 
 2. How to start stop any windows service like grafana
 -> Open "Services" using windows search -> check respective service and right click on it -> start/stop
+
+3. To search every file in the current directory and all subdirectories that contained the word Windows, regardless of the letter case, type:
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/findstr
+findstr /s /i Windows *.*

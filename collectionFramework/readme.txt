@@ -237,7 +237,48 @@ Collection :- It is a root interface of collection framework.
             14. computeIfAbsent(key, k -> val) - If key is missing insert this val
             15. computeIfPresent(key, val) - If key is present then only replace this val
 
+            Implementations :-
 
+            1. HashMap :-
+                Internally HashMap uses HashTable data structure.
+                - Insertion order is not preserved.
+                - Duplicate keys are not allowed but duplicate values are allowed.
+                - Only one null key can be inserted.
+                - Null values can be inserted.
+                - Implements serializable and cloneable
+                - Extends an abstract class AbstractMap
+                - Best choice for searching
+                - Default capacity is 16
+                - Default load factor is 0.75
+                - Threshold = capacity * load factor
+                - Doubles the size once threshold is reached.
+
+                Internal working of HashMap :
+                    - HashMap uses hashing technique to store the data.
+                    - Internally it comprises Array of Node class. Node[] ...... Note : Node is nothing but a linkedList
+                    - Node class contains : hash, key, value, Node
+                    - put(key , value) call.
+                        1. First it calculates hashcode of key.
+                        2. Then it calculates the index on which this key will get stores. This index will be within the capacity of the array.
+                        3. Then it goes to that index location. If this location is empty
+                            1. Then it creates objet of Node and add it to this location.
+                            2. Node has 4 properties. Hash will contain the Hashcode of key, Key will contain key, Value will contain value and Node will be null.
+                        4. If step 3 index location is not null.
+                            1. Then it compares hashcode of given key with hash of existing Node. If it matches then it compares key object with Node's key using equals method.
+                                If both are equal then it replaces Node's value with new value.
+                                If hashcode or equals method comparison is false then it creates new Node object with given key and value and add it to Node's next node attribute
+                                if next node is null. If next node attribute is not null then it keeps comparing all the upcoming nodes like step 3 and 4 until it inserts
+                                new key and values.
+                    - get(key) call.
+                        1. First it calculates hashcode of key.
+                        2. Then it calculates the index.
+                        3. Then it goes to that index location. If location is empty then it returns null.
+                        4. If location is not empty then it compares hashcode of given key with Node's hash. If it matches then it compares key object with Node's key using equals method.
+                        5. If both are equal then it returns Node's value.
+                        6. If hashcode or equals method comparison is false then it goes to next and does same comparison mentioned in step 4 to 6 till it visits all the nodes.
+
+                Hash collision :- Hash collision is nothing but when 2 different keys land on same index and 2nd one might replace the first one. To avoid this HashMap uses Node structure.
+                    With the help of Node HashMap can store both the keys at same index.
 
 
 Cursor -
@@ -275,3 +316,17 @@ Comparable and Comparator -
                  - If it returns -1 than obj1 object (object to be inserted) is less than inserted object. It will go as left child in tree.
                  - If it returns 1 then obj1 object (object to be inserted) is greater than inserted object. It will go as right child in tree.
             Example :- org.example.set.ComparatorExample
+
+Hashing -
+    - Hashing is a way to convert object into a number. This can be achieved with hash function. Hash function takes object as input and convert that
+    object into a number. This function must return same number for same object.
+    - In java this can be achieved using hashcode() method. Hashcode() method works as hash function.
+    - So If 2 objects are same their hash code must be the same. If 2 objects have same hashcode they might or might not be the same.
+    - We should use that attribute which used to show unique ness of that object. Like employee id in case of employee.
+
+
+Java HashMap vs Java HashTable -
+    1. HashMap is not synchronized but HashTable is synchronized.
+    2. HashMap - One null key is allowed but multiple null values are allowed. HashTable - Null key and values are not allowed
+    3. HashMap - Added in 1.2 version. HashTable - It's a legacy class.
+    4. HashMap - Extends AbstractMap. HashTable - Extends Dictionary.
