@@ -280,6 +280,24 @@ Collection :- It is a root interface of collection framework.
                 Hash collision :- Hash collision is nothing but when 2 different keys land on same index and 2nd one might replace the first one. To avoid this HashMap uses Node structure.
                     With the help of Node HashMap can store both the keys at same index.
 
+            2. LinkedHashMap :-
+                It maintains insertion order. Internally it works same as HashMap i.e. it uses Hashtable data structure to store data i.e. array of Nodes. Along with this it uses LinkedList
+                structure to maintain insertion order.
+
+            3.IdentityHashMap :-
+                It works same as HashMap, but it uses == operator to compare keys whereas HashMap uses equals method to compare keys.
+                It should be used where we want to store different key object references which might contain same values inside those key objects.
+
+            4. WeakHashMap :-
+                a. This contains weak reference of key object. HashMap and other java classes uses strong reference which is default reference.
+                b. Whenever reference used to create key object becomes null and no other references are present to that key then garbage collection
+                    removes it from WeakHashMap. But if reference becomes null in HashMap then garbage collection doesn't remove it from HashMap.
+                c. It means garbage collection dominates WeakHashMap as it uses weak reference to keys.
+                d. Does not implement Serializable and Cloneable.
+
+                Example : org.example.map.WeakHashMapExample1
+                            org.example.map.WeakHashMapExample2
+
 
 Cursor -
     Cursor is an object which is used to traverse over a collection or list of objects.
@@ -330,3 +348,11 @@ Java HashMap vs Java HashTable -
     2. HashMap - One null key is allowed but multiple null values are allowed. HashTable - Null key and values are not allowed
     3. HashMap - Added in 1.2 version. HashTable - It's a legacy class.
     4. HashMap - Extends AbstractMap. HashTable - Extends Dictionary.
+
+Strong reference and Weak reference :-
+    1. By default, java uses strong reference. But WeakHashMap uses weak reference.
+    2. Reference on which object is created, if we create weak reference of this reference and if we make original reference null
+    and if no other reference is present of object then weak reference object gets garbage collected.
+    3. In order to use any reference as weak reference we can use java.lang.ref.WeakReference class
+
+    Example :- org.example.map.WeakHashMapExample2 is example of weak reference.
