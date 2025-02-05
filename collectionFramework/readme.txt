@@ -298,6 +298,32 @@ Collection :- It is a root interface of collection framework.
                 Example : org.example.map.WeakHashMapExample1
                             org.example.map.WeakHashMapExample2
 
+        SortedMap (I) -
+            It is used to store collection of key value pairs in sorted order using key. By default, it uses key's natural sorting order, but it can use
+            custom sorting as well using comparator. Null key and value are not order
+
+            Methods :
+            1. SortedMap subMap(fromKey, toKey)
+            2. SortedMap headMap(toKey) - returns sorted map having keys less than the given key
+            3. SortedMap tailMap(fromKey) - returns sorted map having keys greater than given key
+            4. K firstKey()
+            5. K lastKey()
+            6. Set keySet()
+            7. Collection values()
+            8. Set<Map.Entry<k,v>> entrySet()
+            9. Comparator comparator() - Used to return comparator used to order the keys.
+
+            NavigableMap (I) -
+                Sub interface of SortedMap. Contains methods used to provide navigation functionality.
+
+                Example :- org.example.map.NavigableMapExample
+
+                TreeMap :-
+                    Implementation class of SortedMap and NavigableMap. Insertion order is not preserved. Element gets added based on key's natural sorting.
+                    It can also provide custom sorting using comparator. Null keys are not allowed. Null values are allowed.
+
+
+
 
 Cursor -
     Cursor is an object which is used to traverse over a collection or list of objects.
