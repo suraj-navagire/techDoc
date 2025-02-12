@@ -319,6 +319,7 @@ Collection :- It is a root interface of collection framework.
                 Example :- org.example.map.NavigableMapExample
 
                 TreeMap :-
+                    Internally it uses Red Black Tree. Red Black tree is self balanced binary search tree.
                     Implementation class of SortedMap and NavigableMap. Insertion order is not preserved. Element gets added based on key's natural sorting.
                     It can also provide custom sorting using comparator. Null keys are not allowed. Null values are allowed.
 

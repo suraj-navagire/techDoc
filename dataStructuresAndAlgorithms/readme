@@ -314,6 +314,53 @@ Progress:-
             com.datastructures.application.TrieApplication
             https://www.youtube.com/watch?v=m9zawMC6QAI&t=3729s
 
+10. AVL tree -
+            AVL tree is
+                1. Self balanced binary tree.
+                2. Balance factor of each node should be {-1, 0, 1}. Note : balance factor is nothing but difference in height between left and right node.
+
+                Insertion Algorithm :-
+                    1. Add new node as we add in binary tree.
+                    2. If at any point balance factor property is not satisfied then do rotation.
+
+                    Types of rotation
+                        1. If tree is unbalance because of Left Left nodes i.e. LL then it needs only one right shift rotation. i.e. rotate top 2 node right.
+                        2. If tree is unbalance because of Right Right nodes i.e. RR then it needs only one left shift rotation. i.e. rotate top 2 node left.
+                        3. If tree is unbalance because of Left Right nodes i.e. LR then it needs one Left and one Right shift rotation. i.e. rotate bottom 2 node left and then top 2 node right.
+                        4. If tree is unbalance because of Right Left nodes i.e. RL then it needs one Right and one Left shift rotation. i.e. rotate bottom 2 node right and then top 2 node left.
+
+                        Note : In all rotation one thing is common i.e. in all rotation we aare making middle element (from those 3 nodes) as parent node.
+
+                Deletion Algorithm :-
+                    1. Same as insertion only this is here we delete node and then check balance factor and do required rotation.
+
+            Example : resources/AVL-tree.pdf
+            https://www.youtube.com/watch?v=YWqla0UX-38&t=8s
+            https://www.youtube.com/watch?v=_8qqlVH5NC0
+            https://www.youtube.com/watch?v=LXdi_4kSd1o&t=22s
+
+
+11. Red black tree -
+            Red black tree is
+                1. Self balanced binary tree
+                2. All nodes are either red or black
+                3. All leaf nodes have nil node
+                4. Root node and leaves [nil node] are black.
+                5. Newly added node is red
+                6. Red-Red connection cannot exist
+                7. All path from node have same count of black nodes
+
+                Insertion Algorithm :-
+                    1. If tree is empty them add new node as root node with black color
+                    2. If tree is not empty them add new node as red.
+                    3. After adding new node if this new connection is not red-red then exit.
+                    4. After adding new node if this new connection is red-red then :-
+                        1. Check color of parent node's sibling node.
+                            1. If its red then recolor both parent and sibling. Also if parent's parent is not root node then recolor it.
+                            Now recheck and see if because of this recoloring any red-red connection has created. If yes then again follow step 4.
+                            2. If its black or null then do suitable rotation as we do in avl and recolor these rotated nodes keeping red-black tree properties in mind
+
+            Example :- https://www.youtube.com/watch?v=qA02XWRTBdw&t=783s
 
 --------------------------------
 
