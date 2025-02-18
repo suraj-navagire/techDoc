@@ -324,7 +324,76 @@ Collection :- It is a root interface of collection framework.
                     It can also provide custom sorting using comparator. Null keys are not allowed. Null values are allowed.
 
 
+Need of Concurrent Collections -
+    1. Old collections (i.e. ArrayList, HashMap, HashSet etc.) are not synchronized.
+    2. We can use Vector and HashTable as these are synchronized, but they lock the entire object. So performance is poor in this case.
+    3. We can use following to get synchronized objects of old collection classes :-
+        a. Collections.SynchronizedList(list)
+        b. Collections.SynchronizedSet(set)
+        c. Collections.Synchronized(map)
+        But these returned objects are also poor in performance as all methods are synchronized.
+    4. Old java collections are failfast.
 
+   To overcome all these issues we need concurrent collections
+
+
+ConcurrentModificationException -
+    This exception is thrown by iterator of collection when shared collection got updated by another thread while iterating on this shared collection.
+    Each collection (i.e. ArrayList, LinkedList, HashMap etc.) returns iterator. Iterator implementation is also given by these collections only. In that while
+    returning next() it checks for count. If they found they if current count of collection is not same as start of iteration then it throws this exception.
+
+    This is also known as fail-fast. One of the problem with old java collections.
+
+    Example :- org.example.concurrent.ConcurrentModificationExceptionExample
+
+
+How concurrent collections solve all these problems of old collections -
+    In old collections full object gets locked and in new concurrent collections entire collections gets divided into number of segments.
+    Lock gets applied on individual segment. So multiple threads can work on different segments simultaneously.
+
+
+java.util.concurrent package -
+    Map(I) -
+        1. ConcurrentMap (I) -
+            1. ConcurrentHashMap -
+                - This class we can use for HashMap if multithreaded environment is there, and we want the best performance.
+                - This is fail-safe i.e. does not throw ConcurrentModificationException.
+                    Example : org.example.concurrent.FailSafeExample
+                - Null is not allowed as key or value in this.
+
+                Internal working :
+                    1. Internally it used Node[] i.e. array of Node same as HshMap.
+                    2. This array get divided into 16 buckets by default. These buckets are also known as segments.
+                    3. So 16 threads can work parallel on this map. So is also known as concurrency level. Here concurrency level is 16 by default.
+                    4. Read operation does not require lock.
+                    5. Lock gets applied at the time of updating the map i.e. put, remove etc.
+                    6. This lock gets applied on that bucket only. Other buckets are free for other threads.
+                    7. Depending on number of core and other factors we can increase or decrease the concurrency level at the time of invoking the constructor.
+                        but ideally we should not touch the default as it might decrease performance.
+
+    Collection (I) -
+        List (I) -
+            CopyOnWriteArrayList -
+                - Multiple threads can perform read operation at same time.
+                - At the time of update, it creates copy of main object and performs update on that copied object and makes this copied object as main object.
+                - Read happens on main object.
+                - So if we do 100 updates then 100 copies will get created. That's why we should use this only if less updates and more reads are required.
+
+                Difference over ArrayList :
+                    1. Iterator of this is fail-safe.
+                    2. In ArrayList iterator can remove elements but here it cannot. If we try we will get unsupported Exception
+
+
+        Set (I) -
+            CopyOnWriteArraySet -
+                - Multiple threads can perform read operation at same time.
+                - At the time of update, it creates copy of main object and performs update on that copied object and makes this copied object as main object.
+                - Read happens on main object.
+                - So if we do 100 updates then 100 copies will get created. That's why we should use this only if less updates and more reads are required.
+
+                Difference over ArrayList :
+                    1. Iterator of this is fail-safe.
+                    2. If we try we will get unsupported Exception
 
 Cursor -
     Cursor is an object which is used to traverse over a collection or list of objects.
