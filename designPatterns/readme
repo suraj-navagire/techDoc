@@ -114,3 +114,41 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             This use useful when we want to reuse the existing classes without modifying their code, but their interface doesn't match with the requirements of client.
 
             Example : com.patterns.structural.adapter.Client
+
+        2. Bridge design pattern :-
+            Problem solved by bridge :
+            1. Suppose if have a requirement to make a system to draw different shapes. What you will do. You will make shape interface. Then you will add its implementations.
+            consider initially you have created 2 shapes Triangle and Square.
+            2. Now consider in future client wants red color and blue colored shapes. Then what you will do, in order to reuse the shape making code you will create new class
+            which will extend the existing shapes i.e. You will make RedTriangleShape which will extend TriangleShape,  BlueTriangleShape which will extend TriangleShape,
+            RedSquareShape which will extend SquareShape, BlueSquareShape which will extend SquareShape.
+            3. Till now you will feel like you have designed great system but wait what if in future client will add more shape and more colors.
+                consider even if client demands 2 more shape and 2 more colors then you will end up having
+                total shapes = 4
+                total colors = 4
+                Total colored shape classes = 16 i.e. cartesian product.
+            Then you will realize how messy system.
+
+            Example : com.patterns.structural.bridge.problem.Client
+
+            Solution :
+            1. First understand the problem.
+            2. Here drawing shape and coloring it are 2 different tasks. This we can decouple.
+            3. Create Color interface and create its implementations.
+            4. Use association over inheritance i.e. add color object inside shape.
+            5. Make shape as abstract class so that it can contain Color, and write its implementations.
+            6. Pass color object at the time of creating shape
+            7. Here if you want to add more 2 color then you will have to create only 2 color classes not more. You can pass color object to shape at the time of creation
+            If you want to add more 2 shapes then also you will have to create only 2 classes.
+
+            Elements of Bridge design patterns :
+                1. Implementor - Functionality which we are separating out/decoupling. Here Color is the implementor
+                2. Concrete implementation - Concrete classes which implements implementor. Here RedColor and BlueColor
+                3. Abstraction - Core of the bridge design pattern. It holds the instance of implementor. It provides abstract method
+                which is used by client. Here 'Shape' class. 'draw()' is the method which is providing abstraction to client.
+                Also Shape class delegate draw() call to color object.
+                4. Concrete abstraction - Concrete classes which extends abstract class. It uses concrete implementor objects to do work.
+                Here it uses RedColor or BlueColor to fill color.
+
+            Example : com.patterns.structural.bridge.solution.Client
+
