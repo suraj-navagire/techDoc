@@ -1,5 +1,19 @@
 This project is created to provide understanding of design patterns.
 
+Before design pattern lets understand some basic concepts:-
+    1. Inheritance (is a) :- Inheritance shows parent child relationship also known as 'is a' relationship.
+        Example :- Dog is a Animal
+    2. Association (Has a) :- Association is known as 'has a' relationship. When a class contains instance of some other class then it
+        is known as association.
+        It has 2 types :
+            1. Aggregation : Aggregation is a weak association. Inner object can exists independently even if outer object gets destroyed.
+                Example : Library and Book. Library has many books. If we destroy library object even then book can exist somewhere else.
+            2. Composition : Composition is a strong association. Inner object cannot exist independently without outer object.
+                The life time of contained object is bound to life time of container object.
+                Example : Car and Engine. Engine cannot exist without car object. So once car object gets destroyed then engine will also
+                    get destroyed.
+        Arrow to be used : designPatterns/src/main/resources/Arrows_UML.png
+
 What is design pattern:-
     Design pattern is a solution to commonly occurring problems in a software design. They are like pre made blue print which
     you can customize to solve design problems in your code.
@@ -115,7 +129,10 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Example : com.patterns.structural.adapter.Client
 
-        2. Bridge design pattern :-
+        2. Bridge design pattern :- It is used to decouple abstraction from implementation. i.e. You are removing some of the functionality from existing abstract class,
+            creating new interface for that functionality. Creating new implementation classes and adding that functionality to it. Then add this new interface inside abstract class
+            and provide its instance at run time to constructor of abstract class.
+
             Problem solved by bridge :
             1. Suppose if have a requirement to make a system to draw different shapes. What you will do. You will make shape interface. Then you will add its implementations.
             consider initially you have created 2 shapes Triangle and Square.
@@ -151,4 +168,28 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
                 Here it uses RedColor or BlueColor to fill color.
 
             Example : com.patterns.structural.bridge.solution.Client
+
+        3. Composite Design Pattern -
+            It helps you to compose objects into tree like structure to represent part-whole hierarchy. With the help of this design you can
+            interact with object uniformly as it implements same interface.
+
+            Part-whole hierarchy is not but there is a object which is container and it contains all the parts.
+
+            Key concept :
+                1. Component (Interface) : It is an interface which contains operation implemented by leaf of composite.
+                2. Leaf : It is an individual object with no children.
+                3. Composite (Container) : This object contains one or more children (can be leaf or other composite)
+                4. Client : It interact with component to perform operation.
+
+            Each part of the composite structure is able to provide its result independently is the key advantage
+
+            Example : We can create file system using composite design pattern. Where we can have files and directory
+                Both os them can implement common interface FileSystem which can have getSize(). Each file is associated with some size.
+                Directory contains another directories of files. So Directory is composite and File is leaf.
+
+                Using this patterns any directory can tell us its size by delegating its call to getSize() method.
+
+                Client will interact with component operation i.e. getSize();
+
+                Example : com.patterns.structural.composite.Client
 
