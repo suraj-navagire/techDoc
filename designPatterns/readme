@@ -193,3 +193,28 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
                 Example : com.patterns.structural.composite.Client
 
+        Decorator Design pattern -
+            When you want to add new behavior or responsibilities to an existing object then you can use this. This pattern provides flexible alternative to
+            subclassing where you want to extend objects functionality.
+            You can decorate an object by wrapping it with another object that adds extra functionality to it without changing original class.
+
+            Key concepts :
+                1. Component Interface :- Interface to declare core functionality. (Coffee)
+                2. Concrete Component class :- Class which provides basic core functionality. (SimpleCoffee)
+                3. abstract decorator class :- Abstract decorator class which implements component and contains base component instance. (CoffeeDecorator)
+                4. Concrete decorator class :- Concrete decorator class which provides additional functionalities. (MilkDecorator, SugarDecorator)
+
+            This design pattern avoid multi-level inheritance. Without decorator coffee system would have looked like Following :-
+            SugarCoffee extending MikCoffee extending SimpleCoffee and so on..
+
+            To avoid this we should use decorator . Now you can add any new behaviour and use existing without modifying it.
+            You can add HoneyClass just by extending abstract decorator.
+
+            Example : com.patterns.structural.decorator.Client
+
+
+
+
+
+
+
