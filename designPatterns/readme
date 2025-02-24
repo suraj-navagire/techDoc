@@ -193,7 +193,7 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
                 Example : com.patterns.structural.composite.Client
 
-        Decorator Design pattern -
+        4. Decorator Design pattern -
             When you want to add new behavior or responsibilities to an existing object then you can use this. This pattern provides flexible alternative to
             subclassing where you want to extend objects functionality.
             You can decorate an object by wrapping it with another object that adds extra functionality to it without changing original class.
@@ -211,6 +211,20 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             You can add HoneyClass just by extending abstract decorator.
 
             Example : com.patterns.structural.decorator.Client
+
+        5. Facade Design pattern -
+            It helps in restructuring the code. If you feel that you have a complex system and you have exposed too many functions or API to
+            client then you can add facade layer to it. Facade is just another layer with simplified/minimum number of API/functions. Facade takes
+            care of calling required functions/API's/subsystems on behalf of client.
+
+            In simple words if you have not designed your API's properly and you have end-up exposing number of API's to do a task, then Facade
+            groups those tasks in single/more (based on requirement) API and client can use this new facade API and then facade internally will call
+            number of API's.
+
+            Example : com.patterns.structural.facade.problem.Client
+                com.patterns.structural.facade.solution.Client
+
+
 
 
 
