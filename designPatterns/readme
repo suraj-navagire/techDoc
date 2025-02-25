@@ -224,6 +224,29 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             Example : com.patterns.structural.facade.problem.Client
                 com.patterns.structural.facade.solution.Client
 
+        6. Flyweight Design pattern -
+            - It is used to save memory and improve performance by sharing as much data as possible among same type of objects.
+            - It is used in a system where large number of objects gets created with some common properties.
+            - Objects' data can be divided into 2 types :
+                1. Intrinsic data - This data is common between multiple objects and it is not going to get changed at run time. Immutable part of object.
+                2. Extrinsic data - This data is specific to every object and which cannot be shared.
+
+            Steps to use flyweight design pattern :
+                1. Find out intrinsic and extrinsic data of a class. (Tree)
+                2. Pull out intrinsic data from class and create new flyweight class which will store this intrinsic data. (TreeType)
+                3. Create flyweight class with intrinsic data and add same operation by passing extrinsic data to it. display(positionX, positionY).
+                4. Add this newly created flyweight class instance inside original class.
+                5. Now original class method won't do operation instead it will delegate task to flyweight class by passing extrinsic data.
+                6. Create flyweight factory. This will contain cache. This factory will return flyweight object from cache. i.e. flyweight object will
+                get created once for each key. (TreeTypeFactory)
+                7. Client will create original class instance by passing flyweight object to it from factory.
+
+                Example : com.patterns.structural.flyweight.problem.Client
+                com.patterns.structural.flyweight.solution.Client
+
+
+
+
 
 
 
