@@ -244,6 +244,14 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
                 Example : com.patterns.structural.flyweight.problem.Client
                 com.patterns.structural.flyweight.solution.Client
 
+        7. Proxy Design pattern -
+            - Proxy is nothing but "on behalf of".
+            - This design pattern is used to provide an object that used as a substitute or placeholder for another object
+            - Proxy controls access to original objects.
+            - It helps to add additional functionalities like access control, logging, caching etc.
+
+            Example : com.patterns.structural.proxy.Client
+
 
 
 
