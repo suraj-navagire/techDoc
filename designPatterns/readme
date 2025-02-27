@@ -253,6 +253,33 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             Example : com.patterns.structural.proxy.Client
 
 
+3. Behavioral Design Pattern -
+    It focuses on object interactions. It shows how object should interact with each other efficiently and flexibly. It promotes loose coupling.
+
+    1. Chain of Responsibility Design Pattern -
+        - It is used when we have multiple handlers which process request sequentially. Each handler can either process the request or it can
+        pass it to the next handler.
+        - We can implement this using 1 abstract handler class which will contain abstract method handle(request). It will also contain
+        reference to nextHandler. It will contain setHandler(handler) method to set next handler.
+        - Each handler will extend this abstract class and call  next handler if present else it will return the result.
+
+        Example : com.patterns.behavioral.chainOfResponsibility.Client
+
+    2. Command Design Pattern -
+        - This design pattern allows actions as an object to decouple the request operation. Generally we make action/operation as methods and call them.
+          But in this pattern we make action/operation as object and pass it to invoker.
+        - Consider Bulb as a receiver which has 2 operation turn on , turn off. Then We can make 2 Command classes for it.
+        - These commands knows how to perform that action.
+        - Client will only need to use this wil remote control.
+
+        - Components :
+            1. Receiver - The object which will be controlled by commands. (Bulb)
+            2. Command Interface - It defines execute() and undo() method. (Command)
+            3. Concrete command - It implements Command interface. It contains the receiver object. (TurnOn, TurnOff)
+            4. Invoker - Stores the commands executes/undoes it. (RemoteControl)
+            5. Client - Creates command and executes it with the help of Invoker.
+
+            Example : com.patterns.behavioral.command.Bulb
 
 
 
