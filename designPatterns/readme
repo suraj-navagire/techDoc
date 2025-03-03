@@ -281,6 +281,17 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Example : com.patterns.behavioral.command.Bulb
 
+    3. Iterator Design pattern -
+        - It provides a way to access elements of a collection (array, tree, list) sequentially  without exposing their underlying structure.
+
+        - Components :
+            1. Iterator interface : It provides methods to access elements sequentially
+            2. Concrete Iterator  : It implements iterator interface and provides way to access elements sequentially.
+            3. Iterable interface : Collection which we don't want to expose will implement this interface. It returns concrete iterator.
+            4. Concrete iterable : It returns iterator.
+
+        Example : com.patterns.behavioral.iterator.Client
+
 
 
 
