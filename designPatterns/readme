@@ -292,6 +292,15 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
         Example : com.patterns.behavioral.iterator.Client
 
+    4. Mediator Design pattern -
+        - It introduces mediator so that different objects can talk to each other without direct dependency i.e. objects will not communicate
+        directly instead they will use mediator.
+        - It helps loose coupling.
+        - Objects are not tightly coupled with each other.
+        - Just like airplanes communicate with each other through air traffic control tower(mediator).
+
+        Example : com.patterns.behavioral.mediator.ChatRoomSimulator
+
 
 
 
