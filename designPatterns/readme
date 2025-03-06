@@ -301,6 +301,17 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
         Example : com.patterns.behavioral.mediator.ChatRoomSimulator
 
+    5. Observer Design pattern -
+        - Suppose there are 2 screen which are showing current temperature if temperature is updated this screen should also show updated value.
+        To achieve this screen's has to check status of weather station time to time. But its not good solution. Instead if weather station gets updated
+        then it should update every screen about it's change. This problem is solved by observer design pattern.
+        - In this pattern subject i.e. weather station keeps list of observer's i.e. screens and update them once temperature gets updated.
+        - In this pattern when the subject (observable) changes state, all its observer's(listeners) gets notified and updated automatically.
+        - Components :
+            1. Subject - It is observable which is being observed by observer's. Maintains list of observer's.
+            2. Observers - Updates itself when notified by subject.
+
+
 
 
 
