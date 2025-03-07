@@ -311,6 +311,19 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             1. Subject - It is observable which is being observed by observer's. Maintains list of observer's.
             2. Observers - Updates itself when notified by subject.
 
+    6. Memento Design pattern -
+        - It is used to capture object's state and restore later.
+        - It is used to implement features like undo/redo, snapshots, history-tracking etc.
+        - It is used when direct access to an object's state is not allowed due to encapsulation.
+        - In notepad memento example we are creating new memento with current state of notepad. This memento we are passing to caretaker.
+          Caretaker keeps history of memento's. On undo caretaker pop's memento from history and uses it for undo operation.
+        - Components :
+            1. Originator : The object whose state needs to be saved and restore later. [Notepad]
+            2. Memento : It stores originator's state. [NotepadMemento]
+            3. Caretaker : Keeps track of mementos but do not modify them. It can restore originator using memento. [NotepadCaretaker]
+
+            Example : com.patterns.behavioral.memento.User
+
 
 
 
