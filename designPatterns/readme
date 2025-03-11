@@ -324,6 +324,20 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Example : com.patterns.behavioral.memento.User
 
+    7. State Design pattern -
+        - It allows object to change its behavior based on change in its state.
+        - It is used when objects behavior depends on its state and needs to change as its state changes.
+        - Basically in this design pattern we are delegating object's responsibility to each state. How object will behave on some action
+        will be determined by its state. So each state will have all the methods as the main object.
+        - Consider coffee machine. It can have 3 states. Idle, Selection, dispense state.
+        - It can have 3 actions (3 buttons) insertCoin, selectCoffee, dispense.
+        - Coffee machine behavior depends on current state. Foe Example if state is idle you cannot directly select coffee, first you
+        will have to insert coin. Once you are in selection state again you cannot insert coin and so on.
+        - So each state will contain all these 3 methods (insertCoin, selectCoffee, dispense) and they will provide respective implementation
+        accordingly
+
+        Example : com.patterns.behavioral.state.Client
+
 
 
 
