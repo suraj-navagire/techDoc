@@ -338,13 +338,16 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
         Example : com.patterns.behavioral.state.Client
 
+    8. Strategy Design pattern -
+        - It is used when you have multiple algorithms (strategies) that can used interchangeably.
+        - When you want to avoid lot of if-else in code.
+        - It promotes open-closed principle.
+        - When you don't want to tightly couple the implementation. When implementation will be available at run time.
+        - There can be multiple payment methods. Credit card, upi, debit card etc. Also new payment method can be introduced in future.
+        Hence we need to design a code in such a way that we can achieve this. This can be achieved using strategy.
+        - Need to create 1 strategy interface. Implement this interface for new payment methods like credit card, debit card etc.
+        - Need to create class which will hold strategy interface. This class will use that interface for payment. At run time based on user's
+          choice payment method object will be injected in that strategy interface
 
-
-
-
-
-
-
-
-
+        Example : com.patterns.behavioral.strategy.Client
 
