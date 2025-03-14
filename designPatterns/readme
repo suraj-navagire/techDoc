@@ -351,3 +351,33 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
         Example : com.patterns.behavioral.strategy.Client
 
+    9. Visitor Design pattern -
+        - It is used when we want to keep algorithm (behavior) separate from object.
+        - Also when you want to perform operation on set of objects without modifying them.
+        - Also new behavior can be added without changing object.
+        - In this individual element is responsible for calling respective visitor method.
+        - If new behaviors are frequently added then this is useful.
+        - If new elements are frequently added then this is not useful as adding new element means changing visitor by adding new visit(newElement) method.
+           This is costly since all the existing behaviors will need to update. This will violet open-closed principle.
+        - Suppose we are having system where we are going to work on 2 shapes. Triangle and square. If we sure that no new shape will be added
+        in system but operation on these shapes will get added then we can use visitor.
+        - Component :
+            1. Visitor interface : Defines operations to be performed on different object types. (ShapeVisitor)
+            2. Concrete visitor : It implements visitor. (DrawShape)
+            3. Element : Interface for object. It defines void accept(Visitor) method.  (Shape)
+            4. Concrete element : It implements Element interface. (Triangle, Square)
+
+            Example : com.patterns.behavioral.visitor.Client
+
+    10. Template Method Design pattern -
+        - It defines skeleton of an algorithm in superclass and allows subclasses to override specific steps.
+        - Servlet in webserver is good example of this. We have created one abstract servlet which has service method (Template method).
+        This method will act as template method, determines how each request should be processed. This template method calls doGet, doPost
+        methods depending on some conditions. This class also provides default implementation for doGet and doPost. but its client responsibility
+        to provide correct implementation.
+        - In normal term you can say that in template method design pattern we provide one method which calls other methods based on requirement
+        and implementation of those other methods will be given by client i.e subclass.
+        - It follows open-closed principle.
+        - Client can add new new servlet to handle doGet and doPost.
+
+        Example : com.patterns.behavioral.templateMethod.Application
