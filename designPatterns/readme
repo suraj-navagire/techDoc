@@ -381,3 +381,7 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
         - Client can add new new servlet to handle doGet and doPost.
 
         Example : com.patterns.behavioral.templateMethod.Application
+
+    11. Interpreter Design pattern -
+        - It is used to define grammar for a language and provides interpreter to evaluate expression in that language.
+        - Like SQL query parsing, compiler etc.
