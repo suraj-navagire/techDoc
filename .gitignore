@@ -22,3 +22,7 @@ collectionFramework/.gradle
 collectionFramework/.idea
 collectionFramework/build
 collectionFramework/gradle
+kafka/.gradle
+kafka/.idea
+kafka/build
+kafka/gradle
