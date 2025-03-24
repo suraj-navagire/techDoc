@@ -649,3 +649,12 @@ Output:
 | Dog        | 2.50    | 33.33                 |
 | Cat        | 0.66    | 33.33                 |
 +------------+---------+-----------------------+
+========================================
+Problem 20 :-
+
+Fetch all records created today using creation date column
+
+Solution :-
+select * from my_Table where trunc(creation_date) = trunc(sysdate);
+
+trunc = this function removes time part from date and only keeps date.
