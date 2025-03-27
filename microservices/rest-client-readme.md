@@ -1,6 +1,6 @@
-# REST Client in microservices (Microprofile framework)
+# REST Client in Microservices (Microprofile framework)
 
-## Normal REST resource Example
+## Normal REST Resource Example
 
 ``` java
 package com.example.resource;
@@ -28,7 +28,7 @@ public class HelloResource {
 </dependency>
 ```
 
-## REST client Example to call REST resource in microprofile
+## REST Client Example to call REST Resource in Microprofile
 
 ```
 package com.example.client;
@@ -96,7 +96,7 @@ com.example.client.HelloClient/mp-rest/url=http://localhost:8080/api
 com.example.client.HelloClient/mp-rest/scope=javax.inject.Singleton
 ```
 
-## Adding fault tollerence in REST client
+## Adding Fault Tollerence in REST Client
 
 ```
 <dependency>
