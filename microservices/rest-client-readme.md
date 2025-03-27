@@ -1,4 +1,4 @@
-# REST Client in microservices (Helidon framework)
+# REST Client in microservices (Microprofile framework)
 
 ## Normal REST resource Example
 
@@ -28,7 +28,7 @@ public class HelloResource {
 </dependency>
 ```
 
-## REST client Example to call REST resource in Helidon
+## REST client Example to call REST resource in microprofile
 
 ```
 package com.example.client;
