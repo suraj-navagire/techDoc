@@ -1,5 +1,7 @@
 # REST Client in Microservices (Microprofile framework)
 
+REST Client is used to invoke/call remote REST resource from a client application.
+
 ## Normal REST Resource Example
 
 ``` java
