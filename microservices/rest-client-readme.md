@@ -20,7 +20,7 @@ public class HelloResource {
     }
 }
 ```
-```
+``` java
 <dependency>
         <groupId>io.helidon.microprofile.rest-client</groupId>
         <artifactId>helidon-microprofile-rest-client</artifactId>
@@ -30,7 +30,7 @@ public class HelloResource {
 
 ## REST Client Example to call REST Resource in Microprofile
 
-```
+``` java
 package com.example.client;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
@@ -48,7 +48,7 @@ public interface HelloClient {
     String getMessage();
 }
 ```
-```
+``` java
 package com.example.client;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -67,7 +67,7 @@ public class RestClientService {
     }
 }
 ```
-```
+``` java
 package com.example.resource;
 
 import com.example.client.RestClientService;
@@ -91,21 +91,21 @@ public class ClientResource {
 }
 ```
 Add property file : src/main/resources/META-INF/microprofile-config.properties
-```
+``` java
 com.example.client.HelloClient/mp-rest/url=http://localhost:8080/api
 com.example.client.HelloClient/mp-rest/scope=javax.inject.Singleton
 ```
 
 ## Adding Fault Tollerence in REST Client
 
-```
+``` java
 <dependency>
     <groupId>io.helidon.microprofile.fault-tolerance</groupId>
     <artifactId>helidon-microprofile-fault-tolerance</artifactId>
     <version>3.2.0</version>
 </dependency>
 ```
-```
+``` java
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
 
@@ -129,7 +129,6 @@ public class RestClientService {
     1. maxRetries=3 : The method will retri 3 times after failure. This means total of 4 attempts.
     2. delay=1000 : The time interval between each retry 1000 ms i.e. 1 second.
     <br>
-
     Use : It is used to handle network issues, Time out issues, service unavailable issues.
     
 2. @CircuitBreaker : It is used to avoid excessive calls to a failing service. It works by :
