@@ -128,8 +128,11 @@ public class RestClientService {
 1. @Retry : It is part of microprofile fault tolerence. It is used to automatically retry a method or service call when it fails due to an exception.
     1. maxRetries=3 : The method will retri 3 times after failure. This means total of 4 attempts.
     2. delay=1000 : The time interval between each retry 1000 ms i.e. 1 second.
-    <br>
-    Use : It is used to handle network issues, Time out issues, service unavailable issues.
+    
+    Use : 
+    * It is used to handle network issues.
+    * Time out issues. 
+    * service unavailable issues.
     
 2. @CircuitBreaker : It is used to avoid excessive calls to a failing service. It works by :
     *  Monitoring success and failure rate of a method.
@@ -139,10 +142,14 @@ public class RestClientService {
     1. requestVolumeThreshold=4 : Circuit breaker evaluates success/failure rate after 4 request. It means after 4 request for each next subsequent requests it eveluates rate using last 4 request.
     2. failureRatio=0.5 : If 50% or more request fail then circuit opens.
     3. delay=2000 : Circuit stays open till 2000 ms i.e. for 2 second before attempting to reset.
-    <br>
+    
     Behavior :
     * Closed state : Normal operations. All requests pass through.
     * Open state : No further requests are made. Request fails immediately.
     * Half open state : After 2 second circuit allows limited number of test requests. 
         * If the test request succeed. Then circuit closes.
         * It the test request fail. Then circuit reopens.
+
+    Use :
+    * Preventing cascading failures.
+    * Reduce load on unstable system.
