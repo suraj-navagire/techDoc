@@ -22,6 +22,7 @@ public class HelloResource {
     }
 }
 ```
+## REST Client Example to call REST Resource in Microprofile
 ``` java
 <dependency>
         <groupId>io.helidon.microprofile.rest-client</groupId>
@@ -29,8 +30,6 @@ public class HelloResource {
         <version>3.2.0</version>
 </dependency>
 ```
-
-## REST Client Example to call REST Resource in Microprofile
 
 ``` java
 package com.example.client;
