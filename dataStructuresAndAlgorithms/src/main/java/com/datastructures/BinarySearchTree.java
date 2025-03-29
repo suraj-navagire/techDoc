@@ -26,7 +26,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		}
 
 		private void insertData(Node currentNode, T data){
-				if(currentNode.data.compareTo(data) <= 0) {
+				if(currentNode.data.compareTo(data) < 0) {
 						if(currentNode.right == null) {
 								Node right = new Node();
 								right.data = data;
@@ -62,7 +62,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
 						return true;
 				}
 
-				if(currentNode.data.compareTo(data) <= 0){
+				if(currentNode.data.compareTo(data) < 0){
 						return searchNode(currentNode.right, data);
 				} else {
 						return searchNode(currentNode.left, data);

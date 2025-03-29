@@ -13,6 +13,7 @@ public class BinarySearchTreeApplication {
 
 				BinarySearchTree<Integer> binarySearchTree = new BinarySearchTree<>();
 				binarySearchTree.add(3);
+				binarySearchTree.add(3);
 				binarySearchTree.add(6);
 				binarySearchTree.add(4);
 				binarySearchTree.add(2);

@@ -2,6 +2,7 @@ This project is created to practice data structures and algorithms
 
 Learning path to be followed :-
 https://instabyte.io/p/dsa-master
+https://leetcode.com/studyplan/top-interview-150/
 
 Data structures:-
 
@@ -500,14 +501,18 @@ Progress :-
             Example :- com.algorithms.BubbleSort
             https://www.youtube.com/watch?v=PkJIc5tBRUE
             Time Complexity = O(n^2);
+            Space Complexity = O(1);
 
 11. Selection sort -
             Selection sort is similar to bubble sort but here we don't swap element every time when we comparing it. We iterate on whole array first. In
             this iteration we just find smallest or largest elements index. Then at the end of iteration we swap smallest or largest index at first or last based on sorting.
+            In bubble sort we unknowingly placing elements correctly from last index, then 2nd last ... then 2nd and then 1st.
+            In selection sort we are placing correct element on i position every time.
 
             Example :- com.algorithms.SelectionSort
             https://www.youtube.com/watch?v=PkJIc5tBRUE
             Time Complexity = O(n^2)
+            Space Complexity = O(1)
 
 12. Insertion sort -
             Insertion sort logically divides array into 2 parts. Sorted and unsorted. In every iteration sorted part increases and unsorted part decreases
@@ -515,6 +520,7 @@ Progress :-
             Example :- com.algorithms.InsertionSort
             https://www.youtube.com/watch?v=PkJIc5tBRUE
             Time Complexity = O(n^2)
+            Space Complexity = O(1)
 
 13. Merge sort -
             It uses divide and conquer approach to sort the array. When extra space is available use merge sort.
@@ -522,15 +528,27 @@ Progress :-
             https://www.youtube.com/watch?v=unxAnJBy12Q
 
            Time Complexity = nlog(n)
+           Space Complexity = O(n)
 
 14. Quick sort -
             It uses divide and conquer approach like merge sort but it does not require additional memory space for sorting.
+            It uses low, high in recursive manner using pivot index. Pivot index tells us sorted index.
+            It has partition method which returns pivot index.
+                - It takes last index as pivot element.
+                - Initially it considers i=(low - 1) as pivots sorted index. Then one by one it iterate on array from low to high. It increases i if element is smaller than
+                pivot element. If element is not smaller than it does not increment i. So after each iteration it actually knows 1 element is smaller than pivot. So at then end
+                of all iteration it knows how many smaller element are there using i. So if we increment i by 1 we will get correct pivot position.
+
+            Now pass this returned pivot index as start and end in next recursion.
+
             Example :- com.algorithms.QuickSort
             https://www.youtube.com/watch?v=QXum8HQd_l4
 
             Time Complexity :-
             Worst Case = O(n^2) It happens when in each iteration pivot becomes first or last element. It happens if array is already sorted.
             Average = O(nlogn)
+
+            Space Complexity = O(log n)
 
 15. Binary search -
             It used to search element in sorted array.

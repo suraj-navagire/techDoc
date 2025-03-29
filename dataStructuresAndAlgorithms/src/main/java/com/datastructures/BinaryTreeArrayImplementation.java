@@ -37,7 +37,7 @@ public class BinaryTreeArrayImplementation<T> {
 				}
 
 				int leftChildIndex = 2*parentIndex + 1;
-				int rightChildIndex = 2*parentIndex + 1;
+				int rightChildIndex = 2*parentIndex + 2;
 
 				if(binaryTree[leftChildIndex] == null){
 						binaryTree[leftChildIndex] = child;
