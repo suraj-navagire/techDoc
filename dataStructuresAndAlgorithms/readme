@@ -552,5 +552,9 @@ Progress :-
 
 15. Binary search -
             It used to search element in sorted array.
+
+            Example : com.algorithms.BinarySearch
             Time Complexity :-
             O(logn)
+
+            Space Complexity :- O(1)
