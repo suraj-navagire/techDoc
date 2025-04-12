@@ -741,7 +741,7 @@ If we use JPARepository we dont need to write all those boiler plate code. It ge
 - If we want to do custom operations that cant be handled by default methods of JPARepository then we should use @Repository without JPARepository. In this case we need to work with entity manager direcly.
 - If we have requirement that can be handled by JPARepository then we can use JPARepository without @Repository annotation. Spring will automatically inject this inservice class. Here we dont need to wory about entity manager.
 
-Example :
+Example of @Repository:
 ```java
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
@@ -791,6 +791,7 @@ public class BookService {
 }
 ```
 
+Example of JPARepository
 ```java
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -900,3 +901,244 @@ public class BookService {
     }
 }
 ```
+
+## Spring JPA example for Employee having list of subordinates in it
+```java
+package com.example.demo.controller;
+
+import com.example.demo.model.Employee;
+import com.example.demo.service.EmployeeService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/employees")
+public class EmployeeController {
+
+    private final EmployeeService service;
+
+    public EmployeeController(EmployeeService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return service.saveEmployee(employee);
+    }
+
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
+        return service.getEmployeeById(id);
+    }
+
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return service.getAllEmployees();
+    }
+
+    @GetMapping("/manager/{managerId}")
+    public List<Employee> getEmployeesByManager(@PathVariable Long managerId) {
+        return service.getEmployeesByManager(managerId);
+    }
+}
+```
+```java
+package com.example.demo.service;
+
+import com.example.demo.model.Employee;
+import com.example.demo.repository.EmployeeRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EmployeeService {
+
+    private final EmployeeRepository repository;
+
+    public EmployeeService(EmployeeRepository repository) {
+        this.repository = repository;
+    }
+
+    public Employee saveEmployee(Employee employee) {
+        return repository.save(employee);
+    }
+
+    public Employee getEmployeeById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public List<Employee> getAllEmployees() {
+        return repository.findAll();
+    }
+
+    public List<Employee> getEmployeesByManager(Long managerId) {
+        return repository.findByManagerId(managerId);
+    }
+}
+```
+```java
+package com.example.demo.repository;
+
+import com.example.demo.model.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    List<Employee> findByManagerId(Long managerId);
+}
+```
+```java
+import javax.persistence.*;
+
+@Entity
+@Table(name = "employee")  // Specifies the name of the table in the database
+public class Employee {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // Employee's unique identifier (primary key)
+
+    @Column(name = "employee_name", nullable = false, length = 100)
+    private String name;   // Employee's name (mapped to "employee_name" column)
+
+    @Column(name = "job_position", nullable = false, length = 50)
+    private String position;  // Employee's job position (mapped to "job_position" column)
+
+    @ManyToOne(fetch = FetchType.LAZY)  // Each employee has one manager (self-referencing relationship)
+    @JoinColumn(name = "manager_id")   // Foreign key column in Employee table
+    private Employee manager;  // The manager of the employee (another Employee object)
+
+    // One-to-many relationship: A manager can have many subordinates
+    //mappedBy field 'manager' will be searched inside List<Employee> class to find relationship. This manager field contains joinColumn attribute.
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employee> subordinates;  // Subordinates of this manager
+
+    @Column(name = "salary", nullable = false)
+    private Double salary;  // Employee's salary (mapped to "salary" column)
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public Employee getManager() {
+        return manager;
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
+    }
+}
+```
+```java
+//cascading explaination
+
+Employee manager = new Employee();
+manager.setName("Alice");
+
+Employee emp1 = new Employee();
+emp1.setName("Bob");
+emp1.setManager(manager);
+
+Employee emp2 = new Employee();
+emp2.setName("Charlie");
+emp2.setManager(manager);
+
+manager.setSubordinates(List.of(emp1, emp2));
+employeeRepository.save(manager); // Only saving manager
+
+//Thanks to cascade = CascadeType.ALL, 
+// JPA will automatically save Bob and Charlie too! 
+
+
+// Without cascade, you’d have to manually save each subordinate as follows:
+employeeRepository.save(manager);
+employeeRepository.save(emp1);
+employeeRepository.save(emp2);
+```
+
+| id  | name    | position   | manager_id |
+|-----|---------|------------|------------|
+| 1   | Alice   | Manager    | NULL       |
+| 2   | Bob     | Developer  | 1          |
+| 3   | Charlie | Developer  | 1          |
+| 4   | David   | Developer  | 2          |
+
+```
+SELECT e.id, e.name, e.position, m.name AS nameOfManager
+FROM employee e
+LEFT JOIN employee m ON e.manager_id = m.id;
+```
+
+Note: We use JoinColumn on ManyToOne attribute. Not on OneToMany. On OneToMany we use mappedBy.
+
+Example 1 :
+```java
+    // Example of self join i.e. Both manage and subordinates are exmployee only. i.e. Employee class.
+    @ManyToOne(fetch = FetchType.LAZY)  
+    @JoinColumn(name = "manager_id")
+    private Employee manager; 
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employee> subordinates; 
+```
+
+Example 2 :
+```java
+    //One teacher has many students.
+
+    //Teacher entity 
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Student> students;
+
+    //Many students have 1 teacher
+
+    //Student entity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+```
+### Teachers
+
+| id  | name        |
+|-----|-------------|
+| 1   | Mr. Smith   |
+| 2   | Ms. Johnson |
+
+### Students
+
+| id  | name     | teacher_id |
+|-----|----------|------------|
+| 1   | Alice    | 1          |
+| 2   | Bob      | 1          |
+| 3   | Charlie  | 2          |
