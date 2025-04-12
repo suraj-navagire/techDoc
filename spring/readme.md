@@ -649,3 +649,82 @@ public class LoggingAspect {
     }
 }
 ```
+## What is JPA ?
+JPA (Java Persistence API) is a speciication for ORM (Object Relational Mapping).
+
+It provides a standard way to map java objects to relational databases.
+
+Basically it provides interfaces and annotations that ORM providers must implement.
+
+## What is Hibernate ?
+Hibernate is the ORM framework and one of the most used implementation of JPA. It provides libraries to map java classes to database tables. 
+
+It provides features like database connections, SQL generation, caching, lazy loading and more.
+
+## List of JPA Implementations?
+- Hibernate
+- Eclipse Link
+
+## What is Spring Data JPA?
+Spring Data JPA is an abstraction layer written on top of JPA specification.
+
+It uses hibernate under the hood as implementation. This implementation we can change with other JPA implementations.
+
+It simplifies data access layer. Reduces boiler plate code and complex queries to write manually
+
+## List of Interfaces in Spring JPA
+1. Repository<T, ID>   
+It is a marker interface that other repository interfaces extends.
+org.springframework.data.repository.Repository
+
+2. CrudRepository<T, ID>   
+It provides basic CRUD operations but does not include sorting or pagination functionality.
+org.springframework.data.repository.CrudRepository
+
+3. PagingAndSortingRepository<T, ID>   
+It extends CRUD repository. It provides additional methods for pagination and sorting.
+Method : findAll(Pageable pageable)
+         findAll(Sort sort)
+org.springframework.data.repository.PagingAndSortingRepository
+
+4. JpaRepository<T, ID>
+It extends PagingAndSortingRepository and CRUDRespository. It also provides methods to flush persistence context and bach operations.
+org.springframework.data.jpa.repository.JpaRepository
+
+## CrudRepository Method Summary
+
+| Method Signature                                             | Description                                                       |
+|--------------------------------------------------------------|-------------------------------------------------------------------|
+| `S save(S entity)`                                           | Saves a given entity (create or update).                          |
+| `Iterable<S> saveAll(Iterable<S> entities)`                  | Saves multiple entities. (create or update)                       |
+| `Optional<T> findById(ID id)`                                | Finds an entity by its ID.  (read)                                |
+| `Iterable<T> findAllById(Iterable<ID> ids)`                  | Returns all entities by their IDs.  (read)                        |
+| `Iterable<T> findAll()`                                      | Returns all entities.  (read)                                     |
+| `boolean existsById(ID id)`                                  | Returns `true` if an entity with the given ID exists.  (read)     |
+| `long count()`                                               | Returns the number of entities.  (read)                           |
+| `void delete(T entity)`                                      | Deletes the given entity. (delete)                                |
+| `void deleteById(ID id)`                                     | Deletes the entity with the given ID.  (delete)                   |
+| `void deleteAllById(Iterable<? extends ID> ids)`             | Deletes entities by the given IDs. (Since Spring Data 2.5)(delete)|
+| `void deleteAll(Iterable<? extends T> entities)`             | Deletes the given entities.  (delete)                             |
+| `void deleteAll()`                                           | Deletes all entities.    (delete)                                 |
+
+
+## PagingAndSortingRepository Method Summary
+
+| Method Signature                             | Description                                                                 |
+|----------------------------------------------|-----------------------------------------------------------------------------|
+| `Iterable<T> findAll(Sort sort)`             | Returns all entities sorted by the given `Sort` parameter.                 |
+| `Page<T> findAll(Pageable pageable)`         | Returns a paginated list of entities according to the `Pageable` parameter. |
+
+
+## JpaRepository Specific Methods
+
+| Method Signature                                         | Description                                                             |
+|----------------------------------------------------------|-------------------------------------------------------------------------|
+| `void flush()`                                           | Flushes all pending changes to the database.                            |
+| `T saveAndFlush(T entity)`                               | Saves an entity and immediately flushes changes to the DB.              |
+| `List<T> saveAllAndFlush(Iterable<T> entities)`          | Saves all entities and flushes. (Since Spring Data 2.5)                 |
+| `void deleteAllInBatch()`                                | Deletes all entities in one batch.                                     |
+| `void deleteAllInBatch(Iterable<T> entities)`            | Deletes given entities in a batch. (Since Spring Data 2.5)              |
+| `T getOne(ID id)`                                        | Lazy-load reference to entity. **Deprecated** in favor of `getById()`. |
+| `T getById(ID id)`                                       | Returns a reference to the entity with the given ID.                    |
