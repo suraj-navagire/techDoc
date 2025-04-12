@@ -520,8 +520,10 @@ public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
 
 ```
 - Pointcut : Pointcut is a rule to define which joinpoint to intercept.
+    - execution pointcut 
+    - @annotation pointcut
 ```
-Structure of pointcut expression :
+Structure of execution pointcut expression :
 
 execution(access-modifier-pattern? return-type-pattern classNameOrInterface-name-pattern? method-name-pattern(param-pattern) throws-pattern?)
 
@@ -534,15 +536,48 @@ option2:
 execution(* com.example.aopdemo.service.MyService.sayHello(..) throws *)
 
 option3:
-//Here we are providing only mandatory regex. i.e. only for ReturnType, MethodName and MethodParameter. This expresssion will intercept all the methods in application.
+//Here we are providing only mandatory regex i.e. only for ReturnType, MethodName and MethodParameter. This expresssion will intercept all the methods in application.
 execution(* *(..))
 
 option4:
 //This expression will intercept all methods in service package. This is widely used and realistic expression.
 execution(* com.example.aopdemo.service.*(..))
 ```
+
+Example of annotation pointcut :
+```java
+
+//Creating custom annotation
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LoggingAspect {
+}
+
+
+@Service
+public class MyService {
+
+    @LoggingAspect
+    public void doSomething() {
+        System.out.println("Doing something...");
+    }
+}
+
+
+@Aspect
+@Component
+public class MyAspect {
+
+    @Before("@annotation(MyCustomAspect)")
+    public void beforeAdvice(JoinPoint joinPoint) {
+        System.out.println("Before method: " + joinPoint.getSignature().getName());
+    }
+}
+```
+
 - Weaving : Weaving is the process of applying aspects to application code either during compile time or run time .
 
+### Example of AOP :
 ```java
 package com.example.aopdemo.service;
 
@@ -614,3 +649,4 @@ public class LoggingAspect {
     }
 }
 ```
+
