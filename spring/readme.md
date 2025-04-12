@@ -438,4 +438,179 @@ public class App {
 }
 ```
 
-## What is Aspect Oriented Programing (AOP)?
+## What is Aspect Oriented Programming (AOP)?
+Aspect Oriented Programming allows us to seperate cross-cutting conserns from main business logic.
+
+Cross-cutting conserns are the code which affect multiple part of application code.
+
+So if we dont use AOP then we will have to write same code in multiple locations like logging code, security code etc along with business logic.
+
+With the help of AOP we can seperate out these cross cutting code into single place.
+
+Common examples of cross-cutting concerns:
+- Logging
+- Security / Authentication / Authorization
+- Error handling
+- Performance monitoring / Metrics
+- Transaction management
+- Caching
+- Validation
+
+### Key concepts of AOP
+- Aspect : Aspect is class which contains cross-cutting conserns like logging, error handling etc.
+    - We can use @Order(1) to set the order in case multiple aspects are present.
+- Advice : Advice is a method which gets executed at a specific join point. This method contains cross cutting code. Advice is a part of aspect class.
+
+| **Advice Type**      | **When It Runs**                                       |
+|----------------------|--------------------------------------------------------|
+| `@Before`            | Before method execution                                |
+| `@After`             | After method finishes (whether it returns or throws)   |
+| `@AfterReturning`    | After method returns successfully                      |
+| `@AfterThrowing`     | If the method throws an exception                      |
+| `@Around`            | Around the method execution (before + after + control) |
+
+- Join Point : Join point is a specific point during execution of a program, like method call or exception, where aspect's advice can be applied.
+```java
+@Aspect
+@Component
+public class JoinPointDemoAspect {
+
+    @Before("execution(* com.example.service.MyService.*(..))")
+    //The JoinPoint object is a snapshot of the execution context at the point where the advised method is invoked
+    public void beforeAdvice(JoinPoint joinPoint) {
+        System.out.println("🔹 @Before: Method = " + joinPoint.getSignature().getName());
+        System.out.println("🔹 Args = " + Arrays.toString(joinPoint.getArgs()));
+    }
+
+    @After("execution(* com.example.service.MyService.*(..))")
+    public void afterAdvice(JoinPoint joinPoint) {
+        System.out.println("🔹 @After: Completed method = " + joinPoint.getSignature().getName());
+    }
+
+    @AfterReturning(
+        pointcut = "execution(* com.example.service.MyService.*(..))",
+        returning = "result"
+    )
+    public void afterReturningAdvice(JoinPoint joinPoint, Object result) {
+        System.out.println("🔹 @AfterReturning: Method = " + joinPoint.getSignature().getName());
+        System.out.println("🔹 Returned = " + result);
+    }
+
+    @AfterThrowing(
+        pointcut = "execution(* com.example.service.MyService.*(..))",
+        throwing = "ex"
+    )
+    public void afterThrowingAdvice(JoinPoint joinPoint, Exception ex) {
+        System.out.println("🔹 @AfterThrowing: Method = " + joinPoint.getSignature().getName());
+        System.out.println("🔹 Exception = " + ex.getMessage());
+    }
+}
+```
+```java
+//ProceedingJoinPoint only meant for Around advice.
+@Around("execution(* com.example.service.MyService.sayHello(..))")
+public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+    System.out.println("🌀 @Around: Method = " + joinPoint.getSignature().getName());
+    Object[] args = joinPoint.getArgs();
+    // Optionally modify args here
+    Object result = joinPoint.proceed(args);
+    System.out.println("🌀 @Around: Result = " + result);
+    return result;
+}
+
+```
+- Pointcut : Pointcut is a rule to define which joinpoint to intercept.
+```
+Structure of pointcut expression :
+
+execution(access-modifier-pattern? return-type-pattern classNameOrInterface-name-pattern? method-name-pattern(param-pattern) throws-pattern?)
+
+option1 : 
+//Most specific expresion to intercept exact same method.
+execution(public String com.example.aopdemo.service.MyService.sayHello(String) throws java.lang.Exception)
+
+option2:
+//As access modifier is optional we will only add only one star before class name for return type.
+execution(* com.example.aopdemo.service.MyService.sayHello(..) throws *)
+
+option3:
+//Here we are providing only mandatory regex. i.e. only for ReturnType, MethodName and MethodParameter. This expresssion will intercept all the methods in application.
+execution(* *(..))
+
+option4:
+//This expression will intercept all methods in service package. This is widely used and realistic expression.
+execution(* com.example.aopdemo.service.*(..))
+```
+- Weaving : Weaving is the process of applying aspects to application code either during compile time or run time .
+
+```java
+package com.example.aopdemo.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+
+    //This is the joinpoint. advices will be applied before, after etc as per defined in aspect class.
+    public String sayHello(String name) {
+        System.out.println("Inside sayHello()");
+        if (name.equals("error")) {
+            throw new RuntimeException("Simulated error");
+        }
+        return "Hello, " + name;
+    }
+}
+```
+```java
+package com.example.aopdemo.aspect;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
+
+//LoggingAspect is a Aspect
+//In Spring Aspects are managed by container thats why need to add @component otherwise spring will not recognise
+@Aspect
+@Component
+@Order(1)
+public class LoggingAspect {
+
+    //beforeAdvice is a advice method because it is annoted with @Before 
+    //Following is the pointcut expression : execution(* com.example.aopdemo.service.MyService.sayHello(..))
+    @Before("execution(* com.example.aopdemo.service.MyService.sayHello(..))")
+    public void beforeAdvice() {
+        System.out.println("@Before: Method is about to run");
+    }
+
+    @After("execution(* com.example.aopdemo.service.MyService.sayHello(..))")
+    public void afterAdvice() {
+        System.out.println("@After: Method has finished (success or exception)");
+    }
+
+    //returning = "result" this name should match with method afterReturningAdvice parameter name.
+    @AfterReturning(pointcut = "execution(* com.example.aopdemo.service.MyService.sayHello(..))", returning = "result")
+    public void afterReturningAdvice(Object result) {
+        System.out.println("@AfterReturning: Method returned – " + result);
+    }
+
+    @AfterThrowing(pointcut = "execution(* com.example.aopdemo.service.MyService.sayHello(..))", throwing = "ex")
+    public void afterThrowingAdvice(Exception ex) {
+        System.out.println("@AfterThrowing: Exception thrown – " + ex.getMessage());
+    }
+
+    //In this we have to call proceed method to execute method.
+    //Around advice gets ProceedingJoinPoint method argument by default.
+    @Around("execution(* com.example.aopdemo.service.MyService.sayHello(..))")
+    public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+        //Do some processing before method execution
+        System.out.println("@Around: Before method");
+
+        // Proceed with method execution
+        Object result = joinPoint.proceed();
+
+        //Do some processing after method execution
+        System.out.println("@Around: After method");
+        return result;
+    }
+}
+```
