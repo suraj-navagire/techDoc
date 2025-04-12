@@ -728,3 +728,175 @@ org.springframework.data.jpa.repository.JpaRepository
 | `void deleteAllInBatch(Iterable<T> entities)`            | Deletes given entities in a batch. (Since Spring Data 2.5)              |
 | `T getOne(ID id)`                                        | Lazy-load reference to entity. **Deprecated** in favor of `getById()`. |
 | `T getById(ID id)`                                       | Returns a reference to the entity with the given ID.                    |
+
+## What is difference between @Repository and JPARepository?
+- Repository annotation is just another annotation like @service, @component etc.
+- It helps spring container to regester a class as bean.
+- It logically marks class as data access layer (Repository layer).
+- On the other hand JPARepository provides CRUD operation and other features.
+If we use JPARepository we dont need to write all those boiler plate code. It gets injected automatically in runtime.
+- If we are extending JPARepository then we dont need to add @Repository annotation on class. Spring will automatically scan for JPARepository and it will inject that.
+
+## When to use @Repository and JPARepository?
+- If we want to do custom operations that cant be handled by default methods of JPARepository then we should use @Repository without JPARepository. In this case we need to work with entity manager direcly.
+- If we have requirement that can be handled by JPARepository then we can use JPARepository without @Repository annotation. Spring will automatically inject this inservice class. Here we dont need to wory about entity manager.
+
+Example :
+```java
+import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+@Repository  // Marks this as a Spring bean
+public class BookRepository {
+
+    @PersistenceContext  // Injects the EntityManager for interacting with the database
+    private EntityManager entityManager;
+
+    // Custom query method
+    public List<Book> findBooksByAuthor(String author) {
+        // JPQL query to find books by author
+        String jpql = "SELECT b FROM Book b WHERE b.author = :author";
+        TypedQuery<Book> query = entityManager.createQuery(jpql, Book.class);
+        query.setParameter("author", author);
+        return query.getResultList();
+    }
+
+    // You can add other custom methods as needed
+}
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class BookService {
+
+    private final BookRepository bookRepository;
+
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public List<Book> getBooksByAuthor(String author) {
+        // Use the custom query method directly
+        return bookRepository.findBooksByAuthor(author);
+    }
+
+    // You can add other service methods as needed
+}
+```
+
+```java
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Book {
+
+    @Id
+    private Long id;
+    private String title;
+    private String author;
+
+    // Constructors, Getters, and Setters
+
+    public Book() {}
+
+    public Book(Long id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+}
+```
+```java
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BookRepository extends JpaRepository<Book, Long> {
+    // You can define custom query methods if needed
+    // Spring will automatically inject implementation for this new method. variable name should match with entityname e.g author is valirable name so method name will be findByAuthor
+    List<Book> findByAuthor(String author);
+}
+```
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class BookService {
+
+    private final BookRepository bookRepository;
+
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    // Create or Update a Book
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
+
+    // Get all Books
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    // Get Book by ID
+    public Optional<Book> getBookById(Long id) {
+        return bookRepository.findById(id);
+    }
+
+    // Get Books by Author (Custom method)
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    // Delete Book by ID
+    public void deleteBookById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    // Delete a Book (using Book entity object)
+    public void deleteBook(Book book) {
+        bookRepository.delete(book);
+    }
+
+    // Delete all Books
+    public void deleteAllBooks() {
+        bookRepository.deleteAll();
+    }
+}
+```
