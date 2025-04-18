@@ -143,6 +143,49 @@ public class WebSocketScopedBean {
 | `@Autowired`   | Dependency injection                       | Anywhere in the app     |
 | `@Value`       | Inject property values                     | Anywhere in the app     |
 
+## @Primary and @Qalifier ?
+@Primary Marks a bean as default when multiple beans of same type exist.
+
+@Qualifier specifies which bean to inject. It overrides @Primary.
+It is used when you want to inject speific bean by name.
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    @Primary
+    public Vehicle car() {
+        return new Car();
+    }
+
+    @Bean
+    public Vehicle bike() {
+        return new Bike();
+    }
+}
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+@Component
+public class TransportService {
+
+    // Injects the car (because it's @Primary)
+    @Autowired
+    private Vehicle defaultVehicle;
+
+    // Injects the bike (overrides @Primary)
+    @Autowired
+    @Qualifier("bike")
+    private Vehicle specificVehicle;
+}
+```
+
 ## What are the different annotations used at REST controller layer in Spring?
 
 | Annotation         | Description |
@@ -1142,3 +1185,278 @@ Example 2 :
 | 1   | Alice    | 1          |
 | 2   | Bob      | 1          |
 | 3   | Charlie  | 2          |
+
+## How to provide database and other properties in spring JPA ?
+src/main/resources/application.properties
+```java
+# Oracle Database configuration
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=your_oracle_username
+spring.datasource.password=your_oracle_password
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+
+# JPA and Hibernate configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+//Following is a class which will be used by hibernate to generate SQL query for oracle db
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.Oracle12cDialect
+```
+
+## Do we need persistence.xml ?
+No. Spring boot auto configures for us.
+- Entity manager
+- Transaction manager
+- Data source
+- Dialect
+- Package scanning
+- Persistence unit
+
+## Cache Types in JPA/Hibernate
+
+### First-Level Cache
+- The First-Level Cache is managed by the EntityManager itself, and it is session-bound (or transaction-scoped). This cache is local to the EntityManager instance and persists only for the duration of a single transaction or session.
+- Once the transaction is committed or the EntityManager is closed, the First-Level Cache is cleared.
+- Primary purpose: It reduces the number of database queries within the same transaction/EntityManager.
+
+### Second-Level Cache
+- The Second-Level Cache is managed by the EntityManagerFactory in collaboration with a cache provider (e.g., EhCache, Infinispan, Hazelcast, etc.).
+- Unlike the First-Level Cache, which is tied to a specific EntityManager, the Second-Level Cache is shared across multiple EntityManager instances and across multiple sessions/transactions.
+- Primary purpose: It improves performance across transactions by avoiding repeated queries to the database.
+
+## Cache Comparison Table
+
+| **Feature**                     | **First-Level Cache (EntityManager)**                                    | **Second-Level Cache (EntityManagerFactory)**                               |
+|----------------------------------|----------------------------------------------------------|------------------------------------------------------|
+| **Scope**                        | Per **`EntityManager`** (session/transaction-scoped)      | **Global** (shared across multiple `EntityManager` instances) |
+| **Enabled by default?**          | Yes                                                      | No (must be explicitly enabled)                      |
+| **Cache expiration**             | Expires when **`EntityManager`** is closed               | Can be configured with expiration and eviction policies |
+| **Scope of Use**                 | Only during the lifecycle of a transaction or session    | Across transactions and application-level, shared by all `EntityManager`s |
+| **Default Configuration**        | Automatic (no setup required)                            | Needs setup and configuration (e.g., cache provider) |
+| **Used for**                     | Caching entities within the current session or transaction. It means if transaction is done then no more caching. For new Transaction again fetched from DB. | Caching entities across sessions and transactions    |
+
+
+## If we have two data sources then how many EntityManagerFactory and EntityManager objects should be there?
+
+- Two EntityManagerFactory instances, one for each data source.
+- Two EntityManager instances, one for each data source, created for each transaction.
+
+## What is persistence context ?
+We can think persistence context as cache (First level and sencon level).
+
+## What is the role of the @Cacheable annotation in Spring?
+It caches result of a method if second level cache is enabled.
+
+```java
+@Service
+public class ProductService {
+
+    @Cacheable(value = "productsCache", key = "#productId")
+    public Product getProductById(Long productId) {
+        return productRepository.findById(productId);
+    }
+}
+
+```
+
+## @Cache ?
+When we enable second level cache like ehcache then this annotations tell cacheing framework about entites which needs to be cached.
+
+It check if primary key of given entity is present in cache or not. If its present then it returns result from cache else it fetches data from database and stores it in cache.
+
+```java
+@Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Product {
+
+    @Id
+    private Long id;
+
+    private String name;
+    private Double price;
+}
+
+```
+
+## What is Spring Boot ?
+Spring boot is a framework used to simplify spring devolopment and deployment process.
+
+It provides built in production ready features like
+- Embedded tomcat server.
+- auto configurations
+
+With the help of which we can create standlone spring applications.
+
+## Spring boot features ?
+- Auto configuration : Automatically configures beans based on classpath and other configuration files.
+- Embedded Servers : Supports embedded servers like tomcat, jetty. Elementes need to deploy war file.
+- Spring boot starters : Starters contains pre-configures dependencies which simplifies inclusion of required dependencies.
+- Spring boot actuators : Helps in health checks, metrix and monitoring.
+- Minimal configuration : Reduces boiler plate code and configuration.
+
+## What is the purpose of @SpringBootApplication annotation
+It is the combinaton of :
+- @Configuration : Marks the class as a source of bean definitions.
+- @EnableAutoConfiguration : Enables spring boots autoconfiguration.
+- @ComponentScan : Enable component scan and scan current package.
+
+## What is the role of application.properties or application.yml in Spring Boot?
+To provide external configurations.
+
+## What is profile and How do you set up profiles in Spring Boot?
+Profiles allows environment specific configurations like dev env, prod env etc.
+
+We can set current profile  using :
+spring.profiles.active=dev
+
+## What is Spring Boot's autoconfiguration?
+It automatically configures beans present in class path. 
+
+Example : IF spring boot finds 'spring-boot-starter-data-jpa' then it automatically configures EntityManagerFactory and other beans.
+
+This feature is enabled by @enableAutoConfiguration and it is part of @springBootApplication.
+
+## How do you disable auto-configuration in Spring Boot?
+We can exclude bean class that we dont want.
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+
+## How to change embedded server ?
+We can change embedded server from default tomcat to jetty by adding required dependency in pom.
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+
+
+## How do you configure the port for an embedded server?
+
+application.properties or application.yml using:
+```
+server.port=8081
+```
+
+## How can you handle exceptions globally in spring boot ?
+Spring Boot provides the @ControllerAdvice annotation to handle exceptions globally. You can define a class with @ControllerAdvice and use @ExceptionHandler methods to handle specific exceptions.
+```java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException ex) {
+        return new ResponseEntity<>("Resource not found", HttpStatus.NOT_FOUND);
+    }
+}
+```
+
+##  What is the use of @Value annotation in Spring Boot?
+@Value is used to inject property value from application.properties or application.yml file.
+```
+@Value("${server.port}")
+private String serverPort;
+```
+
+## What is @ConfigurationProperties ?
+It is used when we want to map any pojo class with external properties present in application.properties or yml
+```java
+@Component
+@ConfigurationProperties(prefix = "myapp")
+public class MyAppProperties {
+    private String name;
+    private int timeout;
+
+    // Getters and setters
+}
+
+
+@Service
+public class AppService {
+    private final MyAppProperties props;
+
+    public AppService(MyAppProperties props) {
+        this.props = props;
+    }
+
+    public void printConfig() {
+        System.out.println("App: " + props.getName());
+    }
+}
+
+```
+
+applicaiton.properties
+```
+myapp:
+  name: AwesomeApp
+  timeout: 45
+```
+
+## What is Spring Boot Actuator?
+Spring boot actuator provides production ready features like health checks, metrics, environment information. It contains set of tools to monitor and manage spring boot application.
+
+To enable actuator add following dependency in pom.xml
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+By default only following endpoints are active :
+```
+/actuator
+/actuator/health
+/actuator/health/{path}
+```
+
+If we want to active other endpoints of actuator then we need to add following property in application.properties.
+```
+management.endpoint.web.expose.include=*    *This property will activate all other 14 endpoints of actuators*
+management.endpoint.web.expose.include=beans,mappings     *This will expose only beans and mappings endpoint*
+```
+Please note by default endpoints are accessible via application's port i.e. 8080. If we want to change this port to seperate application and management endpoints then we can add following in application.properties.
+```
+management.port=9001 
+```
+
+### Lits of actuator endpoints
+- /actuator/beans : Out of of this will be json. This will contain all the beans in application.
+- /actuator/caches : It will list all the caches present in application. If we have cached any JPA entity and any other model then it will show all that with name.
+- /actuator/caches/{cache} : It will fetch only given cache name
+- /actuator/health : It will show status of application.
+- /actuator/info : It will show information of application that we have provided inside application.properties like name, owner, build info etc
+- /actuator/configprops : It will list all the config property beans on which @configurationProperty is mentioned.
+- /actuator/env : It will show active profile like dev, prod, uat etc.
+- /actuator/loggers : It will list all the loggers in application
+- /actuator/heapdump : It will start downloading (.hprof file) heapdump of application. This heapdump we can load in any tool like Jprofiler or intellij(if have ultimate license)
+- /actuator/threaddump : It will show current stacktrace of application. It will show all the threads along with its state.
+- /actuator/metrics : It will list all the available metrics names like 
+![alt text](images/image.png)
+- /actuator/metrics/{metricsId} : It will show details of given metrics like
+![alt text](images/image-1.png)
+- /actuator/mapppings : It will show all rest endpoint present in application.
+
+
+### How to enable or disable any actuator enpoint ?
+In application.properties
+```
+management.endpoint.info.enable=false/true 
+```
+
+## Performance and actuator
+Using actuator like heapdump and all can hamper performace. So in production env we should enable only required endpoints. That too we should rarely use. 
+
+## Prometheus / Grafana
+It is used for long term metrics collection and visualization of an application. We should use this instead of actuator like metrics.
+
+Grafana is for data visualization and monitoring i.e. provides dashboard and prometheus is to store time series data.
+
+Prometheous store data like like CPU usage, memory utilization, request latencey and error rate. 
+
+Please note prometheous itself is data source.
+
+## What is a Spring Boot Banner?
+Spring boot banner is a custom logo that comes on console when we start spring boot application.
+We can disable it adding following property in application.properties.
+```
+spring.main.banner-mode=off
+```
