@@ -1460,3 +1460,79 @@ We can disable it adding following property in application.properties.
 ```
 spring.main.banner-mode=off
 ```
+
+## Testing in Spring boot
+- @SpringBootTest loads the entire Spring context.
+
+- @MockBean replaces the real UserRepository bean with a mock for the test.
+
+- Mockito lets you define what the mock should return using when(...).
+
+- When we mock repository we dont need real database.
+
+```java
+
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import static org.mockito.Mockito.*;
+
+@SpringBootTest
+class UserServiceTest {
+
+    /**
+     * Creating mocked UserRepository. This will create mocked instance of UserRepository inside application context. Because of this wherever this repository is injected like service, mocked instance will be injcted inside that bean.
+     */
+    @MockBean
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void testGetUsername() {
+        // Mocking behavior. This behaviours will be used by mocked object.
+        when(userRepository.findById(1L))
+            .thenReturn(Optional.of(new User(1L, "Alice")));
+
+        // Testing service. userSrvice will use mocked repository and it will return above provided User object written inside (when(.thenReturn()))
+        String name = userService.getUsername(1L);
+        assertEquals("Alice", name);
+    }
+}
+```
+
+## Integration Testing (Controller, Service, Repository)
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+class UserControllerIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    void setup() {
+        userRepository.deleteAll();
+        userRepository.save(new User(null, "Alice"));
+    }
+
+    @Test
+    void testGetUserByIdReturnsUser() throws Exception {
+        User user = userRepository.findAll().get(0);
+
+        mockMvc.perform(get("/users/" + user.getId()))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.name").value("Alice"));
+    }
+}
+```
+This hits 
+- The real DB (H2)
+- The real service
+- The real controller
+- @ActiveProfiles("test") : This activates test profile present in application.properties
+- @AutoConfigureMockMvc : lets you test REST endpoints with MockMvc
