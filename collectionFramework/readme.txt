@@ -41,8 +41,8 @@ Collections framework:-
                 1. Stack(Legacy Class)
         3. Set (Interface) : Represents group of object as single entity where insertion order not gets preserved and duplicates are not allowed.
             1. HashSet
-            2. LinkedHashSet
-            3. SortedSet (Interface)
+                1. LinkedHashSet
+            2. SortedSet (Interface)
                 1. NavigableSet (Interface)
                     1. TreeSet
         4. Queue (Interface): Represents group of individual objects as prior to processing. Follows FIFO order.
@@ -88,7 +88,8 @@ Collection :- It is a root interface of collection framework.
         Methods in List :-
             1.add() 2.get() 3.remove() 4.contains() 5.indexOf() 6.lastIndexOf() 7.set()
         List implementations :-
-            1. ArrayList :- It is based on array. Default capacity is 10. When capacity is full it increases capacity. New size becomes (oldSize * (3/2)).
+            1. ArrayList :- It is based on array. Default capacity is 10. When capacity is full it increases capacity. New size becomes 50% more.
+                newSize = oldSize + (oldSize >> 1)
                 - Serializable
                 - Cloneable
                 - RandomAccess interface - This is marker interface which tells any random elements can be accessed with same speed time complexity.
@@ -112,7 +113,7 @@ Collection :- It is a root interface of collection framework.
                     1. Manipulation is fast as compared with array list as no bits shift needed
                     2. Good memory utilization
                     3. Insertion at specific index is fast
-                    4. It can act as list and dequeue as it implements both interfaces
+                    4. It can act as list and deque (deque is queue) as it implements both interfaces
                     5. Deletion at specific index is fast
                     6. Insertion order is preserved.
 
@@ -120,7 +121,8 @@ Collection :- It is a root interface of collection framework.
                     1. More memory gets used to store same amount of data compared with array list
                     2. Retrieval is slow
 
-            3. Vector :- It is based on array. Initial capacity is 10 same as ArrayList. When capacity is full size increases. New size becomes (oldSize * (3/2)).
+            3. Vector :- It is based on array. Initial capacity is 10 same as ArrayList. When capacity is full size increases. Size gets double.
+                newSize = oldSize * 2.
                 - Serializable
                 - Cloneable
                 - RandomAccess interface
@@ -148,7 +150,7 @@ Collection :- It is a root interface of collection framework.
             Example : org.example.set.SetExample
             1. HashSet : Internally uses Hashtable data structure. Searching is fast. Duplicates are not allowed. We can add null value. Initial capacity 16.
                 Default Load factor is 0.75. Load factor is nothing but at what size capacity should be increased. By-default HashSet increases its size when 75% capacity is
-                used. Then it creates new object with double the capacity and copies all the old element to new one. Then old object becomes available for will be garbage
+                used. Then it creates new object with double the capacity and copies all the old element to new one. Then old object becomes available for garbage
                 collection.
                 - Serializable
                 - Cloneable
@@ -184,7 +186,7 @@ Collection :- It is a root interface of collection framework.
                                 else it will go right. And so on.
                             - For comparison Elements must be comparable to provide natural sorting. We can also pass comparator for custom comparison.
                             - We can pass null element only once i.e. at start. If we insert next element than it will throw null pointer.
-                            - Elements gets traversed using preorder traversing.
+                            - Elements gets traversed using inorder traversing.
                         Example : org.example.set.TreeSetExample
 
     Queue (I) :- It is a group of objects that are about to be processed. Queue follows first in first out concept.
@@ -410,7 +412,10 @@ Cursor -
                 hasNext(), next(), remove(), add(), set() , hasPrevious(), previous(). We can get this object using listIterator() method of List(interface) .
                 Example :- org.example.cursor.ListIteratorExample
 
-            4. SplitIterator :
+            4. Spliterator : It is used by streams. It is used to give better performance as we can split streams and can create multiple spliterator.
+                which we can pass to different threads to process in parallel.
+                It has tryAdvance() and trySplit() method . trySplit will split it into equally. tryAdvance it same as hasNext and next.
+                Example : org.example.cursor.SpliteratorExample
 
 
 
