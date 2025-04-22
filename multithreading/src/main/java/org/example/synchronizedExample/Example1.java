@@ -32,7 +32,7 @@ public class Example1 {
 
 				try {
 						t1.join();
-						t1.join();
+						t2.join();
 				} catch (InterruptedException e) {
 						throw new RuntimeException(e);
 				}

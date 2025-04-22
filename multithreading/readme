@@ -32,7 +32,7 @@ Thread vs Runnable :-
 
 Join :-
     thread.join() method will tell currently executing thread to wait for this thread (thread on which join method is called) to finish its job.
-    Example :- org.example.JonExample
+    Example :- org.example.JoinExample
 
 Volatile keyword :-
     Volatile means read from main memory not from CPU registers since in multicore system each cpu has its own register to store data.
