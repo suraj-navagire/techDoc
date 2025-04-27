@@ -212,6 +212,10 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Example : com.patterns.structural.decorator.Client
 
+            Note : Design wise bridge and decorator may look same but bridge does not solve same purpose. Shape and color is different.
+            In decorator purpose is same i.e. getPrice and prepare. In decorator there is one base and around that we decorate. Like simpleCoffee
+            then we add sugar and mil etc.
+
         5. Facade Design pattern -
             It helps in restructuring the code. If you feel that you have a complex system and you have exposed too many functions or API to
             client then you can add facade layer to it. Facade is just another layer with simplified/minimum number of API/functions. Facade takes

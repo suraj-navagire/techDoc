@@ -26,3 +26,7 @@ kafka/.gradle
 kafka/.idea
 kafka/build
 kafka/gradle
+java/.gradle
+java/.idea
+java/build
+java/gradle

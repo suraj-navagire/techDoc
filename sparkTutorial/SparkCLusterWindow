@@ -39,7 +39,7 @@ Calculation
 Case 1 :-
     Suppose we have to process 25GB of file then answer following questions
         1. To process 25 GB of file how many CPU cores are needed
-            - As per the recommendation we can have 64 to 128GB data per partition. For this lets take 128GB
+            - As per the recommendation we can have 64 to 128MB data per partition. For this lets take 128MB
             - So Number of partitions = 25*1024 MB / 128MB = 200
             - So we need 200 partitions , Hence we can have 200 cores
 
