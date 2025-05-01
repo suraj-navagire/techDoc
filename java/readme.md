@@ -525,4 +525,433 @@ class Test {
 | **Autoboxing**                  | If no primitive match, Java converts primitive types into their corresponding wrapper types (e.g., `int` ➔ `Integer`). |
 | **Autoboxing is Slower than Widening** | Widening (primitive to larger primitive) is generally faster than autoboxing (primitive to wrapper class). |
 
-## 
+# Methods Overriding
+Method overriding allows a subclass to provide a specific implementation of a method that is already defined in its superclass. The overridden method in the subclass must have the same name, return type, and parameters.
+
+## What are the rules of method overriding?
+- Method must have the same name, return type, and parameters.
+- Subclass method cannot be more restrictive than the superclass method.
+- Only inherited methods can be overridden.
+- Constructors cannot be overridden.
+- Private, static, and final methods cannot be overridden.
+- If overriding a method from a superclass in a different package, the overridden method in the subclass must be public or protected.
+
+## Return type summary
+| Superclass Return Type | Subclass Return Type | Allowed? | Reason |
+|----------------------|----------------------|---------|--------|
+| `Animal`             | `Dog`               | ✅       | Covariant |
+| `String`             | `Object`            | ❌       | Not covariant |
+| `int`                | `long`              | ❌       | Primitives must match |
+| `void`               | `void`              | ✅       | Same return type |
+| `List<Number>`       | `List<Integer>`     | ❌       | Generics are invariant |
+| `long`                 | `int`                 | ❌        | Primitives must match |
+
+## Return type example
+Example 1 : Valid Example.
+~~~java
+
+class Parent {
+    String getMessage() {
+        return "Parent";
+    }
+}
+
+class Child extends Parent {
+    @Override
+    String getMessage() {
+        return "Child";
+    }
+}
+~~~
+
+Example 2 : Valid example as Child class is returning Dog which is child of Animal.
+~~~java
+class Animal {
+		
+}
+
+class Dog extends Animal {
+		
+}
+
+class Parent {
+    Animal getAnimal() {
+        return new Animal();
+    }
+}
+
+class Child extends Parent {
+    @Override
+    Dog getAnimal() {
+        return new Dog();
+    }
+}
+~~~
+
+Example 3 : Incompatible return type
+~~~java
+class Parent {
+    String getValue() {
+        return "Hello";
+    }
+}
+
+class Child extends Parent {
+    // ❌ Compile-time error: incompatible return type
+    @Override
+    Integer getValue() {
+        return 42;
+    }
+}
+~~~
+
+Example 4 : Primitive return types: must be exactly the same
+~~~java
+class Parent {
+    int getNumber() {
+        return 10;
+    }
+}
+
+class Child extends Parent {
+    // ❌ Compile-time error if changed to long or float
+    @Override
+    int getNumber() {
+        return 20;
+    }
+}
+~~~
+
+Example 5 : Overriding with broader return type (supertype): Not allowed
+~~~java
+class Parent {
+    Dog getAnimal() {
+        return new Dog();
+    }
+}
+
+class Child extends Parent {
+    // ❌ Compile-time error: Animal is broader than Dog
+    @Override
+    Animal getAnimal() {
+        return new Dog();
+    }
+}
+~~~
+
+## Access Specifier Rules in Method Overriding
+The overriding method cannot be more restrictive than the overridden method. It can be less restrictive, but not the other way around.
+
+| Superclass Modifier         | Allowed Subclass Modifier(s)         |
+|-----------------------------|---------------------------------------|
+| `public`                    | `public` only                        |
+| `protected`                 | `protected`, `public`                |
+| `default` (package-private) | package-private, `protected`, `public` |
+| `private`                   | Cannot be overridden (not visible)   |
+
+# Can you override a static method?
+No, static methods are bound to the class, not the object. You can hide a static method, but not override it.
+
+~~~java
+class Parent {
+    static void display() {
+        System.out.println("Static method in Parent");
+    }
+}
+
+class Child extends Parent {
+    static void display() {
+        System.out.println("Static method in Child");
+    }
+}
+
+public class Test {
+   public static void main(String[] args) {
+      Parent p = new Child();
+	  //Method hiding. Parent method will get called as display is static.
+      p.display();        // Line 1
+      Child.display();    // Line 2
+      Parent.display();   // Line 3
+   }
+}
+
+Output :
+Static method in Parent
+Static method in Child
+Static method in Parent
+
+~~~
+
+# What happens if you reduce the visibility of an overridden method?
+It results in a compile-time error.
+
+# Can you override a private method?
+No. Private methods are not inherited, so overriding them is not possible. Defining a method in the subclass with the same name is method hiding, not overriding.
+
+~~~java
+class Parent {
+    private void show() {
+        System.out.println("Parent show()");
+    }
+}
+
+class Child extends Parent {
+    private void show() {
+        System.out.println("Child show()");
+    }
+
+    public void callShow() {
+        show();  // ✅ This is valid: calling Child's own private method
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Child c = new Child();
+        c.callShow();   // ✅ Allowed
+        // c.show();    // ❌ Compile-time error: show() has private access
+    }
+}
+~~~
+
+## Can overridden methods throw exceptions? What are the rules?
+Yes, but:
+- If the superclass method doesn't throw any checked exceptions, the overriding method cannot throw checked exceptions.
+- If the superclass method throws a checked exception, the subclass can:
+- Throw the same exception
+- Throw a subclass of that exception
+- Not throw any checked exception at all 
+Runtime exceptions are not restricted.
+
+## Can a subclass override a final method?
+No. A final method cannot be overridden to preserve its implementation. If we try we will get compile time error.
+
+## Can a subclass override a default method from an interface?
+Yes
+
+## What is covariant return type in overriding?
+It allows the return type of overridden method to be a subtype of the original return type.
+
+## Can we override constructor?
+No
+
+## Is it possible to call the superclass version of an overridden method?
+Yes. Using 'super'
+~~~java
+class Parent {
+    void display() {
+        System.out.println("Parent display");
+    }
+}
+
+class Child extends Parent {
+    void display() {
+        super.display();
+        System.out.println("Child display");
+    }
+}
+~~~
+
+## Can we call 'super' inside static method to call parents method
+No. 'super' and 'this' is used to refer object. Static methods are not part of object, they are part of class. So if we want to call parents method then we should call using class name.
+~~~java
+class Parent {
+    static void show() {
+        System.out.println("Parent static show");
+    }
+}
+
+class Child extends Parent {
+    static void show() {
+        System.out.println("Child static show");
+    }
+
+    static void callSuperShow() {
+        super.show(); // ❌ Compile-time error
+        Parent.show();//This will work
+    }
+}
+~~~
+
+## What is this in Java?
+- 'this' is a reference to the current object. 
+- It is only available inside non-static (instance) methods or constructors.
+
+## What is super in Java?
+- 'super' is a reference to the immediate parent class.
+- It’s used inside a subclass to:
+- Call parent class constructors
+- Call parent class methods
+- Access parent class fields
+
+~~~java
+class Vehicle {
+    String brand = "Generic Vehicle";
+
+    Vehicle(String brand) {
+        this.brand = brand;
+        System.out.println("Vehicle: " + brand);
+    }
+	
+	void parentMethod(){
+			System.out.println("Inside Parent Method");
+    }
+}
+
+class Car extends Vehicle {
+    String brand = "Car";
+
+    Car(String brand) {
+        super("Super-" + brand); // Call parent constructor
+        this.brand = brand;
+    }
+
+    void printBrands() {
+		super.parentMethod();	
+        System.out.println("Child brand: " + brand);       // Car
+        System.out.println("Parent brand: " + super.brand); // Super-Car
+        System.out.println("Parent brand: " + this.brand); // Car
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Car c = new Car("Car");
+        c.printBrands();
+    }
+}
+~~~
+
+## final in Java 
+| Modifier Target | Meaning                                          |
+|------------------|--------------------------------------------------|
+| `final` variable | Value/reference can't be changed after assignment |
+| `final` method   | Can't be overridden                              |
+| `final` class    | Can't be extended                                |
+
+# Primitive Data types
+1. Numeric Data Types
+These represent numbers and are divided into two sub-categories:
+   1. Integral (Whole Numbers) Data Types
+      These data types represent whole numbers (both positive and negative), including zero.
+   
+      | Data Type | Size     | Range                              | Default Value |
+      |-----------|----------|------------------------------------|---------------|
+      | `byte`    | 1 byte   | -128 to 127                        | 0             |
+      | `short`   | 2 bytes  | -32,768 to 32,767                  | 0             |
+      | `int`     | 4 bytes  | -2^31 to 2^31-1                    | 0             |
+      | `long`    | 8 bytes  | -2^63 to 2^63-1                    | 0L            |
+
+   3. Floating-Point (Decimal) Data Types
+      These represent numbers with fractions (i.e., numbers with decimal points).
+   
+      | Data Type | Size     | Range                                 | Default Value |
+      |-----------|----------|---------------------------------------|---------------|
+      | `float`   | 4 bytes  | ±1.4E-45 to ±3.4E38                   | 0.0f          |
+      | `double`  | 8 bytes  | ±4.9E-324 to ±1.8E308                 | 0.0d          |
+
+2. Non-Numeric Data Types
+   1. Character Type
+      This represents a single character.
+   
+      | Data Type | Size     | Range                          | Default Value |
+      |-----------|----------|--------------------------------|---------------|
+      | `char`    | 2 bytes  | 0 to 65,535 (Unicode characters) | '\u0000'      |
+
+   2. Boolean Type
+      This represents true/false values.
+   
+      | Data Type | Size     | Values                       | Default Value |
+      |-----------|----------|------------------------------|---------------|
+      | `boolean` | 1 bit    | `true` or `false`             | false         |
+   
+## How many bits in 1 byte
+8 bits.
+
+## Wrapper Classes of Primitive Data Types
+
+| Primitive Type | Wrapper Class     | Method to get primitive value|
+|----------------|-------------------|------------------------------|
+| `byte`         | `Byte`            |    b.byteValue();            |
+| `short`        | `Short`           |    s.shortValue();           |
+| `int`          | `Integer`         |    i.intValue();             |
+| `long`         | `Long`            |    l.longValue();            |
+| `float`        | `Float`           |    f.floatValue();           |
+| `double`       | `Double`          |    d.doubleValue();          |
+| `char`         | `Character`       |    c.charValue();            |
+| `boolean`      | `Boolean`         |    bool.booleanValue();      |
+
+## Ways to get wrapper class object from primitive value
+~~~java
+public class PrimitiveToWrapperExample {
+    public static void main(String[] args) {
+        
+        // Primitive type
+        int primitiveInt = 100;
+
+        // 1. Autoboxing: Automatically converts primitive to wrapper
+        Integer wrapperIntAuto = primitiveInt;  // Autoboxing
+        System.out.println("Autoboxing: " + wrapperIntAuto);  // Output: 100
+
+        // 2. Using valueOf() method: Converts primitive to wrapper
+        Integer wrapperIntValueOf = Integer.valueOf(primitiveInt);  // Using valueOf()
+        System.out.println("Using valueOf(): " + wrapperIntValueOf);  // Output: 100
+
+        // 3. Using constructor (deprecated): Converts primitive to wrapper
+        // Note: The constructor approach is deprecated, use valueOf() instead.
+        Integer wrapperIntConstructor = new Integer(primitiveInt);  // Using constructor (deprecated)
+        System.out.println("Using Constructor (deprecated): " + wrapperIntConstructor);  // Output: 100
+    }
+}
+
+~~~
+
+## Key Features of Wrapper Classes
+1. Immutability:
+Wrapper class objects are immutable, meaning their values cannot be changed once they are assigned.
+
+2. Conversion Methods:
+Wrapper classes provide methods to convert from primitive to wrapper and wrapper to primitive.
+
+    Autoboxing & Unboxing:
+   1. Autoboxing is the automatic conversion from a primitive type to a wrapper class object.
+    ~~~java
+   int a = 5;
+   Integer obj = a;  // Autoboxing (primitive to wrapper)
+   ~~~
+   
+    2. Unboxing is the automatic conversion from a wrapper class object to a primitive type.
+   ~~~java
+   Integer obj = 10;
+   int b = obj;  // Unboxing (wrapper to primitive)
+   ~~~
+   
+3. Useful Methods: parse<Type>() methods (e.g., parseInt(), parseDouble()) allow you to convert String values to primitive values.
+    ~~~java
+   int number = Integer.parseInt("123");  // Converts string to int
+   ~~~
+
+4. Constants: Each wrapper class has constants like MIN_VALUE, MAX_VALUE for the range of the respective primitive type.
+~~~java
+System.out.println(Integer.MAX_VALUE);  // Prints 2147483647
+~~~
+
+5 Nullability: Wrapper classes can be null (since they are objects), whereas primitive types cannot.
+~~~java
+Integer obj = null;  // Valid
+int primitiveInt = null;  // ❌ Compile-time error
+~~~
+
+## How much data wrapper class object can hold
+It can hold same data as its primitive type. The difference is since it is an object it will take some extra memory.
+
+All wrapper class will take extra 24 byte memory (for 64 bit jvm)
+
+Example 1: 
+byte can hols 1 byte data.
+Byte will also contain 1 byte + 24 extra memory(object overhead) = 25 byte (memory it will hold)
+
+Example 2 :
+int can hols 4 byte data.
+Integer will also contain 4 byte + 24 extra memory(object overhead) = 28 byte (memory it will hold)
+
