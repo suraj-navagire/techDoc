@@ -955,3 +955,310 @@ Example 2 :
 int can hols 4 byte data.
 Integer will also contain 4 byte + 24 extra memory(object overhead) = 28 byte (memory it will hold)
 
+# Strings in java
+String is a sequence of characters. It is immutable.
+
+## Immutable Nature of Strings
+Immutability means that the content of a String object cannot be changed once it's created. If you try to modify a String, a new object is created.
+
+## String pool
+Java maintains a String pool, also known as the String constant pool or String literal pool. It is part of heap memory.
+
+~~~java
+String str1 = "Hello";  // Uses string pool
+String str2 = "Hello";  // Reuses the existing object from the pool
+
+System.out.println(str1 == str2);  // true (both refer to the same object)
+~~~
+
+## intern() method of String
+You can manually add strings to the pool using the intern() method, which ensures that a string with the same value is stored only once.
+
+~~~java
+String str1 = new String("Hello");
+String str2 = str1.intern();
+~~~
+
+## Ways to create String objects
+1. String Literal
+2. Using new keyword
+~~~java
+String s1 = "Java";  // String literal. It stores string in String pool
+String s2 = new String("Java");  // Creates a new String object outside the String pool
+~~~
+3. Using StringBuilder or StringBuffer
+~~~java
+StringBuilder sb = new StringBuilder("Java");
+sb.append(" is awesome!");
+String s = sb.toString();  // Converts StringBuilder back to String. It will be outside pool.
+~~~
+
+## toString() method used to create String
+When we create String object using toString method by default it will not go inside pool. We have to call intern() method for that or we have to generate String object inside toString using string literal.
+
+## String methods
+1. Length and Character Access
+
+   | **Method**                     | **Description**                                      | **Syntax**                                              | **Example**                                                    | **Output**                             |
+   |---------------------------------|------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------------|----------------------------------------|
+   | `length()`                      | Returns the length of the string (number of characters). | `int length()`                                          | `String str = "Hello";`<br>`int len = str.length();`          | `len` will be `5`                      |
+   | `charAt(int index)`             | Returns the character at the specified index in the string. | `char charAt(int index)`                               | `String str = "Hello";`<br>`char c = str.charAt(1);`          | `c` will be `'e'`                      |
+   | `substring(int start, int end)` | Returns a substring from the string, starting at `start` (inclusive) and ending at `end` (exclusive). | `String substring(int start, int end)`                  | `String str = "Hello";`<br>`String subStr = str.substring(1, 4);` | `subStr` will be `"ell"`                |
+
+2. Searching and Matching
+
+| **Method**                              | **Description**                                                       | **Syntax**                                                        | **Example**                                                       | **Output**                                 |
+|-----------------------------------------|-----------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------------|
+| `contains(CharSequence sequence)`       | Checks if the string contains the specified sequence of characters.   | `boolean contains(CharSequence sequence)`                        | `String str = "Hello World";`<br>`boolean result = str.contains("World");` | `result` will be `true`                    |
+| `startsWith(String prefix)`             | Checks if the string starts with the specified prefix.               | `boolean startsWith(String prefix)`                              | `String str = "Hello World";`<br>`boolean result = str.startsWith("Hello");` | `result` will be `true`                    |
+| `endsWith(String suffix)`               | Checks if the string ends with the specified suffix.                 | `boolean endsWith(String suffix)`                                | `String str = "Hello World";`<br>`boolean result = str.endsWith("World");` | `result` will be `true`                    |
+| `indexOf(int ch)` or `indexOf(String str)` | Finds the index of the first occurrence of a character or substring. | `int indexOf(int ch)` or `int indexOf(String str)`               | `String str = "Hello World";`<br>`int index1 = str.indexOf('o');`<br>`int index2 = str.indexOf("World");` | `index1` will be `4`, `index2` will be `6` |
+
+3. Comparison Methods
+
+   | **Method**                                    | **Description**                                               | **Syntax**                                                   | **Example**                                                       | **Output**                                  |
+   |-----------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------------|-------------------------------------------------------------------|---------------------------------------------|
+   | `boolean equals(Object obj)`                  | Compares two strings for **equality** (case-sensitive).       | `boolean equals(Object obj)`                                  | `String str1 = "Hello";`<br>`String str2 = "Hello";`<br>`boolean result = str1.equals(str2);` | `result` will be `true`                       |
+   | `boolean equalsIgnoreCase(String anotherString)` | Compares two strings **ignoring case** (case-insensitive).    | `boolean equalsIgnoreCase(String anotherString)`              | `String str1 = "Hello";`<br>`String str2 = "hello";`<br>`boolean result = str1.equalsIgnoreCase(str2);` | `result` will be `true`                       |
+   | `int compareTo(String anotherString)`         | Compares two strings **lexicographically** (case-sensitive).   | `int compareTo(String anotherString)`                         | `String str1 = "apple";`<br>`String str2 = "banana";`<br>`int result = str1.compareTo(str2);` | `result` will be a negative number (e.g., `-1`) |
+   | `int compareToIgnoreCase(String anotherString)`| Compares two strings **lexicographically**, ignoring case.    | `int compareToIgnoreCase(String anotherString)`               | `String str1 = "apple";`<br>`String str2 = "Banana";`<br>`int result = str1.compareToIgnoreCase(str2);` | `result` will be a negative number (e.g., `-1`) |
+
+4. Modification Methods
+
+| **Method**                                    | **Description**                                                   | **Syntax**                                                    | **Example**                                                       | **Output**                                 |
+|-----------------------------------------------|-------------------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------------|
+| `String replace(CharSequence target, CharSequence replacement)` | Replaces all occurrences of the specified `target` sequence with the `replacement` sequence. | `String replace(CharSequence target, CharSequence replacement)` | `String str = "Hello World";`<br>`String result = str.replace("World", "Java");` | `result` will be `"Hello Java"`             |
+| `String trim()`                               | Removes **leading and trailing** whitespace from the string.       | `String trim()`                                                | `String str = "   Hello World   ";`<br>`String result = str.trim();` | `result` will be `"Hello World"`            |
+| `String toUpperCase()`                        | Converts all characters in the string to **uppercase**.            | `String toUpperCase()`                                         | `String str = "Hello";`<br>`String result = str.toUpperCase();`   | `result` will be `"HELLO"`                  |
+| `String toLowerCase()`                        | Converts all characters in the string to **lowercase**.            | `String toLowerCase()`                                         | `String str = "HELLO";`<br>`String result = str.toLowerCase();`   | `result` will be `"hello"`                  |
+| `String concat(String str)`                   | Concatenates the specified string `str` to the end of the current string. | `String concat(String str)`                                    | `String str1 = "Hello";`<br>`String str2 = " World";`<br>`String result = str1.concat(str2);` | `result` will be `"Hello World"`            |
+
+5. Conversion Methods
+
+| **Method**                                    | **Description**                                                   | **Syntax**                                                    | **Example**                                                       | **Output**                                 |
+|-----------------------------------------------|-------------------------------------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------------|
+| `String[] split(String regex)`                | Splits the string into an array of strings based on the specified delimiter (regular expression). | `String[] split(String regex)`                                 | `String str = "apple,banana,orange";`<br>`String[] result = str.split(",");` | `result` will be `["apple", "banana", "orange"]` |
+| `boolean matches(String regex)`               | Checks if the string matches the given **regular expression**.    | `boolean matches(String regex)`                                | `String str = "12345";`<br>`boolean result = str.matches("\\d+");` | `result` will be `true`                    |
+
+##  String Immutability 
+~~~java
+public class StringImmutabilityExample {
+    public static void main(String[] args) {
+        String str1 = "Java";
+        str1 = str1 + " Programming";  // Creates a new String object
+
+        System.out.println(str1);  // Output: Java Programming
+    }
+}
+~~~
+
+## String vs. StringBuilder vs. StringBuffer
+
+| **Feature**          | **String**                                       | **StringBuilder**                                   | **StringBuffer**                                      |
+|----------------------|--------------------------------------------------|-----------------------------------------------------|-------------------------------------------------------|
+| **Mutability**       | Immutable (cannot be modified once created)     | Mutable (can be modified after creation)            | Mutable (can be modified after creation)              |
+| **Thread Safety**    | Not thread-safe                                 | Not thread-safe                                     | Thread-safe (synchronized methods)                    |
+| **Performance**      | Slower for frequent modifications due to immutability | Faster for string manipulation (non-synchronized)   | Slower than `StringBuilder` due to synchronization    |
+| **Use Case**         | Best for short-lived, rarely modified strings   | Best for single-threaded environments where frequent string manipulation is needed | Best for multi-threaded environments where thread safety is important |
+| **Internal Storage** | Uses a **char[]** array, creates new objects with every modification | Uses a **char[]** array, modifies the array directly | Uses a **char[]** array, modifies the array directly  |
+| **Memory Consumption** | Higher memory usage due to immutability and frequent new object creation | More efficient memory usage as it modifies the same object | More efficient memory usage than `String`, but with synchronization overhead |
+| **Common Methods**   | `length()`, `charAt()`, `substring()`, `concat()`, `replace()` | `append()`, `insert()`, `delete()`, `reverse()`, `toString()` | `append()`, `insert()`, `delete()`, `reverse()`, `toString()` |
+
+## StringBuilder Example
+
+~~~java
+public class StringBuilderExample {
+    public static void main(String[] args) {
+        // Creating a StringBuilder instance
+        StringBuilder sb = new StringBuilder("Hello");
+
+        // Using append() to add more text
+        sb.append(" World");
+        System.out.println("After append: " + sb.toString());  // Output: "Hello World"
+
+        // Using insert() to add text at a specific position
+        sb.insert(5, " Beautiful");
+        System.out.println("After insert: " + sb.toString());  // Output: "Hello Beautiful World"
+
+        // Using delete() to remove text between two indices
+        sb.delete(5, 15);
+        System.out.println("After delete: " + sb.toString());  // Output: "Hello World"
+
+        // Using deleteCharAt() to remove a character at a specific position
+        sb.deleteCharAt(5); // Remove the space at index 5
+        System.out.println("After deleteCharAt: " + sb.toString());  // Output: "HelloWorld"
+
+        // Using reverse() to reverse the entire string
+        sb.reverse();
+        System.out.println("After reverse: " + sb.toString());  // Output: "dlroWolleH"
+
+        // Using replace() to replace characters between specific indices
+        sb.replace(0, 5, "Hello");
+        System.out.println("After replace: " + sb.toString());  // Output: "HelloolleH"
+
+        // Using setCharAt() to change a specific character at an index
+        sb.setCharAt(5, ' ');
+        System.out.println("After setCharAt: " + sb.toString());  // Output: "Hello olleH"
+
+        // Using setLength() to truncate or extend the StringBuilder
+        sb.setLength(5);
+        System.out.println("After setLength: " + sb.toString());  // Output: "Hello"
+
+        // Using capacity() to check the current capacity of the StringBuilder
+        System.out.println("Current capacity: " + sb.capacity());  // Output: 16 (default capacity)
+
+        // Using ensureCapacity() it ensures atleast 50 size is present after that it can increase if needed.
+        sb.ensureCapacity(50);
+        System.out.println("New capacity after ensureCapacity: " + sb.capacity());  // Output: 50
+
+        // Using charAt() to get the character at a specific index
+        char ch = sb.charAt(0);
+        System.out.println("Character at index 0: " + ch);  // Output: 'H'
+    }
+}
+~~~
+
+## Performance Considerations for String concatenation.
+- String concatenation using + in a loop can be inefficient because each concatenation creates a new String object. It's better to use StringBuilder or StringBuffer in such cases.
+- Since String is immutable, repeated string manipulation can lead to excessive memory usage. StringBuilder or StringBuffer can help avoid creating multiple intermediate String objects.
+
+## The Numeric/Unicode value for the lowercase letter 'A' and 'a'
+It is 65 and 97 respectively
+~~~java
+public class CharValueExample {
+    public static void main(String[] args) {
+        char charCap = 'A';
+        int valCap = charCap; // Implicit conversion from char to int
+        System.out.println("The Unicode value of 'A' is: " + valCap);  // Output: 65
+        
+        char ch = 'a';
+        int value = ch;  // Implicit conversion from char to int
+        System.out.println("The Unicode value of 'a' is: " + value);  // Output: 97
+    }
+}
+~~~
+
+
+# Comparable Interface
+The Comparable interface is used to define the natural order of objects. It provides a method called compareTo() that is used to compare the current object with another object of the same class.
+
+Purpose: When you want to sort objects of a class in a natural order (e.g., alphabetically for strings, numerically for integers).
+
+Method: int compareTo(T o) method:
+
+Returns:
+- Negative if the current object is less than the specified object.
+- Zero if they are equal.
+- Positive if the current object is greater than the specified object.
+~~~java
+import java.util.*;
+
+class Person implements Comparable<Person> {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    @Override
+    public int compareTo(Person other) {
+        return this.age - other.age;  // Sorting by age in ascending order
+    }
+}
+
+public class ComparableExample {
+    public static void main(String[] args) {
+        List<Person> people = new ArrayList<>();
+        people.add(new Person("John", 25));
+        people.add(new Person("Alice", 30));
+        people.add(new Person("Bob", 20));
+
+        Collections.sort(people);  // Uses compareTo method of Person
+        for (Person p : people) {
+            System.out.println(p.name + " - " + p.age);
+        }
+    }
+}
+~~~
+~~~
+Bob - 20
+John - 25
+Alice - 30
+~~~
+
+## Comparator Interface
+The Comparator interface is used when you want to define a custom order for objects, or when the class does not implement Comparable. It provides a method called compare() to compare two objects.
+
+Purpose : When you want to define a custom sorting order, or if the class being sorted doesn't implement Comparable.
+
+Method: int compare(T o1, T o2) method:
+
+Returns:
+- Negative if o1 is less than o2.
+- Zero if they are equal.
+- Positive if o1 is greater than o2.
+
+~~~java
+import java.util.*;
+
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+class AgeComparator implements Comparator<Person> {
+    @Override
+    public int compare(Person p1, Person p2) {
+        return p1.age - p2.age;  // Sorting by age in ascending order
+    }
+}
+
+class NameComparator implements Comparator<Person> {
+    @Override
+    public int compare(Person p1, Person p2) {
+        return p1.name.compareTo(p2.name);  // Sorting by name alphabetically
+    }
+}
+
+public class ComparatorExample {
+    public static void main(String[] args) {
+        List<Person> people = new ArrayList<>();
+        people.add(new Person("John", 25));
+        people.add(new Person("Alice", 30));
+        people.add(new Person("Bob", 20));
+
+        // Sorting by age using AgeComparator
+        Collections.sort(people, new AgeComparator());
+        System.out.println("Sorted by Age:");
+        for (Person p : people) {
+            System.out.println(p.name + " - " + p.age);
+        }
+
+        // Sorting by name using NameComparator
+        Collections.sort(people, new NameComparator());
+        System.out.println("\nSorted by Name:");
+        for (Person p : people) {
+            System.out.println(p.name + " - " + p.age);
+        }
+    }
+}
+~~~
+~~~
+Sorted by Age:
+Bob - 20
+John - 25
+Alice - 30
+
+Sorted by Name:
+Alice - 30
+Bob - 20
+John - 25
+~~~
+
