@@ -45,6 +45,18 @@ docker exec -it {container_id} sh
 run container and start shell:
 docker run -it {image_name} sh
 
+Suppose if we have db docker and tomcat docker running on same server and if we want to connect tomcat with that db.
+Then we should not use localhost as url. Instead use db docker name. To access docker by its name we have to run both docker on same network.
+
+docker network create my-network
+
+docker run -d --name my-db --network my-network -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydb postgres:13
+  
+docker run -d --name my-tomcat --network my-network -p 8080:8080 my-tomcat-image
+
+To list existing docker network
+docker network ls
+
 Steps to copy docker image from one server to anothe:-
 1. Copy docker image to tar file:
 	docker save -o /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar obdxkafka-3.4.0
@@ -52,3 +64,4 @@ Steps to copy docker image from one server to anothe:-
 	docker load -i /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar
 	docker run -it obdxkafka-3.4.0 /bin/bash
 	docker start {container id}
+	
