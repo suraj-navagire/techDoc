@@ -8,7 +8,7 @@ Thread is the smallest lightweight process.
 
 1. **New state** – When we create a thread.  
    `Thread t = new Thread();`
-2. **Runnable / Running** – When we start thread it goes in runnable state, then depending upon availability, it goes to running state.  
+2. **Runnable and Running** – When we start a thread, it enters the runnable state; when selected by the JVM scheduler, it may actually run (running state).  
    `t.start();`
 3. **Blocked state** – When thread tries to acquire a lock but it's not available.  
    `synchronized(Object) {}`
@@ -16,7 +16,7 @@ Thread is the smallest lightweight process.
    `object.wait();`
 5. **Timed waiting state** – When thread is waiting for a definite amount of time.  
    `object.wait(1000);`
-6. **Terminate state** – When thread completes its task or any exception occurred.
+6. **Terminated state** – When thread completes its task or if any exception occurs.
 
 ---
 
@@ -75,13 +75,15 @@ Thread is the smallest lightweight process.
 
 ---
 
-## synchronized Keyword on Method
+## synchronized Keyword in Java
 
-- Every object in Java has an intrinsic lock. At a time, only one thread can acquire this lock. When we mark any method synchronized, then thread has to acquire this intrinsic lock in order to do any processing on that object.
-- When we use the `synchronized` keyword on a method, then we don't need to use the `volatile` keyword for shared data. By default, that shared data is monitored by all the threads.
+- Every object in Java has an intrinsic lock. At a time, only one thread can acquire this lock. When we mark any method synchronized, the thread has to acquire this intrinsic lock in order to do any processing on that object.
+- When we use the `synchronized` keyword on a method, the Java Memory Model guarantees that changes to shared variables made by one thread are visible to other threads accessing those variables inside other synchronized methods or blocks on the same lock. Thus, you do not need to mark those variables as `volatile` if all access is properly synchronized.
 
-**Case:**  
-If a class has 2 synchronized methods and if 2 threads want to access them then, at a time, only 1 thread can access one of the methods. If 1 thread is accessing one method then other thread cannot access same or other synchronized method.
+---
+
+### Instance Methods
+If a class has two synchronized instance methods and two threads try to access them on the same object, only one thread at a time can execute either method—the object’s intrinsic lock ensures exclusive access. If both threads use different object instances, then they can each acquire the lock on their respective objects independently, and both synchronized methods can run concurrently (one per object).
 
 ```java
 void synchronized method1() {
@@ -93,8 +95,11 @@ void synchronized method2() {
 }
 ```
 
-**Solution:**  
-To solve this, we can use synchronized lock on separate objects.
+---
+
+### Solution (Separate Object Locks)
+
+To solve this, we can use synchronized lock on separate objects:
 
 ```java
 Object o1 = new Object();
@@ -112,6 +117,25 @@ void method2() {
     }
 }
 ```
+
+---
+
+### Static Methods
+
+The intrinsic lock used is associated with the Class object itself (e.g., `ClassName.class`). This means that only one thread at a time can execute any static synchronized method for that class, regardless of how many different object instances exist. Even if two threads call static synchronized methods using different instances of the same class, they will still compete for the same lock and cannot execute concurrently.
+
+---
+
+### Instance and Static Method Behavior (1 Object, 2 Threads)
+
+If one thread tries to access a synchronized instance method and another thread tries to access a synchronized static method (even on the same object), both threads can execute their respective methods concurrently without blocking each other.
+
+- A synchronized instance method locks on the specific object instance (`this`).
+- A synchronized static method locks on the Class object (`ClassName.class`).
+
+These are completely separate locks. So, acquiring a lock on the instance does not interfere with acquiring a lock on the class object, and vice versa.
+
+---
 
 **Example:**  
 Follow example present in package  
@@ -196,7 +220,8 @@ It's used when we don't want to use synchronized method or block where we try to
 
 ## DeadLock
 
-Deadlock occurs when one Thread has acquired lock on one resource and is waiting for lock on another resource, but at same time another thread has acquired lock on another resource for which first thread is waiting, and this second thread also wants lock on resource whose lock is taken by first thread.
+Deadlock occurs when one Thread has acquired lock on one resource and is waiting for lock on another resource, but at the same time another thread has acquired lock on the resource for which the first thread is waiting, and this second thread also wants the lock on the resource whose lock is taken by the first thread.
+A deadlock generally requires four conditions: mutual exclusion, hold and wait, no preemption, and circular wait.
 
 ---
 
@@ -206,7 +231,8 @@ Semaphore is used to acquire permit. The number provided to semaphore, that many
 
 - **acquire:** Used to acquire permit. If permit not available, then thread will wait.
 - **release:** Used to release permit. Then available permit count increases.
-- **availablePermit:** Used to check available permit count.
+
+- **availablePermits():** Used to check available permit count.
 
 **Example:**  
 `org/example/semaphore`
@@ -215,7 +241,7 @@ Semaphore is used to acquire permit. The number provided to semaphore, that many
 
 ## Interrupt
 
-This method will invoke interrupted exception if thread calling thread is in sleep. If calling thread is running then it will update interrupt flag of that thread.
+If one thread calls the `interrupt()` method on another thread and that thread is currently sleeping, waiting, or otherwise blocked on a method that responds to interrupts, it will immediately throw an `InterruptedException`. If the thread is running or not blocked in such a method, the interrupt flag is set and can be checked later using `Thread.interrupted()` or `isInterrupted()`.
 
 **Example:**  
 `org.example.InterruptExample`
