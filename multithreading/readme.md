@@ -1,4 +1,4 @@
-# Multithreading Interview Preparation
+# Multithreading
 
 Thread is the smallest lightweight process.
 
