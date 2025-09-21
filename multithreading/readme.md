@@ -1,4 +1,4 @@
-# Multithreading (Based on Udemy Course)
+# Multithreading Interview Preparation
 
 Thread is the smallest lightweight process.
 
