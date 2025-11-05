@@ -64,7 +64,12 @@ Useful cmds :
     User username@org.com
     IdentityFile ~/.ssh/id_rsa2
     IdentitiesOnly yes
+
 19. "git clone ssh://work-git/repositioryname.git" Clone cmd in case of multiple ssh keys. Please note "work-git" name should match "Host" of config file.
+
+20. "git checkout -b feature/JiraId-GitIgnore_File" This will create new branch and switch it to new branch.
+
+21. "git push origin feature/JiraId-GitIgnore_File" This will push entire feature branch to origin i.e. to mapped repository. In case config file is updated then follow point 16 and 17.
 
 Terms : 
 1. "origin" - This is short form for repository which is mapped.
