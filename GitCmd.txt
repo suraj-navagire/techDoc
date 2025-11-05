@@ -53,6 +53,19 @@ Useful cmds :
 
 15. "git stash pop" Used to apply changes that we have stashed.
 
+16. "git remote -v" To check current origin url
+
+17. "git remote set-url origin git@github-obdx:your-org/your-repo.git" To change current origin url. This will be useful when we are using mutiple ssh keys and if host is changed in config file.
+
+18. In case of multiple ssh keys use config file in same folder as public private key.
+	Content of config file :
+	Host work-git
+    HostName alm.org.com
+    User username@org.com
+    IdentityFile ~/.ssh/id_rsa2
+    IdentitiesOnly yes
+19. "git clone ssh://work-git/repositioryname.git" Clone cmd in case of multiple ssh keys. Please note "work-git" name should match "Host" of config file.
+
 Terms : 
 1. "origin" - This is short form for repository which is mapped.
 2. "HEAD" - This will help us to use instead of actual commit id. This will point to latest commit id of current branch.
