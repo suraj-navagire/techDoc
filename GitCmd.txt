@@ -71,6 +71,14 @@ Useful cmds :
 
 21. "git push origin feature/JiraId-GitIgnore_File" This will push entire feature branch to origin i.e. to mapped repository. In case config file is updated then follow point 16 and 17.
 
+22. "git checkout develop" Switch to develop branch. As code is merged to develop branch. 
+
+23. "git branch -D feature/JiraId-GitIgnore_File" Delete branch. Before this move to another branch.
+
+24. "git fetch --prune" Fetch updates from remote and remove any remote-tracking branches that no longer exist on the remote.
+
+25. "git pull origin develop" fetches updates from develop branch or ( we can use main if main is the branch where code is merged)
+
 Terms : 
 1. "origin" - This is short form for repository which is mapped.
 2. "HEAD" - This will help us to use instead of actual commit id. This will point to latest commit id of current branch.
