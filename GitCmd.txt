@@ -85,3 +85,18 @@ Terms :
 3. "HEAD~1" - This will point to latest minus 1 i.e. second latest commit id.
 4. ".gitignore" This file will contains file names which we want to ignore from staging area. Also result in not comes for commit.
 		We can use this to add class files and cred files that we should not commit.
+
+
+Best practice for daily work :
+
+1. git checkout develop => Always go to your main/develop branch before starting new work
+2. git pull origin develop => Fetch all updates for develop/main branch from original repository
+3. git checkout -b feature/JiraId-GitIgnore_File => This will create new branch and switch it to new branch.
+4. git push origin feature/JiraId-GitIgnore_File => This will push entire feature branch to origin i.e. to mapped repository
+5. Raise MR to merge feature branch to develop/main branch.
+6. Once approved merger the MR from UI
+7. Once merged, delete the feature branch
+8. git checkout develop => Switch to develop branch. As code is merged to develop branch. 
+9. git branch -D feature/JiraId-GitIgnore_File =>  Delete branch locally. Before this move to another branch.
+10. git fetch --prune => Fetch updates from remote and remove any remote-tracking branches that no longer exist on the remote.
+11. git pull origin develop => fetches updates from develop branch. Check updates.
