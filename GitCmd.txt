@@ -100,3 +100,7 @@ Best practice for daily work :
 9. git branch -D feature/JiraId-GitIgnore_File =>  Delete branch locally. Before this move to another branch.
 10. git fetch --prune => Fetch updates from remote and remove any remote-tracking branches that no longer exist on the remote.
 11. git pull origin develop => fetches updates from develop branch. Check updates.
+
+Commands to clean branch :
+1. git clean -fd => This will remove all newly added files in current branch
+2. git reset --hard origin/main => If you have created your current branch from main and if you want to remove all updates in current branch then use this. This will make your current branch same as main branch
