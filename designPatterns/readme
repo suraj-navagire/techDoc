@@ -19,6 +19,18 @@ What is design pattern:-
     you can customize to solve design problems in your code.
 
 SOLID principle in software design:- These are the design principles that needs to be consider while designing the software
+SOLID (with real examples)
+
+    SRP: separating business logic vs orchestration
+
+    OCP: adding features without modifying existing code
+
+    LSP: correct inheritance usage
+
+    ISP: avoiding fat interfaces
+
+    DIP: programming to abstractions
+
 1. Single responsibility principle -
         A class should have only one reason to change. i.e. A class should have only one job to do or one task or one purpose.
         Example :- com.patterns.solid.SingleResponsibilityViolation,
@@ -34,8 +46,35 @@ SOLID principle in software design:- These are the design principles that needs 
 
 3. Liskov substitution principle -
         It states that object of superclass can be replaced by object of sub class without affecting correctness of a program.
-        Example :- com.patterns.solid.LiskovSubstitutionCorrect,
-                    com.patterns.solid.LiskovSubstitutionViolation
+
+        Example :com.patterns.solid.LiskovSubstitutionShapeCorrect, com.patterns.solid.LiskovSubstitutionShapeViolation
+        Case 1 : Suppose we have Rectangle class with width and height variable and setter methods.
+                 It has area() method to return area of rectangle (width * height).
+                Now consider we have Square class which is a rectangle, So we will end up extending rectangle for Square class to reuse area() method and setter methods.
+                For rectangle width and height are independent. But for square its dependent. So exposing separate setter for width and height for Square class is not right.
+
+        Problem/Violation : “Square violates Liskov Substitution Principle because it changes the behavior of Rectangle’s setters.
+                            Rectangle assumes width and height are independent, but Square makes them dependent.
+                            So when a Square is substituted for a Rectangle, client expectations break.”
+
+        Fix/Solution : Redesign this and use correct approach to avoid inheritance and use a common abstraction like Shape.
+
+
+        Also If parent class has method which child class cannot use or override then LSP is broken.
+
+        Example :
+        Case 2 : Suppose we have Bird interface with methods eat and fly. So whoever will implement Bird they will have to implement both methods.
+        Suppose we have Sparrow and Penguin Classes, as we know both are Bird's then we will end up implementing Bird interface for both the classes.
+        Then they will have to override both methods.
+
+        Problem/Violation : The LSP violation occurs because the Bird interface forces all birds to implement fly().
+                            Penguin cannot fly, so it throws an exception, which breaks the contract.
+                            When the client substitutes a Sparrow with a Penguin, behavior changes, violating LSP.
+
+        Fix/Solution : The fix is we have to redesign interfaces to separate behavior into smaller interfaces like Flyable.
+    
+        Example :- com.patterns.solid.LiskovSubstitutionBirdViolation, com.patterns.solid.LiskovSubstitutionBirdCorrect
+
 
 4. Interface segregation principle -
         This principle states that interface should be segregated properly. This principle is similar to single responsibility principle.
