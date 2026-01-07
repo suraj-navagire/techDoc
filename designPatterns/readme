@@ -150,7 +150,8 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
             Shallow copy :- If we implement Cloneable interface and override Clone method then default implementation will give shallow copy feature.
                 Example :- com.patterns.creational.prototype.CompanyShallowExample
-            Deep copy :- If we implement Cloneable interface and override Clone method then Along with default implementation clone all non primitive and non immutable fields explicitly.
+            Deep copy :- If we implement Cloneable interface and override Clone method then Along with default implementation clone all non primitive
+                        and non immutable fields explicitly.
                 Example :- com.patterns.creational.prototype.CompanyDeepExample
 
             We can create copy using copy constructors as well. This is more advantageous then implementing cloneable.

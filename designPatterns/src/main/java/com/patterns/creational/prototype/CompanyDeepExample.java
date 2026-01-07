@@ -43,8 +43,10 @@ public class CompanyDeepExample implements Cloneable{
 				try {
 						CompanyDeepExample clone = (CompanyDeepExample) super.clone();
 
+						//For all non primitive we have to manually create copy.
 						List<Employee> newEmployee = new ArrayList<>();
 						for(Employee e : employees){
+								//Dont just directly add e add clone of e.
 								newEmployee.add(e.clone());
 						}
 

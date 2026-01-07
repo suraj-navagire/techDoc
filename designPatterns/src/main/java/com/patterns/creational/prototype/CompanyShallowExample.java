@@ -40,6 +40,9 @@ public class CompanyShallowExample implements Cloneable{
 
 		@Override public CompanyShallowExample clone() {
 				try {
+						//In this case name and dateOfInception will get copied but employee will still refer to original object.
+						//If we add anything in employee of new cloned object then it will get added in original object as well because
+						//both cloned and original object points to same employee object as this is shallow copy.
 						CompanyShallowExample clone = (CompanyShallowExample) super.clone();
 						// TODO: copy mutable state here, so the clone can't change the internals of the original
 						return clone;

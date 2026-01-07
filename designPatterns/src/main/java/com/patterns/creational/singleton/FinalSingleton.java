@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class FinalSingleton implements Serializable, Cloneable {
 
+		//This Holder class does not get loaded when FinalSingleton class is loaded. Its not eager initialization. It gets loaded when getInstance is called.
+		//Static class is used as static class object can be created without object of outer class.
+		// To instantiate a non-static inner class, we must first create an instance of the outer class. Which is not acceptable for singleton. That why we are using static inner class.
 		private static class Helper {
 				private static FinalSingleton INSTANCE = new FinalSingleton();
 		}
