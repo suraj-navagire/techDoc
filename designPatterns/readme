@@ -164,8 +164,8 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
         objects)
 
         1. Adapter design pattern :-  Adapter design pattern is a structural design pattern that allows objects with different interfaces to collaborate.
-            It acts as a bridge between 2 incompatible interfaces by converting the interface of one class into another interface.
-            This use useful when we want to reuse the existing classes without modifying their code, but their interface doesn't match with the requirements of client.
+            This is use useful when we want to reuse the existing classes without modifying their code, but their interface doesn't match with the requirements of client.
+            It extends the target interface and creates association with adaptee interface. Target interface is the one which is dealing with client.
 
             Example : com.patterns.structural.adapter.Client
 
@@ -261,9 +261,13 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             client then you can add facade layer to it. Facade is just another layer with simplified/minimum number of API/functions. Facade takes
             care of calling required functions/API's/subsystems on behalf of client.
 
-            In simple words if you have not designed your API's properly and you have end-up exposing number of API's to do a task, then Facade
-            groups those tasks in single/more (based on requirement) API and client can use this new facade API and then facade internally will call
-            number of API's.
+            In simple words if you have end-up exposing number of API's to do a task, then Facade groups those tasks in single/more
+            (based on requirement) API and client can use this new facade API and then facade internally will call number of API's.
+                        ✔ Facade simplifies a complex system
+                        ✔ It exposes fewer, cleaner APIs to the client
+                        ✔ It calls multiple subsystems on behalf of the client
+                        ✔ Client should not know internal complexity
+                        ✔ Facade is an orchestration layer
 
             Example : com.patterns.structural.facade.problem.Client
                 com.patterns.structural.facade.solution.Client
@@ -289,10 +293,11 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
                 com.patterns.structural.flyweight.solution.Client
 
         7. Proxy Design pattern -
-            - Proxy is nothing but "on behalf of".
-            - This design pattern is used to provide an object that used as a substitute or placeholder for another object
-            - Proxy controls access to original objects.
-            - It helps to add additional functionalities like access control, logging, caching etc.
+            - In proxy design pattern we provide object (UserServiceProxy) which controls access of another object (UserService).
+            - The purpose of Proxy is to control access to an object. As part of that control, it can add cross-cutting concerns
+              like caching, logging, security, or lazy initialization.
+
+              Difference in Proxy and facade is -> Proxy controls access of single object. Facade is used to control multiple subsystem.
 
             Example : com.patterns.structural.proxy.Client
 
