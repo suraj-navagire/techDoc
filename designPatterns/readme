@@ -315,11 +315,12 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
         Example : com.patterns.behavioral.chainOfResponsibility.Client
 
     2. Command Design Pattern -
+        - In command design we use actions as an object rather than having it as methods and calling them directly from client.
         - This design pattern allows actions as an object to decouple the request operation. Generally we make action/operation as methods and call them.
           But in this pattern we make action/operation as object and pass it to invoker.
         - Consider Bulb as a receiver which has 2 operation turn on , turn off. Then We can make 2 Command classes for it.
         - These commands knows how to perform that action.
-        - Client will only need to use this wil remote control.
+        - Client will only need to use this with remote control.
 
         - Components :
             1. Receiver - The object which will be controlled by commands. (Bulb)
@@ -327,6 +328,9 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
             3. Concrete command - It implements Command interface. It contains the receiver object. (TurnOn, TurnOff)
             4. Invoker - Stores the commands executes/undoes it. (RemoteControl)
             5. Client - Creates command and executes it with the help of Invoker.
+
+            Here, instead of the client directly calling the Bulb’s methods, the client uses a command object to turn the bulb on or off. In this way we are decoupling
+            client and bulb.
 
             Example : com.patterns.behavioral.command.Bulb
 
@@ -351,11 +355,11 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
         Example : com.patterns.behavioral.mediator.ChatRoomSimulator
 
     5. Observer Design pattern -
-        - Suppose there are 2 screen which are showing current temperature if temperature is updated this screen should also show updated value.
-        To achieve this screen's has to check status of weather station time to time. But its not good solution. Instead if weather station gets updated
+        - Suppose there are 2 screen which are showing current temperature if temperature is updated these screens should also show updated value.
+        To achieve this, screen's has to check status of weather station time to time. But its not good solution, instead if weather station gets updated
         then it should update every screen about it's change. This problem is solved by observer design pattern.
         - In this pattern subject i.e. weather station keeps list of observer's i.e. screens and update them once temperature gets updated.
-        - In this pattern when the subject (observable) changes state, all its observer's(listeners) gets notified and updated automatically.
+        - In this pattern when the subject (observable) changes state, all its observer's(listeners) gets notified and update automatically.
         - Components :
             1. Subject - It is observable which is being observed by observer's. Maintains list of observer's.
             2. Observers - Updates itself when notified by subject.
@@ -375,7 +379,7 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
 
     7. State Design pattern -
         - It allows object to change its behavior based on change in its state.
-        - It is used when objects behavior depends on its state and needs to change as its state changes.
+        - It is used when objects behavior depends on its current state and needs to change as its state changes.
         - Basically in this design pattern we are delegating object's responsibility to each state. How object will behave on some action
         will be determined by its state. So each state will have all the methods as the main object.
         - Consider coffee machine. It can have 3 states. Idle, Selection, dispense state.
@@ -384,6 +388,11 @@ https://www.youtube.com/watch?v=4ff_KZdvJn8
         will have to insert coin. Once you are in selection state again you cannot insert coin and so on.
         - So each state will contain all these 3 methods (insertCoin, selectCoffee, dispense) and they will provide respective implementation
         accordingly
+        - Components :
+            1. State (interface) : This will declare all possible actions of main object
+            2. Concrete State : This will implement state interface and will provide definition for all actions for this state
+            3. Main Object : This is a main object which will contain all states along with current state. This will contains all actions and
+            it will delegate call to current state to perform given action.
 
         Example : com.patterns.behavioral.state.Client
 
