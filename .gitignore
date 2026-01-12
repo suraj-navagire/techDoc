@@ -30,3 +30,7 @@ java/.gradle
 java/.idea
 java/build
 java/gradle
+systemDesign/.gradle
+systemDesign/.idea
+systemDesign/build
+systemDesign/gradle
