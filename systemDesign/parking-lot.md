@@ -107,11 +107,15 @@ class CarFeeCalculationStrategy{
 	+calculateFee(ticket : Ticket) : long
 }
 
-class TruckFessCalculationStrategy{
+class TruckFeesCalculationStrategy{
 	+calculateFee(ticket : Ticket) : long
 }
 
 DisplayBoard ..|> Observer
+
+class Observer {
+   +update(count : int) : void
+}
 
 class DisplayBoard {
 	-id : String
@@ -160,7 +164,7 @@ FeeCalculationFactory --> IFeeCalculationStrategy
 
 class FeeCalculationFactory{
 	-strategyMap : Map<VehicleType, IFeeCalculationStrategy>
-	+getInstance() : IFeeCalculationStrategy
+	+getInstance(vehicleType : VehicleType) : IFeeCalculationStrategy
 }
 
 
@@ -293,6 +297,58 @@ class ParkingLot{
 	-exitGates : List<ExitGate>
 }
 ~~~
+Explain class diagram in flow :-
+At entry gate, vehicle comes in. EntryGate uses SlotAssignmentStrategy to find a free slot across floors.
+Once parked, slot changes its state to occupied and a ticket is generated.
+At exit, ExitGate uses FeeCalculationFactory based on vehicle type, calculates fee, then delegates payment to PaymentFactory.
+After successful payment, slot transitions back to free state and observers are notified.
 
 ## Step 6 : Implementation
 Exmaple : com.systemdesign.lld.parkinglot.Client
+
+## Step 7 : API Design
+
+### API to get parking ticket
+~~~
+POST /api/v1/parking/entry
+
+Request :
+{
+  "registrationNumber": "MH12AB1234",
+  "vehicleType": "CAR",
+  "entryGateId": "G-IN-1"
+}
+
+Response : 
+{
+  "ticketId": "T123",
+  "slotId": "S45",
+  "floorId": "F2",
+  "entryTime": "2026-01-10T10:30:00"
+}
+~~~
+
+Controller → EntryGate.issueTicket() → SlotAssignmentStrategy.assignSlot() → ParkingSlot.parkVehicle() → Ticket
+
+### API for vehicle exit and payment
+~~~
+POST /api/v1/parking/exit
+
+Request :
+{
+  "ticketId": "T123",
+  "paymentType": "UPI"
+}
+
+Response :
+{
+  "amount": 120,
+  "paymentStatus": "SUCCESS",
+  "exitTime": "2026-01-10T13:45:00"
+}
+~~~
+Controller → ExitGate.processExit() → FeeCalculationFactory.getInstance(vehicleType) → IFeeCalculationStrategy.calculateFee() 
+→ PaymentFactory.getInstance(paymentType) → IPaymentStrategy.pay() → ParkingSlot.unParkVehicle()
+
+## Step 8 : Concurrency and Locking
+Slot assignment and state transitions must be synchronized

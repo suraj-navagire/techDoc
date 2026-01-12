@@ -31,17 +31,17 @@ public class ParkingLot {
 				}
 
 				entryGates = new ArrayList<>();
-				EntryGate entryGate = new EntryGate("Entry gate : 1", new NearestSlotAssignmentStrategy());
-				EntryGate entryGate2 = new EntryGate("Entry gate : 2", new RandomSlotAssignmentStrategy());
+				EntryGate entryGate = new EntryGate("G-IN-1", new NearestSlotAssignmentStrategy());
+				EntryGate entryGate2 = new EntryGate("G-IN-2", new RandomSlotAssignmentStrategy());
 				entryGates.add(entryGate);
 				entryGates.add(entryGate2);
 
 				exitGates = new ArrayList<>();
 
-				ExitGate exitGate = new ExitGate("Exit-1");
+				ExitGate exitGate = new ExitGate("G-OUT-1");
 				exitGates.add(exitGate);
 
-				ExitGate exitGate2 = new ExitGate("Exit-2");
+				ExitGate exitGate2 = new ExitGate("G_OUT-2");
 				exitGates.add(exitGate2);
 		}
 
@@ -56,5 +56,5 @@ public class ParkingLot {
 		public List<ExitGate> getExitGates() {
 				return exitGates;
 		}
-		
+
 }
