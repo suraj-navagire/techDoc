@@ -352,3 +352,6 @@ Controller → ExitGate.processExit() → FeeCalculationFactory.getInstance(vehi
 
 ## Step 8 : Concurrency and Locking
 Slot assignment and state transitions must be synchronized
+
+## Step 9 : Final comments
+The design avoids conditional logic, follows SOLID principles using appropriate design patterns, and keeps the REST layer thin
