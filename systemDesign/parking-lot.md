@@ -304,7 +304,7 @@ At exit, ExitGate uses FeeCalculationFactory based on vehicle type, calculates f
 After successful payment, slot transitions back to free state and observers are notified.
 
 ## Step 6 : Implementation
-Exmaple : com.systemdesign.lld.parkinglot.Client
+Example : com.systemdesign.lld.parkinglot.Client
 
 ## Step 7 : API Design
 
