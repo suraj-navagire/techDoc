@@ -3,5 +3,5 @@ package com.systemdesign.lld.elevatorsystem;
 import java.util.List;
 
 public interface ElevatorScheduler {
-		Elevator assignElevator(Request request, List<Elevator> elevators);
+		Elevator assignElevator(ExternalRequest externalRequest, List<Elevator> elevators);
 }
