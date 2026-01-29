@@ -10,9 +10,7 @@ public class ElevatorRunner implements Runnable{
 		@Override public void run() {
 				System.out.println("Elevator runner started for elevator : "+ this.elevator.getId());
 				while (true){
-						if(this.elevator.getState() == ElevatorState.WORKING){
-								elevator.move();
-						}
+						elevator.move();
 				}
 
 		}

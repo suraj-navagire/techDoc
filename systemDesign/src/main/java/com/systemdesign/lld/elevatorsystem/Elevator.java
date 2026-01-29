@@ -10,6 +10,7 @@ public class Elevator {
 		private int currentFloor;
 		private TreeSet<Integer> requestedUpperFloors;
 		private TreeSet<Integer> requestedDownFloors;
+		private Object object;
 
 		public Elevator(String id, Direction direction, ElevatorState state, int currentFloor) {
 				this.id = id;
@@ -19,27 +20,39 @@ public class Elevator {
 
 				this.requestedUpperFloors = new TreeSet<>();
 				this.requestedDownFloors = new TreeSet<>(Collections.reverseOrder());
+				this.object = new Object();
 		}
 
 		public void addFloor(int requestedFloor){
-				if(this.currentFloor < requestedFloor){
-						this.requestedUpperFloors.add(requestedFloor);
-				}else {
-						this.requestedDownFloors.add(requestedFloor);
+				synchronized (object){
+						if(this.currentFloor < requestedFloor){
+								this.requestedUpperFloors.add(requestedFloor);
+						}else {
+								this.requestedDownFloors.add(requestedFloor);
+						}
+
+						this.state = ElevatorState.MOVING;
 				}
 		}
 
 		public void move(){
-				if(this.requestedUpperFloors.isEmpty() && this.requestedDownFloors.isEmpty()){
-						this.direction = Direction.IDLE;
+				if(this.state != ElevatorState.MOVING){
 						return;
 				}
 
-				if(this.direction == Direction.IDLE && this.requestedUpperFloors.isEmpty() ){
+				if(this.requestedUpperFloors.isEmpty() && this.requestedDownFloors.isEmpty()){
+						synchronized (object){
+								this.direction = Direction.NO_DIRECTION;
+								this.state = ElevatorState.STOPPED;
+						}
+						return;
+				}
+
+				if(this.direction == Direction.NO_DIRECTION && this.requestedUpperFloors.isEmpty() ){
 						this.direction = Direction.DOWN;
 				}
 
-				if(this.direction == Direction.IDLE && this.requestedDownFloors.isEmpty()){
+				if(this.direction == Direction.NO_DIRECTION && this.requestedDownFloors.isEmpty()){
 						this.direction = Direction.UP;
 				}
 
@@ -48,33 +61,40 @@ public class Elevator {
 						System.out.println("Elevator "+this.getId()+" reached : "+this.currentFloor);
 						int requestedFloor = this.requestedUpperFloors.first();
 						if(this.currentFloor == requestedFloor){
-								openDoor();
-								this.requestedUpperFloors.remove(requestedFloor);
-								try {
-										Thread.sleep(1000);
-								} catch (InterruptedException e) {
-										throw new RuntimeException(e);
+								synchronized (object){
+										this.state = ElevatorState.STOPPED;
+										openDoor();
+										this.requestedUpperFloors.remove(requestedFloor);
+										try {
+												Thread.sleep(1000);
+										} catch (InterruptedException e) {
+												throw new RuntimeException(e);
+										}
+										closeDoor();
 								}
-								closeDoor();
 						}
 				} else {
 						this.currentFloor--;
 						System.out.println("Elevator "+this.getId()+" reached : "+this.currentFloor);
 						int requestedFloor = this.requestedDownFloors.first();
 						if(this.currentFloor == requestedFloor){
-								openDoor();
-								this.requestedDownFloors.remove(requestedFloor);
-								try {
-										Thread.sleep(1000);
-								} catch (InterruptedException e) {
-										throw new RuntimeException(e);
+								synchronized (object){
+										this.state = ElevatorState.STOPPED;
+										openDoor();
+										this.requestedDownFloors.remove(requestedFloor);
+										try {
+												Thread.sleep(1000);
+										} catch (InterruptedException e) {
+												throw new RuntimeException(e);
+										}
+										closeDoor();
 								}
-								closeDoor();
 						}
 				}
 		}
 
 		public void openDoor(){
+				if(this.state == ElevatorState.STOPPED)
 				System.out.println("Door is opening at floor : "+this.currentFloor);
 
 		}

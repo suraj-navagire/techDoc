@@ -13,13 +13,13 @@ public class Application {
 				ExecutorService executor = Executors.newFixedThreadPool(5);
 
 
-				Elevator elevatorA = new Elevator("1",Direction.UP,ElevatorState.WORKING,2);
+				Elevator elevatorA = new Elevator("1",Direction.UP,ElevatorState.STOPPED,2);
 				ElevatorRunner runnerA = new ElevatorRunner(elevatorA);
 
-				Elevator elevatorB = new Elevator("2",Direction.DOWN,ElevatorState.WORKING,8);
+				Elevator elevatorB = new Elevator("2",Direction.DOWN,ElevatorState.STOPPED,8);
 				ElevatorRunner runnerB = new ElevatorRunner(elevatorB);
 
-				Elevator elevatorC = new Elevator("3",Direction.IDLE,ElevatorState.WORKING,5);
+				Elevator elevatorC = new Elevator("3",Direction.NO_DIRECTION,ElevatorState.STOPPED,5);
 				ElevatorRunner runnerC = new ElevatorRunner(elevatorC);
 
 

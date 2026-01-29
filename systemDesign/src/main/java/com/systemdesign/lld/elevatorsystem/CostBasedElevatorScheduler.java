@@ -15,7 +15,7 @@ public class CostBasedElevatorScheduler implements ElevatorScheduler{
 								continue;
 						}
 
-						if (elevator.getDirection() == Direction.IDLE){
+						if (elevator.getDirection() == Direction.NO_DIRECTION){
 								tempCost = Math.abs(externalRequest.getFloor() - elevator.getCurrentFloor());
 						} else if(elevator.getDirection() == externalRequest.getDirection() &&
 								canPassFrom(externalRequest, elevator.getCurrentFloor())){

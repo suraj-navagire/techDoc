@@ -17,12 +17,6 @@ public class ElevatorSystem {
 
 				selectedElevator.addFloor(externalRequest.getFloor());
 
-				if(selectedElevator.getDirection() == Direction.IDLE){
-						selectedElevator.setDirection(externalRequest.getDirection());
-				}
-
-
-
 				return new ExternalResponse(selectedElevator.getId());
 		}
 }
