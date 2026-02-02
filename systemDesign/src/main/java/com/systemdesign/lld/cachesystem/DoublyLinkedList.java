@@ -21,37 +21,48 @@ public class DoublyLinkedList<K> {
 				return node;
 		}
 
-		public void addToFirstNode(Node<K> node){
-				Node<K> prev = node.prev;
+		public void moveToFirst(Node<K> node){
+				if (node == head) return;
 
-				if(prev == null){
-						return;
+				// detach node
+				if (node.prev != null) {
+						node.prev.next = node.next;
+				}
+				if (node.next != null) {
+						node.next.prev = node.prev;
 				}
 
-				Node<K> next = node.next;
-
-				if(next == null){
-						tail = prev;
-				} else {
-						next.prev = prev;
+				if (node == tail) {
+						tail = node.prev;
 				}
 
-
+				// move to head
 				node.prev = null;
 				node.next = head;
 
-				head.prev = node;
+				if (head != null) {
+						head.prev = node;
+				}
+
+				head = node;
+
+				if (tail == null) {
+						tail = head;
+				}
 		}
 
 
 		public Node<K> removeLast(){
 				Node<K> node = tail;
 
-				Node<K> prev = tail.prev;
+				if(head == tail){
+						head = tail = null;
+						return node;
+				}
 
-				tail = prev;
+				tail = tail.prev;
 
-				prev.next = null;
+				tail.next = null;
 
 				return node;
 		}

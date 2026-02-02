@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LRUEvictionPolicy<K> implements EvictionPolicy<K> {
+		//Note Both DoublyLinkedList and Map is required to achieve O(1) time complexity.
 		private final DoublyLinkedList<K> doublyLinkedList = new DoublyLinkedList<>();
 		private final Map<K, Node<K>> map = new HashMap<>();
 
@@ -14,7 +15,7 @@ public class LRUEvictionPolicy<K> implements EvictionPolicy<K> {
 						node = doublyLinkedList.addToFirst(key);
 						map.put(key, node);
 				} else {
-						doublyLinkedList.addToFirstNode(node);
+						doublyLinkedList.moveToFirst(node);
 				}
 		}
 
