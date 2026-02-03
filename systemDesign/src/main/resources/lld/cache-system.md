@@ -1,4 +1,5 @@
 # Design a Cache system
+Cache is used to store data in key-value pair. Expectation is to retrieve value for given key in O(1) time.
 
 ## Step 1 : Requirement gathering
 Gather following information from interviewer (While asking these requirement we should tell upfront what we are assuming)

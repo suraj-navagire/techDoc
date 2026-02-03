@@ -1,4 +1,5 @@
 # Design an Elevator system
+System that manages elevator movement in a building.
 
 ## Step 1 : Requirement gathering
 Gather following information from interviewer (While asking these requirement we should tell upfront what we are assuming)

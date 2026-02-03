@@ -1,4 +1,5 @@
 # Design a parking lot system
+System that manages parking lot.
 
 ## Step 1 : Requirement gathering
 Gather following information from interviewer (While asking these requirement we should tell upfront what we are assuming)
