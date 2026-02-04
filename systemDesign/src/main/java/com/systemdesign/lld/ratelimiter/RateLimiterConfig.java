@@ -1,15 +1,15 @@
 package com.systemdesign.lld.ratelimiter;
 
 public class RateLimiterConfig {
-		private final int capacity;
+		private final double capacity;
 		private final double refillRate;
 
-		public RateLimiterConfig(int capacity, double refillRate) {
+		public RateLimiterConfig(double capacity, double refillRate) {
 				this.capacity = capacity;
 				this.refillRate = refillRate;
 		}
 
-		public int getCapacity() {
+		public double getCapacity() {
 				return capacity;
 		}
 

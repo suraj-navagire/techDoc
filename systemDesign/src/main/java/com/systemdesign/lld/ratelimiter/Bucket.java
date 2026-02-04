@@ -10,7 +10,7 @@ public class Bucket {
 		private double availableTokens;
 		private long lastRefillTimeStamp;
 
-		private ReentrantLock lock;
+		private ReentrantLock lock = new ReentrantLock();
 
 		public Bucket(RateLimiterConfig config){
 				this.capacity = config.getCapacity();
@@ -22,16 +22,21 @@ public class Bucket {
 		public boolean consume(){
 				boolean isConsumed = false;
 				lock.lock();
-				if(availableTokens > 0){
-						availableTokens = availableTokens - 1;
-						isConsumed = true;
+				try {
+						refill();
+						if(availableTokens >= 1){
+								availableTokens = availableTokens - 1;
+								isConsumed = true;
+						}
+
+				} finally {
+						lock.unlock();
 				}
-				lock.unlock();
+
 				return isConsumed;
 		}
 
 		private void refill(){
-				lock.lock();
 				long now = System.currentTimeMillis();
 				long timeDiffMillis = now - lastRefillTimeStamp;
 
@@ -40,9 +45,8 @@ public class Bucket {
 				double tokensToAdd = timeDiffSeconds * refillRate;
 
 				availableTokens = Math.min(capacity, availableTokens + tokensToAdd);
-				lastRefillTimeStamp = System.currentTimeMillis();
+				lastRefillTimeStamp = now;
 
-				System.out.println("timeDiffSeconds : "+timeDiffSeconds+" , tokensToAdd : "+tokensToAdd+", capacity : "+capacity );
-				lock.unlock();
+				System.out.println("timeDiffSeconds : "+timeDiffSeconds+" , tokensToAdd : "+tokensToAdd+", availableTokens : "+availableTokens );
 		}
 }

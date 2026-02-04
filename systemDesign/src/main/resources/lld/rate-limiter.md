@@ -121,7 +121,7 @@ class RateLimiter{
 }
 
 class TokenBucketRateLimiter{
-	- tokenBuckets : Map<String, Bucket>
+	- keyTokenMap : Map<String, Bucket>
 	- config : RateLimiterConfig
 	+ isRequestAllowed(key : String) : boolean
 }
@@ -138,14 +138,14 @@ class RateLimiterType{
 }
 
 class RateLimiterConfig{
-	- capacity : int
-	- refillRate : int
+	- capacity : double
+	- refillRate : double
 }
 
 class Bucket{
-	- capacity : int
+	- capacity : double
 	- refillRate : double
-	- avaiableTokens : int
+	- avaiableTokens : double
 	- lastRefillTimeStamp : long
 	+ consume() : boolean
 	- refill() : void
@@ -154,8 +154,14 @@ class Bucket{
 
 Explain class diagram in flow :-
 
-## Step 6 : Implementation
+Users will try to access application -> all request will land on RateLimiter.isRequestAllowed() ->
+TokenBucketRateLimiter.isRequestAllowed() -> Bucket will be fetched for key -> Bucket.consume() ->
+return true or false based on token availability
 
+Bucket.consume() method does the work of refilling token on every request. Lazy refilling.
+
+## Step 6 : Implementation
+com.systemdesign.lld.ratelimiter.Client
 
 ## Step 7 : API Design
 Not Applicable
@@ -164,5 +170,10 @@ Not Applicable
 ~~~
 
 ## Step 8 : Concurrency and Locking
+Used ConcurrentHashMap to store key and Bucket. So that if same key comes concurrently even then it will be thread safe.
+
+Same key user will get same bucket.
+
+Bucket.consume() uses Lock so that token use will be synchronized.
 
 ## Step 9 : Final comments
