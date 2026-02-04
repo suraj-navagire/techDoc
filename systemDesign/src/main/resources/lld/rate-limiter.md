@@ -11,7 +11,6 @@ Interviewers love the “why”.
 1. Prevent API abuse (DDOS, bots)
 2. Protect backend resources (DB, CPU)
 3. Ensure fair usage among users
-4. Avoid cascading failures
 
 ### Where is Rate Limiter used?
 
@@ -33,11 +32,11 @@ Gather following information from interviewer (While asking these requirement we
 8. There should be a pluggable design to allow changing the rate-limiting technique in the future.
 9. Which algorithm and why?
 
-   | Algorithm          | Description                                                                             |
-   | ------------------ | --------------------------------------------------------------------------------------- |
-   | **Fixed Window**   | Counts requests in fixed time windows. Simple, but burst can happen at window boundary. |
-   | **Sliding Window** | Uses a moving time window to count requests, so boundary burst is avoided.              |
-   | **Token Bucket**   | Uses tokens to allow requests. Supports small bursts but controls average rate.         |
+   | Algorithm          | Description                                                                                     |
+   | ------------------ |-------------------------------------------------------------------------------------------------|
+   | **Fixed Window**   | Counts requests in fixed time windows. Simple, but burst can happen at window boundary.         |
+   | **Sliding Window** | Uses a moving time window to count requests, so boundary burst is avoided but takes more memory |
+   | **Token Bucket**   | Uses tokens to allow requests. Supports small bursts but controls average rate.                 |
 
 
 ### Simple example (10 requests per 1 hour)
@@ -72,7 +71,7 @@ The window keeps moving.
 
 **Configuration:**
 - Bucket size = **10 tokens**
-- Refill rate = **10 tokens per hour**
+- Refill rate = **0.2**
 
 **How it works:**
 - Initially, the bucket has **10 tokens**
@@ -80,6 +79,7 @@ The window keeps moving.
     - If a token is available → allow and remove **1 token**
     - If no token is available → reject
 - Tokens are added **slowly over time** (not all at once)
+- In this case 0.2 tokens will be added per second. Means in 5 second 1 token will be added
 
 Note : 
 Time-based rate limiting focuses on fairness over time.
@@ -177,3 +177,4 @@ Same key user will get same bucket.
 Bucket.consume() uses Lock so that token use will be synchronized.
 
 ## Step 9 : Final comments
+Overall, the system is simple, extensible, performant (O(1)), and suitable for production-grade API rate limiting.
