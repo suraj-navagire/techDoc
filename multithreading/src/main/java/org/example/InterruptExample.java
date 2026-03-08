@@ -8,7 +8,7 @@ public class InterruptExample {
 						int count =0;
 					for(int i=0; i<1E9; i++){
 							if(Thread.currentThread().isInterrupted()){
-									System.out.println("Thread interrupted");
+									System.out.println("Thread interrupted on count :"+count);
 									break;
 							}
 							count++;

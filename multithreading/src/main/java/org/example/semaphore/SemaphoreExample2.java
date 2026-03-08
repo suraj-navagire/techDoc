@@ -34,16 +34,9 @@ class Connection1 {
 
 						synchronized (this) {
 								count++;
+								//Count will never go above 10
+								System.out.println("Connection count : "+count);
 						}
-
-						try {
-								Thread.sleep(1);
-						} catch (InterruptedException e) {
-								throw new RuntimeException(e);
-						}
-
-						//Count will never go above 10
-						System.out.println("Connection count : "+count);
 
 						try {
 								Thread.sleep(100);
@@ -53,6 +46,7 @@ class Connection1 {
 
 						synchronized (this){
 								count--;
+								System.out.println("Connection count : "+count);
 						}
 
 				} catch (InterruptedException e) {

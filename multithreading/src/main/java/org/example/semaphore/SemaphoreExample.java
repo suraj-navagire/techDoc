@@ -33,16 +33,10 @@ class Connection {
 		public void openConnection(){
 				synchronized (this) {
 						count++;
+						System.out.println("Connection count : "+count);
 				}
 
 				//This sleep shows some task in real life
-				try {
-						Thread.sleep(1);
-				} catch (InterruptedException e) {
-						throw new RuntimeException(e);
-				}
-
-				System.out.println("Connection count : "+count);
 
 				try {
 						Thread.sleep(100);
@@ -52,6 +46,7 @@ class Connection {
 
 				synchronized (this){
 						count--;
+						System.out.println("Connection count : "+count);
 				}
 
 		}
