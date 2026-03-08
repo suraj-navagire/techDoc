@@ -1439,3 +1439,120 @@ static {
 x = 10;
 static block exected
 ~~~
+
+### JVM Memory Model (Run time data area)
+
+#### Method Area (Metaspace)
+It is used to store **class-level information**.
+
+It stores:
+1. Class metadata
+   - Class name
+   - Parent class
+   - Implemented interfaces
+   - Field definitions
+   - Method declaration
+2. Method bytecode
+3. Static variables
+4. Runtime Constant Pool
+   1. Method references(Not current class methods) : After the resolution phase, symbolic method references are replaced with direct references to the actual method in memory.
+   2. Field references : After the resolution phase, symbolic field references are replaced with direct references to the actual field in memory.
+   3. String reference : Contains references to string literals used in the class. The actual string objects are stored in the String Pool in the Heap.
+   4. Primitive constants : Stores constant primitive values (int, float, long, etc.) used
+
+~~~
+Method Area (Metaspace)  ← shared JVM memory
+
+├── Class A data
+│     ├─ Metadata
+│     ├─ Methods
+│     ├─ Bytecode
+│     ├─ Static variables
+│     └─ Runtime Constant Pool
+│
+├── Class B data
+│     ├─ Metadata
+│     ├─ Methods
+│     ├─ Bytecode
+│     ├─ Static variables
+│     └─ Runtime Constant Pool
+~~~
+---
+
+#### Heap
+It is used to store **objects created during runtime**.
+
+It stores:
+1. Objects (which contain instance variables)
+2. Arrays (It gets stored outside object space inside heap)
+3. String Pool (Java 7+)
+~~~
+class Person {
+    int age;
+    int[] marks;
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Person p = new Person();
+        p.age = 25;
+        p.marks = new int[3];
+
+        String s = "Hello";
+    }
+}
+
+Heap
+├── Person Object
+│     ├── age = 25
+│     └── marks ───────────┐
+│                          ▼
+│                     Array Object
+│                     [0,0,0]
+│
+└── String Pool
+"Hello"
+~~~
+#### Stack
+Each thread has its own stack memory.
+
+It is used to store method execution information. Each method call creates a stack frame. When a method calls another method, a new frame is pushed onto the stack, when the method execution finishes, the frame is removed from the stack
+
+A stack frame contains:
+1. Local variables
+2. Method parameters
+3. Object references
+4. Intermediate results
+
+~~~
+public class Test {
+    public static void main(String[] args) {
+        int x = 10;               // primitive local variable
+        String s = "Hello";       // reference to string literal
+        Person p = new Person();  // reference to object
+        p.age = 25;
+        p.marks = new int[3];
+    }
+}
+
+class Person {
+    int age;
+    int[] marks;
+}
+
+Stack (per thread)
+ ├── main() frame
+ │     ├── x → 10                   (primitive local variable)
+ │     ├── s → reference ─────────┐ (points to String Pool object)
+ │     └── p → reference ──────┐   (points to Person object in Heap)
+~~~
+
+### PC Registers
+Each thread has its own pc register. It is used to store program counter i.e. address of next instruction. 
+
+### Native Method Stack 
+Each thread has its own native method stack, just like the Java Stack.
+
+It stores information about native methods (methods written in languages like C or C++ that are called from Java using JNI).
+
+Native methods do not use regular Java bytecode, so JVM maintains a separate stack for them.
