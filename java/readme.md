@@ -1262,3 +1262,180 @@ Bob - 20
 John - 25
 ~~~
 
+### What is JVM, JRE and JDK
+
+1. JVM (Java Virtual Machine) is the virtual machine responsible for executing Java bytecode. It loads compiled .class files and runs them.
+
+2. JRE (Java Runtime Environment) provides the environment required to run Java applications. It contains the JVM and core Java libraries required for execution.
+
+3. JDK (Java Development Kit) is used to develop Java applications. It includes JRE along with development tools like javac, jar, javadoc, jvisualvm, etc.
+
+~~~
+JDK
+ └── JRE
+      └── JVM
+~~~
+
+
+## JVM Architecture
+~~~
+        Class Loader
+             ↓
+     ---------------------
+     | Runtime Data Area |
+     |-------------------|
+     | Method Area       |
+     | Heap              |
+     | Stack             |
+     | PC Register       |
+     | Native Stack      |
+     ---------------------
+             ↓
+        Execution Engine
+        (Interpreter + JIT)
+             ↓
+       Native Interface
+             ↓
+        Native Libraries
+~~~
+
+### Class Loader in JVM
+Class Loader is a subsystem of JVM responsible for loading .class files into memory at runtime.
+
+#### Example
+~~~
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.print();
+    }
+}
+
+
+public class Student {
+    void print() {
+        System.out.println("Student class loaded");
+    }
+}
+~~~
+
+What Happens When Program Runs
+
+1. JVM starts
+2. ClassLoader loads Main.class
+3. JVM executes main() method
+4. When JVM sees Student s = new Student()
+5. ClassLoader loads Student.class
+
+~~~
+Main.class loaded
+       ↓
+main() executed
+       ↓
+Student object created
+       ↓
+Student.class loaded
+~~~
+This is called dynamic class loading
+
+#### Types of Class Loaders
+1. Bootstrap Class Loader : Loads class files present in <JAVA_HOME>/lib
+~~~
+java.lang.*
+java.util.*
+java.io.*
+~~~
+2. Extension Class Loader : Loads extension libraries present in <JAVA_HOME>/lib/ext
+3. Application Class Loader : Loads applications classes.
+~~~
+MyApp.class
+Student.class
+~~~
+
+#### Class Loader Hierarchy
+Java follows Parent Delegation Principle.
+When a class is requested:
+1. Application ClassLoader asks Extension ClassLoader
+2. Extension asks Bootstrap ClassLoader
+3. If parent cannot find class → child loads it
+
+Parent loads first.
+~~~
+Bootstrap ClassLoader
+        ↑
+Extension ClassLoader
+        ↑
+Application ClassLoader
+~~~
+
+#### Why Parent Delegation is needed ? What happens behind the scene ?
+Suppose someone writes a fake class inside the application (Custom Sting class with same package name):
+~~~
+package java.lang;
+
+public class String {
+}
+~~~
+Somewhere in application this String got called.
+~~~
+String s = "Hello";
+~~~
+Now JVM must decide which String class to load.
+
+When the Application ClassLoader receives the request to load 'java.lang.String', It does not load it immediately. Instead it follows Parent Delegation.
+1. Application ClassLoader receives request
+2. It asks Extension ClassLoader
+3. Extension ClassLoader asks Bootstrap ClassLoader
+4. Bootstrap ClassLoader searches inside core Java libraries 'JAVA_HOME/lib/modules'
+5. Bootstrap finds the real java.lang.String
+6. Bootstrap loads it
+7. That class is returned back down the chain.
+
+The Application ClassLoader never loads the fake class. It is ignored.
+
+Without parent delegation, A malicious developer could create :
+~~~
+java.lang.SecurityManager
+java.lang.String
+java.lang.System
+~~~
+and override core Java behavior, which would break JVM security. 
+
+Parent delegation prevents this attack.
+
+### Class Loading phases
+
+Loading -> Linking (Verification -> Preparation -> Resolution) -> Initialization
+
+1. Loading : Class loader loads .class file. JVM loads it to the method area and created java.lang.Class object.
+2. Lining : Prepares class for execution
+   1. Verification : In the verification phase, the JVM checks the bytecode to ensure it is valid, not corrupted, type-safe, and follows Java security rules. If any violation is detected, the JVM throws a java.lang.VerifyError.
+   ~~~
+   int x = "Hello"; //Illegal code
+   ~~~
+   2. Preparation : In the preparation phase, JVM allocates memory for static variables and assigns default values.
+   ~~~
+   static int x = 10; //Code in application
+   
+   x = 0 // During preparation
+   ~~~
+   3. Resolution : In resolution phase, JVM converts symbolic references into direct references.
+   ~~~
+   System.out.println(); // Code in application
+   
+   //During resolution
+   System → actual class in memory
+   println → actual method reference
+   ~~~
+3. Initialization : Now JVM executes static variables and static blocks.
+~~~
+static int x = 10;
+
+static {
+    System.out.println("Static block executed");
+}
+
+---
+x = 10;
+static block exected
+~~~
