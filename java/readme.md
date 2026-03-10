@@ -1052,6 +1052,15 @@ public class StringImmutabilityExample {
 }
 ~~~
 
+## Why String is Immutable
+There are several important design reasons.
+1. Java maintains a String Pool inside the Java Virtual Machine. Suppose 2 Strings are created using string literal with same values. If they become mutable updating one of them will result in update of object present in String pool. so both variable will get updated. Which will produce wrong result.
+2. Security : Strings are used in sensitive operations. If Strings were mutable, a malicious program could change them resulting security concerns.
+   1. database URLs
+   2. file paths 
+   3. network connections
+   4. class loading
+
 ## String vs. StringBuilder vs. StringBuffer
 
 | **Feature**          | **String**                                       | **StringBuilder**                                   | **StringBuffer**                                      |
@@ -1743,3 +1752,66 @@ Introduced: Java 11
 ~~~
 -XX:+UseZGC
 ~~~
+
+## Immutable objects in java
+In Java, an immutable object is an object whose state cannot change after it is created.
+
+### How to Create an Immutable Class
+1. Make the class final : So there won't be any subclass to modify the behavior.
+2. Make fields private and final : Once value/reference assigned cannot be updated.
+3. Initialize fields in constructor : Values are assigned at the time of object creation. Not later.
+4. Do not provide setters : Only provide getters.
+5. Return copies of mutable objects : If any field is mutable then return deep copy of it.
+
+Example :-
+Here Employee is immutable. Address is mutable object. So while storing Address creating new object. Also while returning creating its new object.
+~~~
+final class Employee {
+
+    private final int id;
+    private final String firstName;
+    private final String lastName;
+    private final Address address;
+
+    public Employee(int id, String firstName, String lastName, Address address) {
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+
+        // Defensive copy
+        this.address = new Address(
+                address.getStreet(),
+                address.getBuilding(),
+                address.getCity()
+        );
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Address getAddress() {
+
+        // Return copy to protect internal state
+        return new Address(
+                address.getStreet(),
+                address.getBuilding(),
+                address.getCity()
+        );
+    }
+}
+~~~
+## Why Immutable Objects Are Useful
+1. Thread Safety : Multiple threads can safely use the same object.
+2. Security : Values cannot be modified accidentally or maliciously.
+3. Safe Caching : Used in hash-based collections like java.util.HashMap, java.util.HashSet so keys won't be changed.
+4. Safe Sharing : Objects can be shared without copying.
