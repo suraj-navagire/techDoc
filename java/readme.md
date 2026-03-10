@@ -1609,3 +1609,137 @@ Native Library (.dll / .so)
       ↓
 Operating System
 ~~~
+
+## Garbage Collection (GC)
+Garbage collection is a process of automatically removing objects from heap memory that are no longer reachable from program.
+
+### When is an Object Eligible for GC?
+An object becomes eligible when no reference points to it.
+
+### Heap Structure Used by GC
+Heap is divided into generations to optimize garbage collection.
+~~~
+Heap
+ ├── Young Generation
+ │     ├── Eden
+ │     ├── Survivor S0
+ │     └── Survivor S1
+ │
+ └── Old Generation (Tenured)
+~~~
+1. Young Generation : New objects
+   1. Eden : Newly created objects.
+   2. Survivor (s0, s1) : Objects survived GC
+2. Old Generation : Objects that live longer. E.g. Cached objects, Long-Running objects
+
+### Types of Garbage Collection
+
+1. Minor GC : Occurs in Young Generation.
+
+   During Minor GC:
+   1. Objects in Eden and one Survivor space (From space) are scanned.
+   2. Live objects are copied to the other Survivor space (To space).
+   3. Objects surviving multiple GC cycles are promoted to Old Generation.
+
+   Note : Each object has an age counter. Every time an object survives Minor GC,
+   its age increases. When the age exceeds a threshold (usually 15), the object
+   is promoted to the Old Generation.
+
+   Note : S0 and S1 are Survivor spaces. At any point in time one of them is empty.
+   During garbage collection, live objects are copied to the empty Survivor space.
+   After copying, the roles of the Survivor spaces swap. This process continues
+   during each Minor GC cycle.
+
+~~~
+GC1 → Eden → S0
+GC2 → Eden + S0 → S1
+GC3 → Eden + S1 → S0
+GC4 → Eden + S0 → S1
+~~~
+
+2. Major GC : Occurs in Old Generation. It is slower and pauses the application longer.
+
+3. Full GC : Occurs on the entire heap (Young Generation + Old Generation).
+
+
+
+### Basic GC Algorithm
+Most JVM GC's follow Mark and Sweep algorithm
+1. Mark : GC Identifies reachable objects.
+2. Sweep : Removes unreachable objects.
+3. Compact : Moves objects together to avoid memory fragmentation.
+
+### How JVM Finds Reachable Objects
+GC starts from GC root
+Examples of GC Roots:
+1. Local variables in stack
+2. Static variables
+3. Active threads
+4. JNI references
+
+Objects reachable from these roots are not collected.
+
+~~~
+class Test {
+    Test t;
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Test t1 = new Test();
+        Test t2 = new Test();
+
+        t1.t = t2;
+        t2.t = t1;
+
+        t1 = null;
+        t2 = null;
+    }
+}
+~~~
+Even though objects reference each other, they are still collected because no GC root references them. 
+Here in stack frame of main(), t1 and t2 are variables, both becomes null. so no active reference from stack to heap pointing to t1 and t2 object. So it will be GC.
+
+### Can we force garbage collection?
+No. We can only request it.
+~~~
+System.gc();
+~~~
+
+### JVM Garbage Collectors
+#### Serial Garbage Collector (Very Old / Legacy)
+1. Single thread
+2. Stop-The-World
+3. Suitable for small applications
+~~~
+-XX:+UseSerialGC
+~~~
+
+#### Parallel Garbage Collector
+Introduced: Java 5
+1. Multiple threads
+2. Faster throughput
+3. Still Stop-The-World
+~~~
+-XX:+UseParallelGC
+~~~
+
+#### Garbage-First Garbage Collector (G1 GC)
+Introduced: Java 7
+Default since: Java 9
+1. Divides heap into regions
+2. Predictable pause times
+3. Good for large heaps
+~~~
+-XX:+UseG1GC
+~~~
+
+#### Z Garbage Collector (Modern)
+Introduced: Java 11
+1. Ultra low pause time
+2. Handles very large heaps
+3. Pause time usually <10 ms
+~~~
+-XX:+UseZGC
+~~~
