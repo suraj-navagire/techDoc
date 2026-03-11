@@ -1815,3 +1815,225 @@ final class Employee {
 2. Security : Values cannot be modified accidentally or maliciously.
 3. Safe Caching : Used in hash-based collections like java.util.HashMap, java.util.HashSet so keys won't be changed.
 4. Safe Sharing : Objects can be shared without copying.
+
+## Exception Handling
+Exception handling in java is used to handle runtime problems so that program doesn't crash suddenly and we can respond properly.
+
+### Types of Exception
+1. Checked Exception : Compiler forces to handle them with try-catch or throws. E.g. IOException, SQLException
+2. Un-Checked Exception : Checked at runtime. E.g. NullPointerException, ArithmeticException
+
+### try-catch-finally
+It is used to handle exception safely
+
+~~~
+try {
+    // risky code
+}
+catch(Exception e) {
+    // handling logic
+}
+finally {
+    // always runs
+}
+~~~
+
+### finally block
+finally always executes
+
+Even if:
+1. exception occurs
+2. exception handled
+3. return statement used
+
+Used for :
+1. closing files
+2. closing DB connections
+3. releasing resources
+
+### try-with-resources
+Introduced in Java 7. Used for automatic resource closing. Resources must implement AutoCloseable.
+
+Example resources: File, Database connection, InputStream, OutputStream
+
+Without try-with-resources
+~~~
+FileReader fr = null;
+
+try {
+    fr = new FileReader("test.txt");
+}
+catch(Exception e) {
+}
+finally {
+    fr.close();
+}
+~~~
+
+Problem:
+1. easy to forget closing
+2. messy code
+
+With try-with-resources
+~~~
+try (FileReader fr = new FileReader("test.txt")) {
+
+    System.out.println("Reading file");
+
+}
+catch (Exception e) {
+    e.printStackTrace();
+}
+
+Java automatically calls:
+fr.close()
+~~~
+
+### Custom Exceptions
+Sometimes built-in exceptions don’t describe your business error.
+
+Example:
+1. Invalid employee id
+2. Insufficient balance
+3. Order not found
+
+So we create our own exception class.
+~~~
+class InvalidAgeException extends Exception {
+
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+
+public class Test {
+
+    static void validateAge(int age) throws InvalidAgeException {
+
+        if(age < 18) {
+            throw new InvalidAgeException("Age must be above 18");
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        validateAge(15);
+    }
+}
+~~~
+
+### throw vs throws
+throw : It is used to throw an exception object. It is present inside method body.
+
+throws : It declares that the method may throw an exception. Used in method signature.
+
+### Exception Hierarchy
+~~~
+Throwable
+   |
+   |------ Error
+   |         |-- OutOfMemoryError
+   |         |-- StackOverflowError
+   |
+   |------ Exception
+             |
+             |-- IOException
+             |-- SQLException
+             |
+             |-- RuntimeException
+                     |-- NullPointerException
+                     |-- ArithmeticException
+                     |-- ArrayIndexOutOfBoundsException
+~~~
+
+Throwable : Throwable is the root class of Java’s exception hierarchy. Any object that can be thrown using throw and caught using catch must extend Throwable.
+
+Error : Serious problems you should not handle. E.g. OutOfMemoryError, StackOverflowError
+
+Exception : Problems that applications can handle. Two types Checked and Unchecked (RuntimeException) Exception.
+
+
+### AutoCloseable in Java
+AutoCloseable is an interface in Java that allows an object to be closed automatically when used in a try-with-resources statement.
+
+~~~
+class MyResource implements AutoCloseable {
+
+    public void use() {
+        System.out.println("Using resource");
+    }
+
+    @Override
+    public void close() {
+        System.out.println("Resource closed");
+    }
+}
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        try (MyResource r = new MyResource()) {
+            r.use();
+        }
+
+    }
+}
+
+
+Output :
+Using resource
+Resource closed
+~~~
+
+## Object Class
+The java.lang.Object class is the root class of all Java classes. Every class in Java implicitly extends Object.
+
+| Method             | Purpose                                       |
+| ------------------ | --------------------------------------------- |
+| `toString()`       | Returns string representation of object       |
+| `equals(Object o)` | Compares two objects                          |
+| `hashCode()`       | Returns hash value of object                  |
+| `getClass()`       | Returns runtime class                         |
+| `clone()`          | Creates copy of object                        |
+| `wait()`           | Thread waits                                  |
+| `notify()`         | Wakes one waiting thread                      |
+| `notifyAll()`      | Wakes all waiting threads                     |
+| `finalize()`       | Called before garbage collection (deprecated) |
+
+## Math Class
+The java.lang.Math class provides mathematical functions. All methods are static, so no object creation is needed.
+
+| Method          | Purpose        |
+| --------------- | -------------- |
+| `Math.sqrt()`   | Square root    |
+| `Math.pow()`    | Power          |
+| `Math.max()`    | Maximum        |
+| `Math.min()`    | Minimum        |
+| `Math.random()` | Random number  |
+| `Math.abs()`    | Absolute value |
+| `Math.ceil()`   | Round up       |
+| `Math.floor()`  | Round down     |
+
+### System Class
+The java.lang.System class provides access to system-level resources.
+
+| Feature                      | Purpose                    |
+| ---------------------------- | -------------------------- |
+| `System.out`                 | Standard output            |
+| `System.in`                  | Standard input             |
+| `System.err`                 | Error output               |
+| `System.currentTimeMillis()` | Current time               |
+| `System.gc()`                | Suggest garbage collection |
+| `System.exit()`              | Terminates JVM             |
+| `System.getenv()`            | Environment variables      |
+
+
+### ClassLoader
+The java.lang.ClassLoader is responsible for loading .class files into JVM memory.
+
+~~~
+ClassLoader loader = Test.class.getClassLoader();
+System.out.println(loader); //Test is application class so it will print application class loader like jdk.internal.loader.ClassLoaders$AppClassLoader@63947c6b
+~~~
+
