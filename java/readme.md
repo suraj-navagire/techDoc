@@ -2037,3 +2037,128 @@ ClassLoader loader = Test.class.getClassLoader();
 System.out.println(loader); //Test is application class so it will print application class loader like jdk.internal.loader.ClassLoaders$AppClassLoader@63947c6b
 ~~~
 
+## Java I/O operations
+### Small / Medium files
+Use java.nio.file package classes. It gives good performance and simple to use. We can use for all type of files text, pdf, image.
+
+1. Files.readString()
+2. Files.writeString()
+3. Files.readAllLines()
+
+~~~
+
+Path path = Paths.get("data.txt");
+Files.writeString(path, "Hello Java");
+
+
+Path path = Paths.get("data.txt");
+String content = Files.readString(path);
+System.out.println(content);
+~~~
+
+### Large files
+Useful for large text files. They read line by line without loading the whole file so out-of-memory issue won't come.
+
+1. BufferedReader
+2. BufferedWriter
+
+~~~
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        try (
+            BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("output.txt"))
+        ) {
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+
+                // modify text
+                String modified = line.toUpperCase();
+
+                bw.write(modified);
+                bw.newLine();   // move to next line
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+~~~
+
+### Binary data (images, pdf)
+Useful for large non-text files. Modify buffer size for better and fast performance keeping jvm memory in mind, Default buffer size 8kb.
+1. InputStream(abstract). FileInputStream (implementation)
+2. OutputStream(abstract), FileOutputStream (implementation)
+
+~~~
+InputStream in = new FileInputStream("big.pdf");
+OutputStream out = new FileOutputStream("copy.pdf");
+
+byte[] buffer = new byte[8192];   // 8 KB buffer
+int bytesRead;
+
+while ((bytesRead = in.read(buffer)) != -1) { //Here 'bytesRead' will show size of bytes read. Actual data will get saved in 'buffer'
+    out.write(buffer, 0, bytesRead);
+}
+
+in.close();
+out.close();
+~~~
+
+### Why to use InputStream over BufferedRead ?
+BufferedRead try to convert file data into text so it will corrupt non-text file data.
+
+### Can we use java.nio.file package classes for large files ?
+Yes, but internally they use BufferedRead and InputStream only
+
+## Static Block vs Instance Block
+A static block runs when the class is loaded into JVM, before any object is created. 
+
+An instance block runs every time an object is created, before the constructor.
+
+~~~
+class Test {
+
+    static {
+        System.out.println("First");
+    }
+    
+    {
+        System.out.println("Third");
+    }
+
+    Test() {
+        System.out.println("Fourth");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Second");
+        new Test();
+    }
+}
+~~~
+
+~~~
+Class Load
+   ↓
+Static block
+   ↓
+main() starts
+   ↓
+Object creation
+   ↓
+Instance block
+   ↓
+Constructor
+~~~
