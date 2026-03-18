@@ -40,4 +40,8 @@ public class TransactionalLimitValidator implements ILimitValidator{
 
 				return false;
 		}
+
+		@Override public void utilizeLimit(LimitCheckRequest request) {
+				System.out.println("Not applicable");
+		}
 }

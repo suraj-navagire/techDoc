@@ -1,10 +1,10 @@
 package com.systemdesign.lld.financiallimitsystem.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class LimitUtilization {
 
-		private PartyType partyype;
+		private PartyType partyType;
 
 		private String partyValue;
 
@@ -14,17 +14,17 @@ public class LimitUtilization {
 
 		private int count;
 
-		private Date date;
+		private LocalDate date;
 
 		//It will be null for payee records
 		private PeriodicType periodicType;
 
-		public PartyType getPartyype() {
-				return partyype;
+		public PartyType getPartyType() {
+				return partyType;
 		}
 
-		public void setPartyype(PartyType partyype) {
-				this.partyype = partyype;
+		public void setPartyType(PartyType partyType) {
+				this.partyType = partyType;
 		}
 
 		public String getPartyValue() {
@@ -59,11 +59,11 @@ public class LimitUtilization {
 				this.count = count;
 		}
 
-		public Date getDate() {
+		public LocalDate getDate() {
 				return date;
 		}
 
-		public void setDate(Date date) {
+		public void setDate(LocalDate date) {
 				this.date = date;
 		}
 

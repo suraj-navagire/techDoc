@@ -12,7 +12,13 @@ public class UserLevelLimitPackageFetcher extends AbstractLimitPackageFetcher {
 		}
 
 		@Override public EntityLimitPackageMap fetchLimitPackage(LimitCheckRequest request) {
-				return DataBase.getEntityLimitPackage(this.entityType, request.getUserId());
+				EntityLimitPackageMap entityLimitPackageMap = DataBase.getEntityLimitPackage(this.entityType, request.getUserId());
+
+				//Now check if it contains limit for given transaction.
+
+				boolean isPresent = entityLimitPackageMap.getLimitPackage().getLimitMap().containsKey(request.getTransaction().getId());
+
+				return isPresent ? entityLimitPackageMap : null;
 		}
 
 		@Override public int compareTo(AbstractLimitPackageFetcher o) {

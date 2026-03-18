@@ -10,6 +10,7 @@ import com.systemdesign.lld.financiallimitsystem.model.PartyType;
 import com.systemdesign.lld.financiallimitsystem.model.PeriodicLimit;
 import com.systemdesign.lld.financiallimitsystem.model.PeriodicType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PeriodicLimitValidator implements ILimitValidator{
@@ -33,7 +34,8 @@ public class PeriodicLimitValidator implements ILimitValidator{
 						}
 				}
 
-				return validateDailyLimit(dailyLimit, request) && validateMonthlyLimit(monthlyLimit, request);
+				return  validateDailyLimit(dailyLimit, request) && validateMonthlyLimit(monthlyLimit, request);
+
 		}
 
 		private boolean validateDailyLimit(PeriodicLimit dailyLimit, LimitCheckRequest request) {
@@ -48,9 +50,9 @@ public class PeriodicLimitValidator implements ILimitValidator{
 
 
 				//Fetch utilized limits for user
-				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.DAILY);
+				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.DAILY, LocalDate.now(), request.getTransaction().getId());
 
-				if (utilization == null){
+				if (utilization.getAmount().getAmount() == 0){
 						return true;
 				}
 
@@ -60,7 +62,13 @@ public class PeriodicLimitValidator implements ILimitValidator{
 				int amountToBeValidated = utilizedAmount + inputAmount;
 				int countToBeValidated = utilizedCount + 1;
 
-				return amountToBeValidated <= dailyAmount && countToBeValidated <= dailyCount;
+				boolean isAllowed = amountToBeValidated <= dailyAmount && countToBeValidated <= dailyCount;
+
+				if(isAllowed){
+						utilizeLimit(request);
+				}
+
+				return isAllowed;
 		}
 
 		private boolean validateMonthlyLimit(PeriodicLimit monthlyLimit, LimitCheckRequest request) {
@@ -75,9 +83,10 @@ public class PeriodicLimitValidator implements ILimitValidator{
 
 
 				//Fetch utilized limits for user
-				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.MONTHLY);
+				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.MONTHLY,
+						LocalDate.now().withDayOfMonth(1), request.getTransaction().getId());
 
-				if (utilization == null){
+				if (utilization.getAmount().getAmount() == 0){
 						return true;
 				}
 
@@ -87,12 +96,34 @@ public class PeriodicLimitValidator implements ILimitValidator{
 				int amountToBeValidated = utilizedAmount + inputAmount;
 				int countToBeValidated = utilizedCount + 1;
 
-				return amountToBeValidated <= monthlyAmount && countToBeValidated <= monthLyCount;
+				boolean isAllowed = amountToBeValidated <= monthlyAmount && countToBeValidated <= monthLyCount;
+
+				if(isAllowed){
+						utilizeLimit(request);
+				}
+
+				return isAllowed;
 		}
 
-		@Override public boolean utilizeLimit(LimitCheckRequest request) {
+		@Override public void utilizeLimit(LimitCheckRequest request) {
+				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.MONTHLY, LocalDate.now().withDayOfMonth(1), request.getTransaction().getId());
 
-				DataBase.updateLimitUtilization(PartyType.INITIATOR, request.getUserId(), PeriodicType.DAILY, );
-				return false;
+				int utilizedAmount = utilization.getAmount().getAmount();
+				int utilizedCount = utilization.getCount();
+
+				int updateAmount = utilizedAmount + request.getAmount().getAmount();
+				int updateCount = utilizedCount + 1;
+
+				DataBase.updateLimitUtilization(request.getTransaction().getId(),PartyType.INITIATOR, request.getUserId(), PeriodicType.MONTHLY, LocalDate.now().withDayOfMonth(1), updateAmount, updateCount);
+
+				utilization = DataBase.getUtilizedLimit(PartyType.INITIATOR, request.getUserId(), PeriodicType.DAILY, LocalDate.now(), request.getTransaction().getId());
+
+				utilizedAmount = utilization.getAmount().getAmount();
+				utilizedCount = utilization.getCount();
+
+				updateAmount = utilizedAmount + request.getAmount().getAmount();
+				updateCount = utilizedCount + 1;
+
+				DataBase.updateLimitUtilization(request.getTransaction().getId(),PartyType.INITIATOR, request.getUserId(), PeriodicType.DAILY, LocalDate.now(), updateAmount, updateCount);
 		}
 }

@@ -6,5 +6,5 @@ import com.systemdesign.lld.financiallimitsystem.model.LimitCheckRequest;
 public interface ILimitValidator {
 		boolean validate(LimitCheckRequest request, EntityLimitPackageMap entityLimitPackageMap);
 
-		boolean utilizeLimit(LimitCheckRequest request);
+		void utilizeLimit(LimitCheckRequest request);
 }

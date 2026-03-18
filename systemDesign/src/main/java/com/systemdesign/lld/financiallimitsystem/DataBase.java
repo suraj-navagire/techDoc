@@ -1,5 +1,6 @@
 package com.systemdesign.lld.financiallimitsystem;
 
+import com.systemdesign.lld.financiallimitsystem.model.CurrencyAmount;
 import com.systemdesign.lld.financiallimitsystem.model.EntityLimitPackageMap;
 import com.systemdesign.lld.financiallimitsystem.model.EntityType;
 import com.systemdesign.lld.financiallimitsystem.model.ILimit;
@@ -9,6 +10,7 @@ import com.systemdesign.lld.financiallimitsystem.model.PartyType;
 import com.systemdesign.lld.financiallimitsystem.model.Payee;
 import com.systemdesign.lld.financiallimitsystem.model.PeriodicType;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,15 +71,32 @@ public class DataBase {
 				return userWithUserGroup.get(user);
 		}
 
-		public static LimitUtilization getUtilizedLimit(PartyType partyType, String partyValue, PeriodicType type){
-				return utilizedLimitMap.get(partyType+"#"+partyValue+"#"+type);
+		public static LimitUtilization getUtilizedLimit(PartyType partyType, String partyValue, PeriodicType type, LocalDate date, String transactionId){
+				if(date != null){
+						return utilizedLimitMap.computeIfAbsent(transactionId+"#"+partyType+"#"+partyValue+"#"+type+"#"+date, v -> {
+								LimitUtilization utilization = new LimitUtilization();
+								utilization.setAmount(new CurrencyAmount(0, null));
+								utilization.setCount(0);
+								utilization.setDate(type == PeriodicType.DAILY ?  LocalDate.now() : LocalDate.now().withDayOfMonth(1));
+								utilization.setPartyType(partyType);
+								utilization.setPartyValue(partyValue);
+								utilization.setPeriodicType(type);
+								utilization.setTransactionId(transactionId);
+
+								return utilization;
+						});
+				} else{
+						return utilizedLimitMap.get(transactionId+"#"+partyType+"#"+partyValue);
+				}
 		}
 
 		public static Payee getPayee(String payeeId){
 				return payeeMap.get(payeeId);
 		}
 
-		public static void updateLimitUtilization(PartyType partyType, String partyValue, PeriodicType type, int updatedAmount, int updatedCount){
-
+		public static void updateLimitUtilization(String transactionId, PartyType partyType, String partyValue, PeriodicType type, LocalDate date, int updatedAmount, int updatedCount){
+				LimitUtilization utilization = getUtilizedLimit(partyType, partyValue, type, date, transactionId);
+				utilization.setCount(updatedCount);
+				utilization.setAmount(new CurrencyAmount(updatedAmount, null));
 		}
 }

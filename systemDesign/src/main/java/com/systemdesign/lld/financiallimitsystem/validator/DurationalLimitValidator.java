@@ -44,9 +44,9 @@ public class DurationalLimitValidator implements ILimitValidator{
 
 				int durationaLimitAmount = durationaLimit.getAmount().getAmount();
 
-				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.PAYEE, request.getPayeeId(), null);
+				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.PAYEE, request.getPayeeId(), null, null, request.getTransaction().getId());
 
-				if (utilization == null){
+				if (utilization.getAmount().getAmount() == 0){
 						return true;
 				}
 
@@ -54,7 +54,13 @@ public class DurationalLimitValidator implements ILimitValidator{
 
 				int amountToBeValidated = utilizedAmount + inputAmount;
 
-				return amountToBeValidated <= durationaLimitAmount;
+				boolean isAllowed = amountToBeValidated <= durationaLimitAmount;
+
+				if(isAllowed){
+						utilizeLimit(request);
+				}
+
+				return isAllowed;
 		}
 
 		private static boolean isDurationalLimitCheckRequired(LimitCheckRequest request, int endTime) {
@@ -69,8 +75,15 @@ public class DurationalLimitValidator implements ILimitValidator{
 				return payeeCreatedDuration.toHours() > endTime;
 		}
 
-		@Override public boolean utilizeLimit(LimitCheckRequest request) {
+		@Override public void utilizeLimit(LimitCheckRequest request) {
+				LimitUtilization utilization = DataBase.getUtilizedLimit(PartyType.PAYEE, request.getPayeeId(), null, null, request.getTransaction().getId());
 
-				return false;
+				int utilizedAmount = utilization.getAmount().getAmount();
+
+				int updatedAmount = utilizedAmount + request.getAmount().getAmount();
+
+				int updatedCount = 1 + utilization.getCount();
+
+				DataBase.updateLimitUtilization(request.getTransaction().getId(), PartyType.PAYEE, request.getPayeeId(), null, null, updatedAmount, updatedCount);
 		}
 }

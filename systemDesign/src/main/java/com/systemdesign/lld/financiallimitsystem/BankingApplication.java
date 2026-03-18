@@ -6,9 +6,11 @@ import com.systemdesign.lld.financiallimitsystem.model.DurationLimit;
 import com.systemdesign.lld.financiallimitsystem.model.EntityLimitPackageMap;
 import com.systemdesign.lld.financiallimitsystem.model.EntityType;
 import com.systemdesign.lld.financiallimitsystem.model.ILimit;
+import com.systemdesign.lld.financiallimitsystem.model.LimitCheckRequest;
 import com.systemdesign.lld.financiallimitsystem.model.LimitPackage;
 import com.systemdesign.lld.financiallimitsystem.model.PeriodicLimit;
 import com.systemdesign.lld.financiallimitsystem.model.PeriodicType;
+import com.systemdesign.lld.financiallimitsystem.model.Transaction;
 import com.systemdesign.lld.financiallimitsystem.model.TransactionLimit;
 
 public class BankingApplication {
@@ -22,16 +24,37 @@ public class BankingApplication {
 		public static void main(String[] args) {
 				System.out.println("Banking Application Started");
 
-
-
-
-
-
+				try {
+						run();
+				}catch (Exception e){
+						e.printStackTrace();
+				}
 
 
 				System.out.println("Banking Application Terminated");
 		}
 
+		private static void run(){
+				BankingApplication bankingApplication = new BankingApplication();
+
+				bankingApplication.createSystemLevelLimits();
+
+				//Retail user logs-in and customize its limits;
+				bankingApplication.userUpdatingLimits("retail001");
+
+				ILimitEvaluationService service = new LimitEvaluationService();
+
+				LimitCheckRequest request = new LimitCheckRequest();
+				request.setAmount(new CurrencyAmount(6000, null));
+				request.setTransaction(new Transaction(IMPS, NEFT, "NEFT transaction"));
+				request.setPayeeId("payee001");
+				request.setUserId("retail001");
+
+
+				boolean isAllowed = service.validate(request).isAllowed();
+				System.out.println(isAllowed ? "Transaction is Allowed ": "Transaction is not allowed");
+
+		}
 
 		private void createSystemLevelLimits(){
 
@@ -78,7 +101,7 @@ public class BankingApplication {
 
 
 				limitPackage.addLimitMap(RTGS, rtgsTransactionLimit);
-				limitPackage.addLimitMap(IMPS, rtgsDailyPeriodicLimit);
+				limitPackage.addLimitMap(RTGS, rtgsDailyPeriodicLimit);
 
 				//Storing this limit package in db
 				DataBase.addLimitPackages(limitPackage);
