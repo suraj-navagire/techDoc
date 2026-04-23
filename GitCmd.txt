@@ -104,3 +104,18 @@ Best practice for daily work :
 Commands to clean branch :
 1. git clean -fd => This will remove all newly added files in current branch
 2. git reset --hard origin/main => If you have created your current branch from main and if you want to remove all updates in current branch then use this. This will make your current branch same as main branch
+
+How to solve git conflict :
+Base release branch has changed and need to merge with pointfix branch
+release branch : release_branch_name  (source)
+pointfix branch : pointfix_branch_name   (target)
+
+git checkout pointfix_branch_name
+git pull origin pointfix_branch_name
+git fetch origin
+git merge origin/release_branch_name
+git checkout --theirs -- "full_file_path_name"
+git add "full_file_path_name"
+git commit -m "commit msg"
+git push origin pointfix_branch_name
+
