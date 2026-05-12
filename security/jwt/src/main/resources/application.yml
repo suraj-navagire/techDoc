@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: jwt-rest-poc
+
+app:
+  jwt:
+    secret: "local-development-secret-key-for-jwt-learning-that-is-at-least-32-bytes"
+    expiration-minutes: 30
