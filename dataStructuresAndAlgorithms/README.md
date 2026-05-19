@@ -212,7 +212,7 @@ Heap is a binary tree data structure which satisfies heap property for every nod
 6. Keep performing steps from step 2 till we reach where lastIndex = 0;
 7. By doing this we will make array sorted in ascending order.
 
-5. Priority queues : Priority queue is nothing but heap. Depending upon application. If less value means highest priority then use min heap.
+##### 5. Priority queues : Priority queue is nothing but heap. Depending upon application. If less value means highest priority then use min heap.
 If max value means highest priority then use max heap.
 - When we dequeue element from heap then we will get max or min depending upon heap, While returning and deleting this element we adjust tree
 to satisfy heap property like "Delete " operation.
