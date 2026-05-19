@@ -171,7 +171,7 @@ Heap is a binary tree data structure which satisfies heap property for every nod
 3. Heapify : Converts an arbitrary binary tree into a heap.
 
 **Algorithm (Max heap)-**
-1. Insert :
+##### 1. Insert :
 
 **Steps :-**
 1. Insert element at last position.
@@ -179,7 +179,7 @@ Heap is a binary tree data structure which satisfies heap property for every nod
 3. If element is greater than parent swap it.
 4. Keep performing steps from step 2 till no more swap needed or element reaches 0 index.
 
-2. Delete (Extract Max) :
+##### 2. Delete (Extract Max) :
 
 **Steps :-**
 1. Remove element from 0 index which is root node. This node is max node.
