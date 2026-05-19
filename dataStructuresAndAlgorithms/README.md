@@ -1,0 +1,595 @@
+# This project is created to practice data structures and algorithms
+
+## Learning path to be followed :-
+- https://instabyte.io/p/dsa-master
+- https://leetcode.com/studyplan/top-interview-150/
+
+## Data structures:-
+
+### Progress :-
+
+#### 1. Arrays
+Array is collection similar data type stored in a contiguous memory location. It is a linear data structure. It is a static data structure with a fixed size.
+Array.length method gives size of array not number of elements inserted in array.
+
+**Operations :-**
+1. Traversal - Visiting each element of an array in a specific order [sequential or reversal].
+2. Insertion - Adding new element to an array at a specific index.
+3. Deletion - Removing an existing element from an array at a specific index.
+4. Searching - Finding the index of an element in an array.
+5. Retrieval - Returning an element present at a specific index from an array.
+
+**Advantages :-**
+1. Retrieval of an element is faster.
+2. Requires less memory compared with linked list.
+
+**DisAdvantages :-**
+1. Adding new element is slow.
+2. Deleting existing element is slow.
+3. When array is initialized memory gets reserved even if element is not added.
+
+**Example :-** `src/main/java/com/datastructures/Array.java`
+
+#### 2. Linked List
+Linked list is a linear data structure consists of series of nodes connected by references. Node consists of data and reference to the next node. It doesn't
+store node in a contiguous memory location.
+
+**Operations :-**
+1. Traversal - Visiting each element of a linked list in a specific order.
+2. Insertion - Adding new element to a linked list.
+3. Deletion - Removing existing element from a linked list.
+4. Searching - Finding the element in a linked list.
+4. Retrieval - Returning an element present at a specific index.
+
+**Advantages :-**
+1. Adding new element is faster/efficient.
+2. Removing existing element is faster/efficient.
+
+**Disadvantages :-**
+1. Retrieving element from a specific index is costly.
+2. Traversal is slow.
+
+**Example :-** `src/main/java/com/datastructures/SinglyLinkedList.java`, `src/main/java/com/datastructures/DoublyLinkedList.java`
+
+#### 3. Hash Table
+Hash table is data structure used to store element in such a way that searching becomes fast.
+
+**Hash table step :-**
+1. Calculate hash of element using hash function.
+2. Calculate index within the size of table using evaluated hash value.
+3. Store the element at that derived index location.
+4. If collision happens then use one of the collision handling technique called separate chaining. In this technique use linked list to store data at that
+index location.
+
+`Hash table :- Node<K>[] table;`
+`Node :- {k element, int hash, Node nextNode}`
+
+```text
+function insert(k element){
+    int hash = hash(element);
+    int index = hash % (table.size-1);
+
+    if(table[index] == null){
+        // add element to this location;
+    } else {
+        // add element to next node provided next node is null else keep moving to next node till we get next node as null;
+    }
+}
+```
+
+**Advantages :-**
+1. Hash table is very useful when we want to perform searching specially unsorted collection.
+
+**Example :-** `src/main/java/com/datastructures/HashTable.java`
+- https://www.hackerearth.com/practice/data-structures/hash-tables/basics-of-hash-tables/tutorial/
+
+#### 4. Tree
+It is non linear data structure consists of nodes connected by edges. It allow faster and quicker access to element as it is non linear in nature.
+
+Node :- It contains key/data along with pointers to child nodes. Last node is called leaf node which don't point to any other node.
+The node with at least one child is called internal node.
+Edge :- It is the link between any 2 node.
+
+Root :- It is the top most node of a tree.
+
+Height of node :- It is the number edges from node to the farthest leaf node of that node.
+
+depth of node :- It is the number of edges from root to that node.
+
+Height of tree :- It is the number of edges from root node to farthest leaf node.
+
+Forest :- A collection of disjoint trees.
+
+**Types of tree :-**
+1. Binary Tree - Binary tree is a tree in which each node can have at most 2 children.
+2. Binary search tree - It allows us to maintain sorted list of elements quickly. time complexity for search is O(log(n))
+3. AVL tree
+4. B-tree
+
+**Tree traversing Techniques :-**
+1. Inorder (DFS):-
+   i. Traverse left subtree
+   ii. Visit root node
+   iii. Traverse right subtree
+2. PreOrder (DFS) :-
+   i.   Visit root node
+   ii.  Traverse left subtree
+   iii. Traverse right subtree
+3. PostOrder (DFS):-
+   i.  Traverse left subtree
+   ii. Traverse right subtree
+   iii. Visit root node
+4. Breath first search :- Print node from left to right i.e. breath first from root node to leaf node
+
+**Binary Tree representation using array :-**
+Root location = 0;
+Left children of i = 2*i + 1
+Right children of i = 2*1 + 2
+Parent of i = (i-1)/2
+
+**Example :-** https://www.programiz.com/dsa/trees,
+- `com.datastructures.application.BinarySearchTreeApplication`
+- `com.datastructures.application.BinaryTreeArrayImplementationExample`
+- `com.datastructures.application.MaxHeapApplication`
+
+#### 5. Stacks
+Stack is linear data structure which used to store and manage data, which follows last in first out(LIFO) or First in last out(FILO) order.
+
+**Operations supported by stack:-**
+1. Push : Adds element at top of the stack.
+2. Pop : Removes and returns element presents at top of the stack.
+3. Peek : Returns element present at top of the stack without removing it.
+4. IsEmpty : Returns boolean true if stack is empty.
+5. IsFull : Returns boolean true if stack is full if fixed size collection is used i.e. array.
+
+**Example :** `com.datastructures.application.StackArrayImplementationApplication`,
+- `com.datastructures.application.StackLinkedListImplementationApplication`
+
+#### 6. Queues
+Queue is a linear data structure which used to store and manage data which follows first in first out (FIFO) or last in last out(LILO) order
+
+**Operations supported by queue :-**
+1. Enqueue : Adds element to the tail of the queue.
+2. Dequeue : Removes and returns element from the head of the queue.
+3. Peek : Returns element from the head of the queue.
+4. isEmpty : Returns boolean true if queue is empty.
+5. isFull : Returns boolean true if queue is full.
+
+**Example :** `com.datastructures.application.QueueArrayImplementationApplication`
+- `com.datastructures.application.QueueLinkedListImplementationApplication`
+
+#### 7. Heaps (Priority queues)
+Heap is a binary tree data structure which satisfies heap property for every node.
+
+**Types of heap :-**
+1. Max heap : In this type of heap every node is greater than or equal to its children. So in type of heap root contains maximum value.
+2. Min heap : In this type of heap every node is less than or equal to its children. So in this type of heap root contains minimum value.
+
+**Operations supported by heap :-**
+1. Insert : Add new element to heap maintaining heap property.
+2. Extract min/max : Removes maximum or minimum element from the heap and return it.
+3. Heapify : Converts an arbitrary binary tree into a heap.
+
+**Algorithm (Max heap)-**
+1. Insert :
+
+**Steps :-**
+1. Insert element at last position.
+2. Compare it with its parent .
+3. If element is greater than parent swap it.
+4. Keep performing steps from step 2 till no more swap needed or element reaches 0 index.
+
+2. Delete (Extract Max) :
+
+**Steps :-**
+1. Remove element from 0 index which is root node. This node is max node.
+2. Take last index element and put it in 0 index.
+3. Now compare this swapped element with its children.
+4. First compare both the children with each other. Select maximum element. Then compare this max element with swapped element.
+5. If swapped element is less than selected element then swap.
+6. Keep performing steps from step 3 till we reach state that there is no more swap needed.
+7. Return removed element in step 1.
+
+3. Heapify : Heapify is a process of converting given binary tree into a heap.
+
+**Steps :-**
+1. Start from last element to 0 element
+2. See if children are present for that current element.
+3. If children are present then compare both the children and find max element.
+4. Compare that max element with current element.
+5. If children is grater then swap.
+6. Keep performing steps from 2 till we reach state that there is no more swap needed and we reach index 0.
+
+4. Heap sort : We can use deletion of element process for sorting. Whatever element we will delete we will put it at recently vacant location.
+
+**Steps :-**
+1. lastIndex = currentLastIndex;
+2. Remove element from 0 index.
+2. Take element from lastIndex and put it at 0 index.
+3. Now keep removed element from step 2 at lastIndex location.
+4. lastIndex--;
+5. Now follow "Delete" algorithm present above to adjust elements position present at 0 index. Follow from step 3 of "Delete algorithm".
+6. Keep performing steps from step 2 till we reach where lastIndex = 0;
+7. By doing this we will make array sorted in ascending order.
+
+5. Priority queues : Priority queue is nothing but heap. Depending upon application. If less value means highest priority then use min heap.
+If max value means highest priority then use max heap.
+- When we dequeue element from heap then we will get max or min depending upon heap, While returning and deleting this element we adjust tree
+to satisfy heap property like "Delete " operation.
+- Every time we do queue we get highest priority element.
+- Use `com.datastructures.application.MaxHeap` class and use insert method as enqueue and extractMax as dequeue.
+
+**Example :-** `com.datastructures.application.MaxHeapApplication`
+- `com.problems.PrintMaxKElementHEAP`
+- https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
+
+#### 8. Graphs
+Graph is  a non linear data structure consists of nodes and edges. Different nodes are connected by edges to indicate relationship
+between them. Nodes are also called Vertices.
+Edges :- Can be uni directional or bi directional/un-directional. Edges can contain weights.
+
+**Operations on graphs :**
+1. Insertion of vertices/edges in the graph
+2. Deletion of vertices/edges in the graph
+3. Searching on graphs
+4. Traversal of graphs
+5. Shortest path from source to destination
+6. Minimum spanning tree : Find minimum weight edge to connect all
+
+**Types of Graphs :**
+1. Directed graphs :- All edges are unidirectional.
+2. Undirected graphs : Edges with no direction
+3. Weighted graphs : In this graph edges has weights.
+4. Unweighted graphs : In this graph edges doesn't have weights.
+
+**Storing / Creating graphs :**
+1. Adjacency list :- Use less space compared with adjacency matrix as this implementation stores only required edges information.
+
+```java
+ArrayList<Edge>[] graph = new ArrayList[v];
+graph[0].add(new Edge(0,2)); //This stores edges of vertex 0.
+```
+
+**Example -** `com.datastructures.graphs.UndirectedUnweightedGraph`, `com.datastructures.graphs.UndirectedWeightedGraph`
+2. Adjacency matrix :- Use more space as this implementation store data of edges which is not required i.e. edges which not present.
+
+```java
+int[v][v] = new int[v][v];
+int[v][i] = 1 or 0 // stores 1 if link is present else 0. Because of this we have to store 0 even if link not present which is unnecessary space wastage.
+```
+3. Edge list :- Used in minimum spanning tree or sorting of edges.
+4. 2D matrix (Implicit graph) :- Used to find shortest path. Uses 2D array to store data.
+
+Print all vertex :- `com.datastructures.graphs.UndirectedUnweightedGraph.printNeighbourOfVertex`, `com.datastructures.graphs.UndirectedWeightedGraph.printNeighbourOfVertex`
+
+BFS :- `com.datastructures.graphs.UndirectedUnweightedGraphTraversal.bfs`, `com.datastructures.graphs.UndirectedUnweightedDisjointGraphTraversal.bfs`
+
+DSF :- `com.datastructures.graphs.UndirectedUnweightedGraphTraversal.bfs`, `com.datastructures.graphs.UndirectedUnweightedDisjointGraphTraversal.bfs`
+
+Print all path from source to destination :- Using dfs. `com.datastructures.graphs.UndirectedUnweightedGraphTraversal.printAllPath`
+
+**Cycle detection :-**
+1. Undirected graph :- we can use DFS, BFS, Disjoint set.
+2. Directed graph :- We can use DFS, BFS and topological sort.
+`com.datastructures.graphs.CycleDetectionInGraphUsingDFS`
+
+**Topological sorting :-** Used on directed acyclic graph(DAG). It is a linear order of vertices such that for every directed edge u->v, vertex u comes before v in the order.
+Topological sorted order shows the dependency sequence.
+`com.datastructures.graphs.TopologicalSorting`
+
+**Dijkstra's Algorithm (Shorted path of all nodes from source) :-** Used to shortest path to all nodes from source. for directed and undirected. Don't work for -ve weight.
+`com.datastructures.graphs.DijkstrasAlgorithm`
+
+**Bellman ford algorithm :-** Used to find shortest path for all the nodes from source vertex. It used in +ve as well as-ve weights. It takes more time than
+Dijkstra's algorithm. So use this only for -ve values weights.
+BellmanFord algorithm don't work if negative cycle present in graph. i.e. if cycle is there and sum of their weight is -ve then this algorithm won't work.
+`com.datastructures.graphs.BellmanFordAlgorithm`
+
+**Minimum Spanning Tree (MST) :-** Minimum spanning tree is a sub graph of a undirected, connected, weighted graph which has following properties.
+1. It contains all vertices of main graph.
+2. All vertices are connected.
+3. Contains no cycles.
+4. Total edge weight is minimum.
+`com.datastructures.graphs.PrimsAlgorithm`
+
+**Strongly connected components (Kosaraju's Algorithm) -**
+Strongly connected component's are set of vertices, where from every vertex we can reach every other vertices.
+`com.datastructures.graphs.KosarajusAlgorithm`
+
+**Example :** `dataStructuresAndAlgorithms/src/main/java/com/datastructures/graphs`
+- https://www.youtube.com/watch?v=59fUtYYz7ZU
+
+#### 9. Tries
+Tries data structure is used to store words.
+
+In trie data structure make a node with children of nodes size 26, endOfWord.
+
+```text
+Node {
+    Node[] children;
+    boolean eow;
+}
+```
+
+**insert :-**
+Parse entire string using for loop. fetch every character and check char index using minus 'a'. minus 'a' with that char will give index within 26;
+check if that place is null . if null add new node else go to next char.
+if last char came then set end of word to true;
+
+**search :-**
+same as insert parse entire string and check if that index node is null or not. if null then return false;
+When last node reach check end of word flag and return that.
+
+**word break :-**
+In this we provide a long word and we have to check weather this word can be made up of array of words.
+
+To solve this problem we can use trie. Add all array of words to trie.
+
+Steps:-
+1. Split string into 2 parts for all possible combinations.
+2. search 1st part using search method and pass 2nd part to again same method recursively
+3. If both returns true then return true from there.
+4. If string reaches length to 0 then also return true.
+5. Else return false
+
+**starts with prefix :-**
+In this prefix is given and we have to check weather given prefix present in array of words
+
+To solve this problem we can use trie. Add all array of words to trie.
+
+Perform same as search except we don't need to check end of word
+
+**Example :-**
+- `com.datastructures.application.TrieApplication`
+- https://www.youtube.com/watch?v=m9zawMC6QAI&t=3729s
+
+#### 10. AVL tree
+AVL tree is
+1. Self balanced binary tree.
+2. Balance factor of each node should be {-1, 0, 1}. Note : balance factor is nothing but difference in height between left and right node.
+
+**Insertion Algorithm :-**
+1. Add new node as we add in binary tree.
+2. If at any point balance factor property is not satisfied then do rotation.
+
+**Types of rotation**
+1. If tree is unbalance because of Left Left nodes i.e. LL then it needs only one right shift rotation. i.e. rotate top 2 node right.
+2. If tree is unbalance because of Right Right nodes i.e. RR then it needs only one left shift rotation. i.e. rotate top 2 node left.
+3. If tree is unbalance because of Left Right nodes i.e. LR then it needs one Left and one Right shift rotation. i.e. rotate bottom 2 node left and then top 2 node right.
+4. If tree is unbalance because of Right Left nodes i.e. RL then it needs one Right and one Left shift rotation. i.e. rotate bottom 2 node right and then top 2 node left.
+
+Note : In all rotation one thing is common i.e. in all rotation we aare making middle element (from those 3 nodes) as parent node.
+
+**Deletion Algorithm :-**
+1. Same as insertion only this is here we delete node and then check balance factor and do required rotation.
+
+**Example :** `resources/AVL-tree.pdf`
+- https://www.youtube.com/watch?v=YWqla0UX-38&t=8s
+- https://www.youtube.com/watch?v=_8qqlVH5NC0
+- https://www.youtube.com/watch?v=LXdi_4kSd1o&t=22s
+
+#### 11. Red black tree
+Red black tree is
+1. Self balanced binary tree
+2. All nodes are either red or black
+3. All leaf nodes have nil node
+4. Root node and leaves [nil node] are black.
+5. Newly added node is red
+6. Red-Red connection cannot exist
+7. All path from node have same count of black nodes
+
+**Insertion Algorithm :-**
+1. If tree is empty them add new node as root node with black color
+2. If tree is not empty them add new node as red.
+3. After adding new node if this new connection is not red-red then exit.
+4. After adding new node if this new connection is red-red then :-
+1. Check color of parent node's sibling node.
+1. If its red then recolor both parent and sibling. Also if parent's parent is not root node then recolor it.
+Now recheck and see if because of this recoloring any red-red connection has created. If yes then again follow step 4.
+2. If its black or null then do suitable rotation as we do in avl and recolor these rotated nodes keeping red-black tree properties in mind
+
+**Example :-** https://www.youtube.com/watch?v=qA02XWRTBdw&t=783s
+
+---
+
+## Algorithms:-
+
+### Progress :-
+
+#### 1. Reservoir sampling
+This algorithm is used to randomly pick k elements from a large list. Usually this list is big enough that it will not fit into memory. So we need algorithm
+through which only in one iteration we will be able to pick k elements with each element getting picked-up with probability k/n where k is number of elements
+picked-up and n is total number of elements.
+
+**Case 1:- Select 1 element randomly from list(might be stream where we don't know size) where probability of i'th element getting selected is 1/n**
+
+```java
+int selectRandom(List arr){
+    int randomNumber = -1;
+    Random rand = new Random();
+    int i=0;
+    while(arr.hasNext()){
+        i++;
+        int random = rand.nextInt(i); //Within the range of i. This will return from 0 to i-1.
+        int num = listIterator.next();
+
+        //Probability of random number will be i-1 is 1/n.  Total number is n and range is 1 then probability will be 1/n
+        if(random == (i-1)){
+            randomNumber = num;
+        }
+    }
+
+    return randomNumber;
+}
+```
+
+**proof :-** p(A of i) getting selected is p(A is getting selected at i position ) * p(A is not getting selected at i+1, i+2,...n) position
+p(A of i) = 1/i * (1 - 1/i+1) * (1- 1/i+2) * ....* (1 - 1/n-1) * (1 - 1/n)
+p(A of i) = 1/i * (i/i+1) * (i+1/i+2) * ....* (n-2/n-1) * (n-1/n)
+p(A of i) = 1/i * (i/i+1) * (i+1/i+2) * ....* (n-2/n-1) * (n-1/n)
+p(A of i) = 1/n
+
+**Case 2 :-** Select k elements randomly from list(might be stream where we don't know size) where probability of i'th element getting selected is k/n
+
+```java
+int[] selectRandomK(List arr, int k){
+    int[] selectedRandomNumber = new int[k];
+
+    for(int i=0;i<k;i++){
+        selectedRandomNumber[i] = arr[i];
+    }
+    Random rand = new Random();
+
+    //After this i will be i=k
+    while(arr.hasNext()){
+        int random = rand.nextInt(i); //Within the range of i. This will return from 0 to i-1.
+        int num = listIterator.next();
+
+        //Probability of random number will be less than k is k/n. Total number is n and range is k then probability will be k/n
+        if(random < k){
+            selectedRandomNumber[random] = num;
+        }
+    }
+
+    return selectedRandomNumber;
+}
+```
+
+**proof :-** p(A of i) getting selected is p(A is getting selected at i position ) * p(A is not getting selected at i+1, i+2,...n) position
+For first k element , p(A of i ) = 1;
+For k<i<n is ,(Note after this i will be k+1)
+p(A of i) = k/k+1 * (1 - k/k+2) * (1- k/k+3) * ....* (1 - k/n-1) * (1 - k/n)
+p(A of i) = k/k+1 * (2/k+2) * (3/k+3) * ....* (n-2/n-1) * (n-1/n)
+p(A of i) = k/n
+
+**Example :** `com.algorithms.ReservoirSampling`
+
+#### 2. Heap Sort
+Check Heap section present under Data Structure above.
+
+**Steps for heap sort :-**
+1. Heapify given array/tree. To heapify each element it takes lon N time. So to heapify entire array with size N it will take -> N log N
+2. Iterate N times and extract element from root i.e. 0 index and put it on current last index. For each extraction it will take log N time
+So for entire it will take N log N
+3. Total time -> N log N + N log N (i.e. step1 and step 2 time ) => 2 N log N => O(NlogN)
+
+**Example :-** `com.algorithms.application.HeapSortApplication`
+- https://youtu.be/HqPJF2L5h9U?si=4P95IM0eqcxX02lk
+
+#### 3. BFS
+BFS is nothing but breath first search/traversal algorithm. It helps us to traverse neighbours. It visits immediate nodes first.
+then it visits those nodes immediate nodes first. In this way it traverse level wise.
+
+If 0 -> 1, 2    1->3,4    2->5,6    3->7,8
+For above example BFS will visit as follows :- 0,   1,2,    3,4,5,6,    7,8
+
+**Example :** `com.datastructures.application.BinarySearchTreeApplication`
+
+#### 4. DFS
+DFS is nothing but depth first search/traversal algorithm. It helps us to traverse neighbours. It first completes one neighbour links till leaf then
+it jumps to next neighbour. In this way it traverse vertically down first then it comes up then goes down again.
+
+If 0 -> 1, 2    1->3,4    2->5,6    3->7,8
+For above example DFS will visit as follows :- 0,1,3,7,8,   4,  2,5,6
+
+**Example :** `com.datastructures.application.BinarySearchTreeApplication`
+
+#### 5. Topological sorting
+Used on directed acyclic graph(DAG). It is a linear order of vertices such that for every directed edge u->v, vertex u comes before v in the order.
+Topological sorted order shows the dependency sequence. It uses DFS approach.
+
+**Example :-** `com.datastructures.graphs.TopologicalSorting`
+
+#### 6. Dijkstra's Algorithm (Shorted path of all nodes from source)
+Used to shortest path to all nodes from source. It works on weighted graphs with +ve values. It fails in -ve values of weight.
+
+**Example :-** `com.datastructures.graphs.DijkstrasAlgorithm`
+
+#### 7. Bellman ford algorithm (Shorted path of all nodes from source)
+Used to find shortest path for all the nodes from source vertex. It used in +ve as well as-ve weights. It takes more time than
+Dijkstra's algorithm. So use this only for -ve values weights.
+BellmanFord algorithm don't work if negative cycle present in graph. i.e. if cycle is there and sum of their weight is -ve then this algorithm won't work.
+
+**Example :** `com.datastructures.graphs.BellmanFordAlgorithm`
+
+8. Minimum Spanning Tree (MST) (Prim's algorithm)-
+Minimum spanning tree is a sub graph of a undirected, connected, weighted graph which has following properties.
+1. It contains all vertices of main graph.
+2. All vertices are connected.
+3. Contains no cycles.
+4. Total edge weight is minimum.
+
+**Example :-** `com.datastructures.graphs.PrimsAlgorithm`
+
+#### 9. Strongly connected components (Kosaraju's Algorithm)
+Strongly connected component's are set of vertices, where from every vertex we can reach every other vertices.
+
+**Example :-** `com.datastructures.graphs.KosarajusAlgorithm`
+
+#### 10. Bubble sort
+In bubble sort we sort numbers like bubbles. We start comparing from left to right and compares each element with each other and swap them till last element.
+So at the end of 1st iteration we gets max or min element at last position.
+Perform this n time but in next iteration compare minus 1 times then last iteration since in last iteration we have already fixed position of 1 element.
+
+**Example :-** `com.algorithms.BubbleSort`
+- https://www.youtube.com/watch?v=PkJIc5tBRUE
+Time Complexity = O(n^2);
+Space Complexity = O(1);
+
+#### 11. Selection sort
+Selection sort is similar to bubble sort but here we don't swap element every time when we comparing it. We iterate on whole array first. In
+this iteration we just find smallest or largest elements index. Then at the end of iteration we swap smallest or largest index at first or last based on sorting.
+In bubble sort we unknowingly placing elements correctly from last index, then 2nd last ... then 2nd and then 1st.
+In selection sort we are placing correct element on i position every time.
+
+**Example :-** `com.algorithms.SelectionSort`
+- https://www.youtube.com/watch?v=PkJIc5tBRUE
+Time Complexity = O(n^2)
+Space Complexity = O(1)
+
+#### 12. Insertion sort
+Insertion sort logically divides array into 2 parts. Sorted and unsorted. In every iteration sorted part increases and unsorted part decreases
+
+**Example :-** `com.algorithms.InsertionSort`
+- https://www.youtube.com/watch?v=PkJIc5tBRUE
+Time Complexity = O(n^2)
+Space Complexity = O(1)
+
+#### 13. Merge sort
+It uses divide and conquer approach to sort the array. When extra space is available use merge sort.
+
+**Example :-** `com.algorithms.MergeSort`
+- https://www.youtube.com/watch?v=unxAnJBy12Q
+
+Time Complexity = nlog(n)
+Space Complexity = O(n)
+
+#### 14. Quick sort
+It uses divide and conquer approach like merge sort but it does not require additional memory space for sorting.
+It uses low, high in recursive manner using pivot index. Pivot index tells us sorted index.
+It has partition method which returns pivot index.
+- It takes last index as pivot element.
+- Initially it considers i=(low - 1) as pivots sorted index. Then one by one it iterate on array from low to high. It increases i if element is smaller than
+pivot element. If element is not smaller than it does not increment i. So after each iteration it actually knows 1 element is smaller than pivot. So at then end
+of all iteration it knows how many smaller element are there using i. So if we increment i by 1 we will get correct pivot position.
+
+Now pass this returned pivot index as start and end in next recursion.
+
+**Example :-** `com.algorithms.QuickSort`
+- https://www.youtube.com/watch?v=QXum8HQd_l4
+
+**Time Complexity :-**
+Worst Case = O(n^2) It happens when in each iteration pivot becomes first or last element. It happens if array is already sorted.
+Average = O(nlogn)
+
+Space Complexity = O(log n)
+
+#### 15. Binary search
+It used to search element in sorted array.
+
+**Example :** `com.algorithms.BinarySearch`
+
+**Time Complexity :-**
+O(logn)
+
+**Space Complexity :-** O(1)
