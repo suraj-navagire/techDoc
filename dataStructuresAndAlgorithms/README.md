@@ -190,7 +190,7 @@ Heap is a binary tree data structure which satisfies heap property for every nod
 6. Keep performing steps from step 3 till we reach state that there is no more swap needed.
 7. Return removed element in step 1.
 
-3. Heapify : Heapify is a process of converting given binary tree into a heap.
+##### 3. Heapify : Heapify is a process of converting given binary tree into a heap.
 
 **Steps :-**
 1. Start from last element to 0 element
@@ -200,7 +200,7 @@ Heap is a binary tree data structure which satisfies heap property for every nod
 5. If children is grater then swap.
 6. Keep performing steps from 2 till we reach state that there is no more swap needed and we reach index 0.
 
-4. Heap sort : We can use deletion of element process for sorting. Whatever element we will delete we will put it at recently vacant location.
+##### 4. Heap sort : We can use deletion of element process for sorting. Whatever element we will delete we will put it at recently vacant location.
 
 **Steps :-**
 1. lastIndex = currentLastIndex;
