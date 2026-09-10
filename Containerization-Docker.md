@@ -297,21 +297,21 @@ docker network ls
 On the source server, save the image to a tar file:
 
 ```bash
-docker save -o /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar obdxkafka-3.4.0
+docker save -o /scratch/obddev/kafka/obdkafka-3.4.0.tar obdkafka-3.4.0
 ```
 
 Copy it to the destination server:
 
 ```bash
-scp /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar \
-  obdxdev@10.180.57.124:/scratch/obdxdev/kafka/
+scp /scratch/obddev/kafka/obdkafka-3.4.0.tar \
+  obddev@10.180.57.124:/scratch/obddev/kafka/
 ```
 
 On the destination server, load and run the image:
 
 ```bash
-docker load -i /scratch/obdxdev/kafka/obdxkafka-3.4.0.tar
-docker run -it obdxkafka-3.4.0 /bin/bash
+docker load -i /scratch/obddev/kafka/obdkafka-3.4.0.tar
+docker run -it obdkafka-3.4.0 /bin/bash
 ```
 
 Use `docker start <container_id>` only to restart a container that was already created earlier.
